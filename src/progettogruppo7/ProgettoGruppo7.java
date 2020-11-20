@@ -16,6 +16,9 @@ public class ProgettoGruppo7 {
         System.out.print("prova");
         System.out.println("ciao Gruppo 7");
         System.out.println("ciao Gruppo 7");
+        
+        System.out.println("yoyoyo");
+
     }
     
 }
