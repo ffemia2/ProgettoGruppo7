@@ -18,6 +18,9 @@ public class ProgettoGruppo7 {
         System.out.println("ciao Gruppo 7");
         System.out.println("ciaololololo");
         System.out.println("yoyoyo");
+        System.out.println("ciao Gruppo 7");
+        System.out.println("ciao Gruppo 7");
+    
 
     }
     
