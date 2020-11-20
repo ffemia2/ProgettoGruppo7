@@ -12,7 +12,7 @@ package progettogruppo7;
 public class ProgettoGruppo7 {
 
     public static void main(String[] args) {
-        System.out.println("ciao");
+        System.out.println("ciao Gruppo 7");
     }
     
 }
