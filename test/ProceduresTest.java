@@ -25,38 +25,53 @@ public class ProceduresTest {
     }
     
     @Test
-    public void testInsertProcedure(){
+    public void testSizeInsertProcedure(){
         Procedure proc=new Procedure("procedura");
-        this.p.insertInProcedureList(proc);
-        assertEquals(1, this.p.getProcedureList().size());
+        this.p.insertInProcedureMap(proc);
+        assertEquals(1, this.p.getProcedureMap().size());
+    }
+    
+    @Test
+    public void testDescriptionInsertProcedure(){
+        Procedure proc=new Procedure("procedura");
+        this.p.insertInProcedureMap(proc);
+        assertEquals(proc.getDescription(), this.p.getFromProcedureMap(proc).getDescription());
     }
     
     @Test
     public void testDeleteProcedure(){
         Procedure proc=new Procedure("procedura");
-        this.p.insertInProcedureList(proc);
-        this.p.deleteInProcedureList(proc);
-        assertEquals(0, this.p.getProcedureList().size());
+        this.p.insertInProcedureMap(proc);
+        this.p.deleteInProcedureMap(proc);
+        assertEquals(0, this.p.getProcedureMap().size());
     }
     
     @Test
     public void testGetProcedure(){
         Procedure proc=new Procedure("procedura");
-        this.p.insertInProcedureList(proc);
-        Procedure getP=this.p.getFromProcedureList(proc);
+        this.p.insertInProcedureMap(proc);
+        Procedure getP=this.p.getFromProcedureMap(proc);
         assertEquals(getP.getDescription(), proc.getDescription());
     }
     
     @Test(expected=RuntimeException.class)
     public void testGetExceptionProcedure(){
         Procedure proc=new Procedure("procedura");
-        Procedure getP=this.p.getFromProcedureList(proc);
+        Procedure getP=this.p.getFromProcedureMap(proc);
     }
     
     @Test(expected=RuntimeException.class)
     public void testDelExceptionProcedure(){
         Procedure proc=new Procedure("procedura");
-        this.p.deleteInProcedureList(proc);
+        this.p.deleteInProcedureMap(proc);
     }
     
+    @Test
+    public void testModifyProcedure(){
+        String description ="manutenzione";
+        Procedure proc=new Procedure("procedura");
+        this.p.insertInProcedureMap(proc);
+        this.p.mofifyFromProcedureMap(proc, description);
+        assertEquals(this.p.getFromProcedureMap(proc).getDescription(), description);
+    }
 }

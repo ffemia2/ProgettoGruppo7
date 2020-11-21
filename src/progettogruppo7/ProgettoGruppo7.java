@@ -13,7 +13,8 @@ public class ProgettoGruppo7 {
 
     public static void main(String[] args) {
         Procedures p=new Procedures();
-        p.insertInProcedureList(new Procedure("manutenzione"));
+        p.insertInProcedureMap(new Procedure("manutenzione"));
+        p.deleteInProcedureMap(new Procedure("manutenzione"));
     }
     
 }

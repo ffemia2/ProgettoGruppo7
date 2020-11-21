@@ -5,37 +5,49 @@
  */
 package progettogruppo7;
 
-import java.util.LinkedList;
+import java.util.HashMap;
+
 
 /**
  *
  * @author Francesco Femia
  */
 public class Procedures {
-    private LinkedList<Procedure> procedureList;
+    private HashMap<String, Procedure> procedureMap;
 
     public Procedures() {
-        this.procedureList = new LinkedList<>();
+        this.procedureMap = new HashMap<>();
     }
 
-    public LinkedList<Procedure> getProcedureList() {
-        return procedureList;
+    public HashMap<String, Procedure> getProcedureMap() {
+        return procedureMap;
     }
 
-    public void insertInProcedureList(Procedure p) {
-        this.procedureList.add(p);
+    public void insertInProcedureMap(Procedure p) {
+        this.procedureMap.put(p.getDescription(), p);
     }
     
-    public void deleteInProcedureList(Procedure p) {
-        if(this.procedureList.contains(p))
-            this.procedureList.remove(this.procedureList.indexOf(p));
+    public void deleteInProcedureMap(Procedure p) {
+        if(this.procedureMap.keySet().contains(p.getDescription()))
+            this.procedureMap.remove(p.getDescription());
         else
             throw new ProcedureDoesntExixtsException("Procedure not in list");
     }
     
-    public Procedure getFromProcedureList(Procedure p) {
-        if(this.procedureList.contains(p))
-            return this.procedureList.get(this.procedureList.indexOf(p));
+    public Procedure getFromProcedureMap(Procedure p) {
+        if(this.procedureMap.keySet().contains(p.getDescription()))
+            return this.procedureMap.get(p.getDescription());
+        else
+            throw new ProcedureDoesntExixtsException("Procedure not in list");
+    }
+    public void mofifyFromProcedureMap(Procedure p, String description) {
+        Procedure proc;
+        if(this.procedureMap.keySet().contains(p.getDescription())){
+            proc = this.procedureMap.get(p.getDescription());
+            this.deleteInProcedureMap(p);
+            proc.setDescription(description);
+            this.procedureMap.put(description, proc);
+        }
         else
             throw new ProcedureDoesntExixtsException("Procedure not in list");
     }
