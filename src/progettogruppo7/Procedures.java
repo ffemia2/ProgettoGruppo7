@@ -26,4 +26,17 @@ public class Procedures {
         this.procedureList.add(p);
     }
     
+    public void deleteInProcedureList(Procedure p) {
+        if(this.procedureList.contains(p))
+            this.procedureList.remove(this.procedureList.indexOf(p));
+        else
+            throw new ProcedureDoesntExixtsException("Procedure not in list");
+    }
+    
+    public Procedure getFromProcedureList(Procedure p) {
+        if(this.procedureList.contains(p))
+            return this.procedureList.get(this.procedureList.indexOf(p));
+        else
+            throw new ProcedureDoesntExixtsException("Procedure not in list");
+    }
 }

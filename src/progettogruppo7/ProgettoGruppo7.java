@@ -12,14 +12,8 @@ package progettogruppo7;
 public class ProgettoGruppo7 {
 
     public static void main(String[] args) {
-        System.out.println("ciao Gruppo 7");
-        System.out.print("prova");
-        System.out.println("ciao Gruppo 7");
-        System.out.println("ciao Gruppo 7");
-        System.out.println("ciaololololo");
-        System.out.println("yoyoyo");
-        System.out.println("ciao Gruppo 7");
-        System.out.println("ciao Gruppo 7");
+        Procedures p=new Procedures();
+        p.insertInProcedureList(new Procedure("manutenzione"));
     }
     
 }
