@@ -5,6 +5,7 @@
  */
 package progettogruppo7;
 
+import progettogruppo7.Exceptions.ProcedureDoesntExistException;
 import java.util.HashMap;
 
 
@@ -31,14 +32,14 @@ public class Procedures {
         if(this.procedureMap.keySet().contains(p.getDescription()))
             this.procedureMap.remove(p.getDescription());
         else
-            throw new ProcedureDoesntExixtsException("Procedure not in list");
+            throw new ProcedureDoesntExistException("Procedure not in list");
     }
     
     public Procedure getFromProcedureMap(Procedure p) {
         if(this.procedureMap.keySet().contains(p.getDescription()))
             return this.procedureMap.get(p.getDescription());
         else
-            throw new ProcedureDoesntExixtsException("Procedure not in list");
+            throw new ProcedureDoesntExistException("Procedure not in list");
     }
     public void mofifyFromProcedureMap(Procedure p, String description) {
         Procedure proc;
@@ -49,6 +50,6 @@ public class Procedures {
             this.procedureMap.put(description, proc);
         }
         else
-            throw new ProcedureDoesntExixtsException("Procedure not in list");
+            throw new ProcedureDoesntExistException("Procedure not in list");
     }
 }

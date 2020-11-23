@@ -11,7 +11,7 @@ package progettogruppo7;
  */
 public class UserFactory {
      
-     public User build(String username, String password, User.Role role) {
+    /*public User build(String username, String password, User.Role role) {
         User u = selectUser(role);
         u.setUsername(username);
         u.setPassword(password);
@@ -20,17 +20,31 @@ public class UserFactory {
     
     protected User selectUser(User.Role role) {
         if (role == User.Role.MAINTAINER) {
-        return new Maintainer();
+            return new Maintainer();
         }
         else if (role == User.Role.PLANNER) {
-            //return new Planner();
-            return null;
+            return new Planner();
+            //return null;
         }
         else if (role == User.Role.SYSTEMADMIN) {
-            //return new SystemAdmin();
-            return null;
+            return new SystemAdmin();
+            //return null;
         }
         return null;
-    }
+    }*/
     
+    
+    public UserFactory() {
+    }
+      
+    public AbstractUser build(String username, String password, User.Role role){
+        if (User.Role.PLANNER.equals(role))
+            return new Planner(username, password);
+        else if (User.Role.MAINTAINER.equals(role))
+            return new Maintainer(username, password);
+        else if (User.Role.SYSTEMADMIN.equals(role))
+            return  SystemAdministrator.SystemAdministrator(username, password);
+        else
+            return null;
+    }
 }

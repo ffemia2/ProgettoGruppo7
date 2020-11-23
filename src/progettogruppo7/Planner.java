@@ -7,29 +7,14 @@ package progettogruppo7;
 
 /**
  *
- * @author Rosanna
+ * @author User
  */
-public class Maintainer extends AbstractUser {
-    private int availability;
-    // Competences
-    // Activities
+public class Planner extends AbstractUser{
     
-    public Maintainer(String username, String password) {
-        super(username, password, User.Role.MAINTAINER);
+    public Planner(String username, String password) {
+        super(username, password, User.Role.PLANNER);
     }
-
-    public int getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(int availability) {
-        this.availability = availability;
-    }
-
-    @Override
-    public String toString() {
-        return "Maintainer" + "\t" + super.toString();
-    }
+    
 
     @Override
     public AbstractUser removeUser(AbstractUser u) {
@@ -39,7 +24,12 @@ public class Maintainer extends AbstractUser {
     @Override
     public AbstractUser getUser(AbstractUser u) {
         throw new UnsupportedOperationException("Not supported for this role."); 
-    }  
+    }
+
+    @Override
+    public String toString() {
+        return "Planner"+ "\t"+ super.toString();
+    }
 
     @Override
     public AbstractUser createUser(String username, String password, Role role) {
@@ -48,7 +38,9 @@ public class Maintainer extends AbstractUser {
 
     @Override
     public String getUsers() {
-        throw new UnsupportedOperationException("Not supported for this role.");
+        throw new UnsupportedOperationException("Not supported for this role."); 
     }
+   
     
+   
 }

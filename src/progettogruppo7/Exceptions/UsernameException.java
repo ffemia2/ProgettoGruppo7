@@ -3,28 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progettogruppo7;
+package progettogruppo7.Exceptions;
 
 /**
  *
- * @author Francesco Femia
+ * @author User
  */
-public class ProcedureDoesntExixtsException extends RuntimeException {
+public class UsernameException extends RuntimeException {
 
-    /**
-     * Creates a new instance of <code>NewException</code> without detail
-     * message.
-     */
-    public ProcedureDoesntExixtsException() {
+    public UsernameException() {
     }
-
+    
     /**
      * Constructs an instance of <code>NewException</code> with the specified
      * detail message.
      *
      * @param msg the detail message.
      */
-    public ProcedureDoesntExixtsException(String msg) {
+    public UsernameException(String msg) {
         super(msg);
     }
 }

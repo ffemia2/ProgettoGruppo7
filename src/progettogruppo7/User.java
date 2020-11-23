@@ -21,4 +21,15 @@ public interface User {
     
     public Role getRole();
     public void setRole(Role role);
+    
+    // System Administrator methods //
+ 
+       
+    public AbstractUser removeUser(AbstractUser u);
+    
+    public AbstractUser getUser(AbstractUser u);
+    
+    public AbstractUser createUser(String username, String password, User.Role role);
+    
+    public String getUsers();
 }
