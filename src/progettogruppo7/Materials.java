@@ -2,6 +2,7 @@ package progettogruppo7;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import progettogruppo7.Exceptions.MaterialException;
 
 /* @author marco */
 public class Materials {
