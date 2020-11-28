@@ -3,23 +3,23 @@ package progettogruppo7;
 /* @author marco */
 public class Material {
     
-    private String nome;
+    private String name;
 
     public Material(String nome) {
-        this.nome = nome;
+        this.name = nome;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String nome) {
+        this.name = nome;
     }
 
     @Override
     public String toString() {
-        return nome;
+        return name;
     }
        
 }
