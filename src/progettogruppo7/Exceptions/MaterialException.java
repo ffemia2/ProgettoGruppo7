@@ -5,13 +5,13 @@ public class MaterialException extends Exception {
 
     public MaterialException(int parameter){
         if(parameter == 1){
-            System.out.println("Material Exception (inserimento): Materiale già presente nella lista");
+            System.out.println("Material Exception (INSERT): material already present");
         }
         else if (parameter == 2){
-            System.out.println("Material Exception (rimozione o modifica): Materiale non presente nella lista");
+            System.out.println("Material Exception (REMOVE or MODIFY): material not present");
         }
         else if (parameter == 3){
-            System.out.println("Material Exception (modifica): Materiale già presente nella lista");
+            System.out.println("Material Exception (MODIFY): material already present");
         }
     }
 
