@@ -17,38 +17,38 @@ public class MaterialTest {
         Material m4 = new Material("Saldatore a stagno");
         
         //Inserimento dei materiali nella lista
-        lista.inserisciMateriale(m1);
-        lista.inserisciMateriale(m2);
-        lista.inserisciMateriale(m3);
-        lista.inserisciMateriale(m4);
+        lista.insertMaterial(m1);
+        lista.insertMaterial(m2);
+        lista.insertMaterial(m3);
+        lista.insertMaterial(m4);
         
         //Verifica dell'inserimento dei materiali all'interno della struttura dati
-        lista.stampaMateriali();
+        lista.printMaterials();
         
         //Rimozione dei materiali dalla lista
-        lista.rimuoviMateriale(m4);
-        lista.rimuoviMateriale(m1);
+        lista.removeMaterial(m4);
+        lista.removeMaterial(m1);
         
         //Verifica della rimozione dei materiali dalla lista
-        lista.stampaMateriali();
+        lista.printMaterials();
         
         //Modifica di un materiale nella lista
-        lista.modificaMateriale(m2, "Chiodi");
+        lista.modifyMaterial(m2, "Chiodi");
         
         //Verifica della modifica dei materiali dalla lista
-        lista.stampaMateriali();
+        lista.printMaterials();
         
         //Verifica delle eccezioni (Inserimento: materiale già presente nella lista)
-        //lista.inserisciMateriale(m2);
+        lista.insertMaterial(m2);
         
         //Verifica delle eccezioni (Rimozione: materiale non presente nella lista)
-        //lista.rimuoviMateriale(m4);
+        lista.removeMaterial(m4);
         
         //Verifica delle eccezioni (Modifica: materiale non presente nella lista)
-        //lista.modificaMateriale(m3, "Chiodi");
+        lista.modifyMaterial(m3, "Chiodi");
         
         //Verifica delle eccezioni (Modifica: materiale non presente in lista)
-        //lista.modificaMateriale(m1, "Martello");
+        lista.modifyMaterial(m1, "Martello");
     }
     
 }
