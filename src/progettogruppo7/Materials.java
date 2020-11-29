@@ -1,53 +1,46 @@
 package progettogruppo7;
 
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import progettogruppo7.Exceptions.MaterialException;
 
 /* @author marco */
 public class Materials {
     
-    private LinkedList<Material> listaMateriali;
+    private HashSet<Material> listaMateriali;
     
     public Materials(){  
-        listaMateriali = new LinkedList<Material>();
-                }
+        listaMateriali = new HashSet<>();
+           }
     
-    public void insertMaterial(Material m) throws MaterialException{
+    public void insertMaterial(Material m){
+        listaMateriali.add(m);
+    }
+    
+    public void removeMaterial(Material m){
+        listaMateriali.remove(m);
+    }
+    
+    public boolean verifyMaterial(Material m){
         if(listaMateriali.contains(m)){
-            throw new MaterialException(1);
+            return true;
         }
         else{
-            listaMateriali.add(m);
+            return false;
         }
     }
     
-    public void removeMaterial(Material m)throws MaterialException{
-        if(!listaMateriali.contains(m)){
-            throw new MaterialException(2);
-        }
-        else{
-        Iterator<Material> iterator = listaMateriali.iterator();
-        
-        while (iterator.hasNext()){
-            if (iterator.next().getName().equals(m.getName())){
-                iterator.remove();
-                }
-            }
-        }
-    }
-    
-    public void modifyMaterial(Material m, String newName) throws MaterialException{
+    public void modifyMaterial(Material m, String newName){
         Iterator<Material> iterator = listaMateriali.iterator();
         
         while(iterator.hasNext()){
             if(iterator.next().getName().equals(newName)){
-                throw new MaterialException(3);
+                throw new MaterialException("Material Exception (MODIFY): material already present");
             }
         }
         
         if(!listaMateriali.contains(m)){
-            throw new MaterialException(2);
+            throw new MaterialException("Material Exception (MODIFY): material to be modified not found");
         }
         else{
            m.setName(newName);
