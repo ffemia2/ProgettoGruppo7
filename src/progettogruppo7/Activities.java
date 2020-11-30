@@ -6,6 +6,7 @@
 package progettogruppo7;
 
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.Map;
 import progettogruppo7.Exceptions.ActivityException;
 
@@ -45,6 +46,19 @@ public class Activities {
             return activities.get(a.getActivityID());
         } else
             throw new ActivityException("Activity doesn't exists");
+    }
+    public Activity getFromActivities(int id){
+        if (activities.containsKey(id)) {
+            return activities.get(id);
+        } else
+            throw new ActivityException("Activity doesn't exists");
+    }
+    
+    public LinkedList<Integer> getWeeks(){
+        LinkedList<Integer> l=new LinkedList<>();
+        for (Activity a: activities.values())
+            l.add(a.getWeek());
+        return l;
     }
     
     public void modifyInActivitiesDescr(Activity a, String description) {

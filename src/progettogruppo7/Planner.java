@@ -11,8 +11,11 @@ package progettogruppo7;
  */
 public class Planner extends AbstractUser{
     
+    private Activities acritivities;
+    
     public Planner(String username, String password) {
         super(username, password, User.Role.PLANNER);
+        this.acritivities=new Activities();
     }
     
 
