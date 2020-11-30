@@ -11,6 +11,10 @@ package progettogruppo7;
  */
 public class Unplanned extends Activity {
 
+    public Unplanned(int activityID, Competences competences, String description, int estimatedTime, boolean interruptible, int week) {
+        super(activityID, competences, description, estimatedTime, interruptible, week);
+    }
+
     public Unplanned(int activityID, String description, int estimatedTime, boolean interruptible, int week) {
         super(activityID, description, estimatedTime, interruptible, week);
     }

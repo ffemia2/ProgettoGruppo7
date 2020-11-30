@@ -11,8 +11,8 @@ package progettogruppo7;
  */
 public class Maintainer extends AbstractUser {
     private int availability;
-    // Competences
-    // Activities
+    private Competences competences;
+    private Activities activities;
     
     public Maintainer(String username, String password) {
         super(username, password, User.Role.MAINTAINER);
@@ -24,6 +24,22 @@ public class Maintainer extends AbstractUser {
 
     public void setAvailability(int availability) {
         this.availability = availability;
+    }
+
+    public Competences getCompetences() {
+        return competences;
+    }
+
+    public void setCompetences(Competences competences) {
+        this.competences = competences;
+    }
+
+    public Activities getActivities() {
+        return activities;
+    }
+
+    public void setActivities(Activities activities) {
+        this.activities = activities;
     }
 
     @Override
