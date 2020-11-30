@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progettogruppo7;
+package progettogruppo7.Users;
+
+import java.util.LinkedList;
 
 /**
  *
@@ -12,7 +14,7 @@ package progettogruppo7;
 public class Planner extends AbstractUser{
     
     public Planner(String username, String password) {
-        super(username, password, User.Role.PLANNER);
+        super(username, password, UserFactory.Role.PLANNER);
     }
     
 
@@ -21,24 +23,31 @@ public class Planner extends AbstractUser{
         throw new UnsupportedOperationException("Not supported for this role."); 
     }
 
-    @Override
-    public AbstractUser getUser(AbstractUser u) {
-        throw new UnsupportedOperationException("Not supported for this role."); 
-    }
-
+   
     @Override
     public String toString() {
-        return "Planner"+ "\t"+ super.toString();
+        return super.toString();
     }
 
     @Override
-    public AbstractUser createUser(String username, String password, Role role) {
+    public AbstractUser createUser(String username, String password, UserFactory.Role role) {
+        throw new UnsupportedOperationException("Not supported for this role."); 
+    }
+
+
+    @Override
+    public String printUsers() {
         throw new UnsupportedOperationException("Not supported for this role."); 
     }
 
     @Override
-    public String getUsers() {
-        throw new UnsupportedOperationException("Not supported for this role."); 
+    public LinkedList<AbstractUser> getUsers() {
+        throw new UnsupportedOperationException("Not supported for this role.");
+    }
+
+    @Override
+    public AbstractUser getUser(String username) {
+        throw new UnsupportedOperationException("Not supported for this role.");
     }
    
     

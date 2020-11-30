@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progettogruppo7;
+package progettogruppo7.Users;
+
+import java.util.LinkedList;
 
 /**
  *
@@ -11,25 +13,25 @@ package progettogruppo7;
  */
 public interface User {
 
-    public enum Role {MAINTAINER, SYSTEMADMIN, PLANNER};
-    
     public String getUsername();
     public void setUsername(String username);
     
     public String getPassword();
     public void setPassword(String password);
     
-    public Role getRole();
-    public void setRole(Role role);
+    public UserFactory.Role getRole();
+    public void setRole(UserFactory.Role role);
     
     // System Administrator methods //
  
        
     public AbstractUser removeUser(AbstractUser u);
     
-    public AbstractUser getUser(AbstractUser u);
+    public AbstractUser getUser(String username);
     
-    public AbstractUser createUser(String username, String password, User.Role role);
+    public AbstractUser createUser(String username, String password, UserFactory.Role role);
     
-    public String getUsers();
+    public String printUsers();
+    
+    public LinkedList<AbstractUser> getUsers();
 }

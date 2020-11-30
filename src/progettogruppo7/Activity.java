@@ -17,7 +17,7 @@ public abstract class Activity {
     private int activityID;
     //site
     //typology
-    //competences
+    private Competences competences;
     private String description;
     private int estimatedTime;
     private boolean interruptible;
@@ -40,6 +40,22 @@ public abstract class Activity {
         }
     }
 
+    public Activity(int activityID, Competences competences, String description, int estimatedTime, boolean interruptible, int week) {
+        this.activityID = activityID;
+        this.competences = competences;
+        this.description = description;
+        this.estimatedTime = estimatedTime;
+        this.interruptible = interruptible;
+        //se il valore di week non ha significato assegno il valore della settimana corrente
+        if (week > 0 && week < 53) {
+            this.week = week;
+        } else {
+            LocalDate date = LocalDate.now();
+            WeekFields weekFields = WeekFields.of(Locale.getDefault());
+            week = date.get(weekFields.weekOfWeekBasedYear());
+        }
+    }
+
     public int getActivityID() {
         return activityID;
     }
@@ -48,6 +64,14 @@ public abstract class Activity {
         this.activityID = activityID;
     }
 
+    public Competences getCompetences() {
+        return competences;
+    }
+
+    public void setCompetences(Competences competences) {
+        this.competences = competences;
+    }
+    
     public String getDescription() {
         return description;
     }

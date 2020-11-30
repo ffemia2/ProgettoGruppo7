@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progettogruppo7;
+package progettogruppo7.Users;
 
 import progettogruppo7.Exceptions.UsernameException;
 import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -41,16 +40,16 @@ public class SystemUsers {
         return single_instance; 
     } 
     
-    public AbstractUser addUser(AbstractUser u){
+    public AbstractUser addUser(AbstractUser u) throws UsernameException{
         if (planners.containsKey(u.getUsername()) || maintainers.containsKey(u.getUsername()))
             throw new UsernameException("Username not available"); 
         
-        if (u.getRole() == User.Role.PLANNER){
+        if (u.getRole() == UserFactory.Role.PLANNER){
             Planner p = new Planner(u.getUsername(),u.getPassword());
             planners.put(u.getUsername(), p);
             return p;
         }
-        else if (u.getRole() == User.Role.MAINTAINER){
+        else if (u.getRole() == UserFactory.Role.MAINTAINER){
             Maintainer m = new Maintainer(u.getUsername(),u.getPassword());
             maintainers.put(u.getUsername(), m);
             return m;
@@ -60,22 +59,20 @@ public class SystemUsers {
     }
     
     public AbstractUser removeUser(AbstractUser u){
-        if (u.getRole() == User.Role.PLANNER)
+        if (u.getRole() == UserFactory.Role.PLANNER)
             return  planners.remove(u.getUsername());
-        else if (u.getRole() == User.Role.MAINTAINER)
+        else if (u.getRole() == UserFactory.Role.MAINTAINER)
             return maintainers.remove(u.getUsername());
         else
             return null;
     }
 
     
-    public AbstractUser getUser(AbstractUser u){
-        if (u.getRole() == User.Role.PLANNER)
-            return  planners.get(u.getUsername());
-        else if (u.getRole() == User.Role.MAINTAINER)
-            return maintainers.get(u.getUsername());
-        else
-            return null;
+    public AbstractUser getUser(String username){
+        AbstractUser user = planners.get(username);
+        if (user == null)
+                user = maintainers.get(username);
+        return user;
     }
 
     public Map<String, Maintainer> getMaintainers() {

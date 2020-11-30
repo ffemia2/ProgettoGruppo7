@@ -11,6 +11,8 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import progettogruppo7.Activities;
 import progettogruppo7.Activity;
+import progettogruppo7.Competence;
+import progettogruppo7.Competences;
 import progettogruppo7.Planned;
 
 /**
@@ -123,6 +125,25 @@ public class ActivitiesTest {
         LocalDate date = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         assertEquals(date.get(weekFields.weekOfWeekBasedYear()), activ.getFromActivities(a1).getWeek());
+    }
+    
+    @Test
+    public void testExcModifyActivitiesComp() {
+        Competence comp1 = new Competence("Doti analitiche e problem solving");
+        Competence comp2 = new Competence("Doti comunicative");
+        Competence comp3 = new Competence("Rapidità d'intervento");
+        Competence comp4 = new Competence("Affidabilità e flessibilità");
+        Competences compets = new Competences();
+        compets.insertCompetence(comp1);
+        compets.insertCompetence(comp2);
+        compets.insertCompetence(comp3);
+        Competences compets2 = new Competences();
+        compets2.insertCompetence(comp4);
+        Activity a1 = new Planned(1, compets, "Replacement of robot", 120, true, 51);
+        Activities activ =new Activities();
+        activ.insertInActivities(a1);
+        activ.modifyInActivitiesCompetences(a1, compets2);
+        assertEquals(compets2, activ.getFromActivities(a1).getCompetences());
     }
     
 }

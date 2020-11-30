@@ -1,11 +1,11 @@
 package progettogruppo7;
 
 /* @author marco */
-public class Material {
+public class Competence {
     
     private String name;
 
-    public Material(String nome) {
+    public Competence(String nome) {
         this.name = nome;
     }
 
@@ -19,7 +19,7 @@ public class Material {
 
     @Override
     public String toString() {
-        return name;
+        return "" + name;
     }
-       
+ 
 }

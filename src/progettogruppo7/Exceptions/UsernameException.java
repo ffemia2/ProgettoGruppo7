@@ -9,7 +9,7 @@ package progettogruppo7.Exceptions;
  *
  * @author User
  */
-public class UsernameException extends RuntimeException {
+public class UsernameException extends Exception {
 
     public UsernameException() {
     }

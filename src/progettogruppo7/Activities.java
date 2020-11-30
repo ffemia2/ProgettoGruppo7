@@ -68,4 +68,11 @@ public class Activities {
             throw new ActivityException("Activity doesn't exists");
     }
     
+    public void modifyInActivitiesCompetences(Activity a, Competences comp) {
+        if (activities.containsKey(a.getActivityID())) {
+            this.activities.get(a.getActivityID()).setCompetences(comp);
+        } else
+            throw new ActivityException("Activity doesn't exists");
+    }
+    
 }

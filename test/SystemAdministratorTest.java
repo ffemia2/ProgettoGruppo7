@@ -4,22 +4,22 @@
  * and open the template in the editor.
  */
 
+import java.util.LinkedList;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import progettogruppo7.UserFactory;
-import progettogruppo7.User;
-import progettogruppo7.AbstractUser;
+import progettogruppo7.Users.*;
 
 /**
  *
  * @author User
  */
 public class SystemAdministratorTest {
-    private UserFactory fact = new UserFactory(); 
-    private AbstractUser admin = fact.build("Adam", "Kadmon", User.Role.SYSTEMADMIN);    
+    private EmployeeFactory employee = new EmployeeFactory(); 
+    private AdminFactory fact = new AdminFactory();
+    private AbstractUser admin = fact.build("Adam", "Kadmon", UserFactory.Role.SYSTEMADMIN);    
     
     public SystemAdministratorTest() {
         
@@ -38,7 +38,7 @@ public class SystemAdministratorTest {
      */
     @Test
     public void testSystemAdministrator() {
-        admin = fact.build("Adam", "Kadmon", User.Role.SYSTEMADMIN);
+        admin = fact.build("Adam", "Kadmon", UserFactory.Role.SYSTEMADMIN);
         assertNotNull(admin);
     }
 
@@ -47,34 +47,22 @@ public class SystemAdministratorTest {
      */
     @Test
     public void testCreateUser() {
-        AbstractUser planner = fact.build("primo", "test", User.Role.PLANNER);
-        AbstractUser maintainer = fact.build("secondo", "test", User.Role.MAINTAINER);
-        assertEquals(planner, admin.createUser("primo", "test", User.Role.PLANNER));
-        assertEquals(maintainer, admin.createUser("secondo", "test", User.Role.MAINTAINER));
+        AbstractUser planner = employee.build("primo", "test", UserFactory.Role.PLANNER);
+        AbstractUser maintainer = employee.build("secondo", "test", UserFactory.Role.MAINTAINER);
+        assertEquals(planner, admin.createUser("primo", "test", UserFactory.Role.PLANNER));
+        assertEquals(maintainer, admin.createUser("secondo", "test", UserFactory.Role.MAINTAINER));
+        assertNull(admin.createUser("secondo", "exception", UserFactory.Role.MAINTAINER));
     }
     
-    /**
-     * Test of Username Exception of addUser method, of class SystemAdministrator.
-     */
-    @Test (expected = Exception.class)
-    public void testCreateUserException() {
-        Exception e = null;
-        
-        admin.createUser("terzo", "test", User.Role.PLANNER);
-        admin.createUser("quarto", "test", User.Role.MAINTAINER);
-
-        admin.createUser("terzo", "exception", User.Role.MAINTAINER);
-
-    }
-  
+   
     /**
      * Test of removeUser method, of class SystemAdministrator.
      */
     @Test
     public void testRemoveUser() {
-        AbstractUser planner = admin.createUser("quinto", "test", User.Role.PLANNER);
-        AbstractUser maintainer = admin.createUser("sesto", "test", User.Role.MAINTAINER);
-        AbstractUser none = fact.build("signor", "nessuno", User.Role.PLANNER);
+        AbstractUser planner = admin.createUser("quinto", "test", UserFactory.Role.PLANNER);
+        AbstractUser maintainer = admin.createUser("sesto", "test", UserFactory.Role.MAINTAINER);
+        AbstractUser none = employee.build("signor", "nessuno", UserFactory.Role.PLANNER);
         assertEquals(planner,admin.removeUser(planner));
         assertEquals(maintainer,admin.removeUser(maintainer));
         assertNull(admin.removeUser(none));
@@ -83,13 +71,23 @@ public class SystemAdministratorTest {
     /**
      * Test of getUser method, of class SystemAdministrator.
      */
-    @Test
+    @Test 
     public void testGetUser() {
-        admin.createUser("settimo", "test", User.Role.PLANNER);
-        admin.createUser("ottavo", "test", User.Role.MAINTAINER);
+        admin.createUser("settimo", "test", UserFactory.Role.PLANNER);
+        admin.createUser("ottavo", "test", UserFactory.Role.MAINTAINER);
         //System.out.println(admin.getUsers());
-        AbstractUser none = fact.build("signor", "nessuno", User.Role.PLANNER);
-        assertNull(admin.getUser(none));
+        assertNull(admin.getUser("signor"));
+    }
+    
+    /**
+     * Test of getUsers method, of class SystemAdministrator.
+     */
+    @Test 
+    public void testGetUsers() {
+        LinkedList<AbstractUser> list = new LinkedList();
+        list.add(admin.createUser("ottavo", "test", UserFactory.Role.MAINTAINER));
+        list.add(admin.createUser("settimo", "test", UserFactory.Role.PLANNER));
+        assertEquals(list,admin.getUsers());
     }
     
     

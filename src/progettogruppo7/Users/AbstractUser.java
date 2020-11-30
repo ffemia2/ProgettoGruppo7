@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progettogruppo7;
+package progettogruppo7.Users;
 
+import progettogruppo7.Users.User;
 import java.util.Objects;
 
 /**
@@ -14,9 +15,9 @@ import java.util.Objects;
 public abstract class AbstractUser implements User {
     private String username;
     private String password;
-    private Role role;
+    private UserFactory.Role role;
 
-    public AbstractUser(String username, String password, Role role) {
+    public AbstractUser(String username, String password, UserFactory.Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -30,7 +31,7 @@ public abstract class AbstractUser implements User {
         return password;
     }
 
-    public Role getRole() {
+    public UserFactory.Role getRole() {
         return role;
     }
 
@@ -42,16 +43,16 @@ public abstract class AbstractUser implements User {
         this.password = password;
     }
 
-    public void setRole(Role role) {
+    public void setRole(UserFactory.Role role) {
         this.role = role;
     }
 
     @Override
     public String toString() {
-        return username + "\t" + password;
+        String str = username + "    " + password;
+        return str;
     }
 
-    
     
     
     @Override
