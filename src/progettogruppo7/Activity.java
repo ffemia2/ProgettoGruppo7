@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 public abstract class Activity {
     private int activityID;
-    //site
+    private Site site;
     //typology
     private Competences competences;
     private String description;
@@ -23,10 +23,9 @@ public abstract class Activity {
     private boolean interruptible;
     private int week; 
 
-    
-    public Activity(int activityID, String description, int estimatedTime, boolean interruptible, int week) {
-        //TODO: al costruttore mancano parametri
+    public Activity(int activityID, Site site, String description, int estimatedTime, boolean interruptible, int week) {
         this.activityID = activityID;
+        this.site = site;
         this.description = description;
         this.estimatedTime = estimatedTime;
         this.interruptible = interruptible;
@@ -40,8 +39,9 @@ public abstract class Activity {
         }
     }
 
-    public Activity(int activityID, Competences competences, String description, int estimatedTime, boolean interruptible, int week) {
+    public Activity(int activityID, Site site, Competences competences, String description, int estimatedTime, boolean interruptible, int week) {
         this.activityID = activityID;
+        this.site = site;
         this.competences = competences;
         this.description = description;
         this.estimatedTime = estimatedTime;
@@ -56,6 +56,14 @@ public abstract class Activity {
         }
     }
 
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
+    }
+    
     public int getActivityID() {
         return activityID;
     }
