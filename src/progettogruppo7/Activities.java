@@ -75,4 +75,11 @@ public class Activities {
             throw new ActivityException("Activity doesn't exists");
     }
     
+    public void modifyInActivitiesSite(Activity a, Site site) {
+        if (activities.containsKey(a.getActivityID())) {
+            this.activities.get(a.getActivityID()).setSite(site);
+        } else
+            throw new ActivityException("Activity doesn't exists");
+    }
+    
 }
