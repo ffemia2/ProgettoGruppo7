@@ -1,4 +1,4 @@
-package progettogruppo7;
+package progettogruppo7.GUI;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -21,6 +21,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import progettogruppo7.Activities;
+import progettogruppo7.Activity;
+import progettogruppo7.ButtonColumn;
+import progettogruppo7.Competence;
+import progettogruppo7.Competences;
+import progettogruppo7.Planned;
+import progettogruppo7.Site;
 
 
 /*
@@ -94,12 +101,10 @@ public class ActivitySelection extends javax.swing.JFrame {
             String []s= str.split(",");
             Activity a= activities.getFromActivities(Integer.valueOf(s[0]));
             
-            System.out.println(a.toString());
-            
-            
-            
-           
-            
+            P3_JFrame frame = new P3_JFrame(a);
+            frame.setVisible(true);
+           // System.out.println(a.toString());
+    
         }
     };
     
@@ -201,7 +206,7 @@ public class ActivitySelection extends javax.swing.JFrame {
             selectionWeek.setText(answer);
         }
         else
-           JOptionPane.showMessageDialog(this, "  The week selected doesn't exixt  ", "Error",JOptionPane.ERROR_MESSAGE );
+           JOptionPane.showMessageDialog(this, "  The week selected doesn't exist  ", "Error",JOptionPane.ERROR_MESSAGE );
          
             
     }//GEN-LAST:event_selectionWeekActionPerformed
@@ -234,10 +239,16 @@ public class ActivitySelection extends javax.swing.JFrame {
         //</editor-fold>
         
         Activities activities=new Activities();
-        Planned p1 =new Planned(1,new Site("Fisciano","Molding"),"Manutenzione Generale", 100,true, 1);
-        Planned p2 =new Planned(2,new Site("Fisciano","Ombrello"),"Manutenzione Generale2", 50,false, 1);
-        Planned p3 =new Planned(3,new Site("Baronissi","Molding"),"Manutenzione Generale3", 150,true, 3);
-        Planned p4 =new Planned(4,new Site("Caserta","Molding"),"Manutenzione Generale4", 200,true, 4);
+        Competences com = new Competences();
+        com.insertCompetence(new Competence("Competenza 1"));
+        com.insertCompetence(new Competence("Competenza 2"));
+        com.insertCompetence(new Competence("Competenza 3"));
+        com.insertCompetence(new Competence("Competenza 4"));
+        
+        Planned p1 =new Planned(1,new Site("Fisciano","Molding"),com,"Manutenzione Generale", 100,true, 1);
+        Planned p2 =new Planned(2,new Site("Fisciano","Ombrello"),com,"Manutenzione Generale2", 50,false, 1);
+        Planned p3 =new Planned(3,new Site("Baronissi","Molding"),com,"Manutenzione Generale3", 150,true, 3);
+        Planned p4 =new Planned(4,new Site("Caserta","Molding"),com,"Manutenzione Generale4", 200,true, 4);
         activities.insertInActivities(p1);
         activities.insertInActivities(p2);
         activities.insertInActivities(p3);

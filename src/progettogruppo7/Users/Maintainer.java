@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package progettogruppo7;
+package progettogruppo7.Users;
+
+import java.util.LinkedList;
 
 /**
  *
@@ -11,11 +13,11 @@ package progettogruppo7;
  */
 public class Maintainer extends AbstractUser {
     private int availability;
-    private Competences competences;
-    private Activities activities;
+    // Competences
+    // Activities
     
     public Maintainer(String username, String password) {
-        super(username, password, User.Role.MAINTAINER);
+        super(username, password, UserFactory.Role.MAINTAINER);
     }
 
     public int getAvailability() {
@@ -26,25 +28,9 @@ public class Maintainer extends AbstractUser {
         this.availability = availability;
     }
 
-    public Competences getCompetences() {
-        return competences;
-    }
-
-    public void setCompetences(Competences competences) {
-        this.competences = competences;
-    }
-
-    public Activities getActivities() {
-        return activities;
-    }
-
-    public void setActivities(Activities activities) {
-        this.activities = activities;
-    }
-
     @Override
     public String toString() {
-        return "Maintainer" + "\t" + super.toString();
+        return super.toString();
     }
 
     @Override
@@ -53,18 +39,25 @@ public class Maintainer extends AbstractUser {
     }
 
     @Override
-    public AbstractUser getUser(AbstractUser u) {
+    public AbstractUser getUser(String u) {
         throw new UnsupportedOperationException("Not supported for this role."); 
     }  
 
     @Override
-    public AbstractUser createUser(String username, String password, Role role) {
+    public AbstractUser createUser(String username, String password, UserFactory.Role role) {
         throw new UnsupportedOperationException("Not supported for this role."); 
     }
 
     @Override
-    public String getUsers() {
-        throw new UnsupportedOperationException("Not supported for this role.");
+    public String printUsers() {
+        throw new UnsupportedOperationException("Not supported for this role."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public LinkedList<AbstractUser> getUsers() {
+        throw new UnsupportedOperationException("Not supported for this role."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
     
 }

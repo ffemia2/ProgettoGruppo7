@@ -19,7 +19,7 @@ public class Competence {
 
     @Override
     public String toString() {
-        return "{" + name + '}';
+        return "" + name ;
     }
  
 }

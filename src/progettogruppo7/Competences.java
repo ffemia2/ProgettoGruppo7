@@ -5,7 +5,7 @@ import java.util.Iterator;
 import progettogruppo7.Exceptions.CompetenceException;
 
 /* @author marco */
-public class Competences {
+public class Competences implements Iterable<Competence> {
     
     private HashSet<Competence> competenze;
 
@@ -51,5 +51,10 @@ public class Competences {
             s = s + c.toString() + "\n";
         }
         System.out.println(s);
+    }
+
+    @Override
+    public Iterator<Competence> iterator() {
+        return competenze.iterator();
     }
 }
