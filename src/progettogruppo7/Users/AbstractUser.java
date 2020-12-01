@@ -5,6 +5,7 @@
  */
 package progettogruppo7.Users;
 
+import java.io.Serializable;
 import progettogruppo7.Users.UserFactory;
 import progettogruppo7.Users.User;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
  *
  * @author Rosanna
  */
-public abstract class AbstractUser implements User {
+public abstract class AbstractUser implements User, Serializable {
     private String username;
     private String password;
     private UserFactory.Role role;

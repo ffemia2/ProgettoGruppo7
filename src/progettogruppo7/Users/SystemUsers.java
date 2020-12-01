@@ -5,8 +5,18 @@
  */
 package progettogruppo7.Users;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import progettogruppo7.Exceptions.UsernameException;
 import java.util.Hashtable;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -14,7 +24,7 @@ import java.util.Objects;
  *
  * @author Rosanna
  */
-public class SystemUsers {
+public class SystemUsers implements Serializable{
     //DESIGN PATTERN: SINGLETON
     private static SystemUsers single_instance=null; 
     
@@ -91,6 +101,45 @@ public class SystemUsers {
         this.planners = planners;
     }
 
+    public void save(String filename){
+         try(ObjectOutputStream p = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(filename)))){
+            p.writeObject(this);
+        } catch (FileNotFoundException ex) {
+           System.out.println("FileNotFoundException");
+        } catch (IOException ex) {
+           //  System.out.println("IOException"+"\n");
+        }
+    }
+    
+    public SystemUsers load (String filename) throws ClassNotFoundException,IOException {
+        SystemUsers ab = null;
+        try(ObjectInputStream i = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)))){
+           ab = (SystemUsers)i.readObject();
+        } catch (ClassNotFoundException ex) {
+           System.out.println("ClassNotFoundException");  
+        } catch (FileNotFoundException ex) {
+           System.out.println("FileNotFoundException");
+        } catch (IOException ex) {
+            // System.out.println("IOException"+"\n");
+        }
+        return ab;
+    }
+
+    @Override
+    public String toString(){
+        String str = "--- MAINTAINERS --" + "\n";
+        
+        for (Maintainer m : maintainers.values())
+            str += m.toString() + "\n";
+        str += "--- PLANNERS --" + "\n";
+        for (Planner p : planners.values()){
+            str += p.toString() + "\n";
+        }
+        return str;
+    }
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 3;

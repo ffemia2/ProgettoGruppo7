@@ -5,13 +5,14 @@
  */
 package progettogruppo7.Users;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
  *
  * @author User
  */
-public class Planner extends AbstractEmployee{
+public class Planner extends AbstractEmployee implements Serializable{
     
     public Planner(String username, String password) {
         super(username, password, UserFactory.Role.PLANNER);
@@ -49,9 +50,6 @@ public class Planner extends AbstractEmployee{
     public AbstractUser getUser(String username) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-
-   
-    
+  
    
 }

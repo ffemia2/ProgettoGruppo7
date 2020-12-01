@@ -5,8 +5,12 @@
  */
 package progettogruppo7.GUI;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import progettogruppo7.Users.*;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
@@ -16,14 +20,25 @@ import javax.swing.JTextField;
 public class SA1_JFrame extends javax.swing.JFrame {
     private AbstractUser admin;
     private UserFactory factory;
+    private SystemUsers employees = SystemUsers.SystemUsers();
+    
     /**
      * Creates new form SystemAdminJFrame
      */
     public SA1_JFrame() {
-        factory = new AdminFactory();
-        admin = factory.build("Adam Kadmon", "password", UserFactory.Role.SYSTEMADMIN);       
-        initComponents();
-        jLabelName.setText(admin.getUsername()+" ,");
+        try {
+            factory = new AdminFactory();
+            admin = factory.build("Adam Kadmon", "password", UserFactory.Role.SYSTEMADMIN);
+            if (employees.load("users.txt") != null)
+                employees = employees.load("users.txt");
+            
+            initComponents();
+            jLabelName.setText(admin.getUsername()+" ,");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SA1_JFrame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SA1_JFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -46,6 +61,11 @@ public class SA1_JFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrator");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -144,7 +164,7 @@ public class SA1_JFrame extends javax.swing.JFrame {
                 .addComponent(jButtonNewMaintainer)
                 .addGap(33, 33, 33)
                 .addComponent(jButtonViewEmployes)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,7 +175,9 @@ public class SA1_JFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -163,7 +185,7 @@ public class SA1_JFrame extends javax.swing.JFrame {
 
     private void jButtonNewPlannerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewPlannerActionPerformed
         JTextField username = new JTextField();
-        JTextField password = new JTextField();
+        JTextField password = new JPasswordField();
         
         Object[] fields = {
             "Username", username,
@@ -180,6 +202,8 @@ public class SA1_JFrame extends javax.swing.JFrame {
                planner = admin.createUser(username.getText(), password.getText(), UserFactory.Role.PLANNER);
             }
         }
+        
+        
     }//GEN-LAST:event_jButtonNewPlannerActionPerformed
 
     private void jButtonViewEmployesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewEmployesActionPerformed
@@ -192,8 +216,8 @@ public class SA1_JFrame extends javax.swing.JFrame {
           model.addElement( employees.get(i).toString()+"\n");
         }*/
         
-        String employees = admin.printUsers();
-        JOptionPane.showMessageDialog(this, employees, "Employees", JOptionPane.PLAIN_MESSAGE);
+        String dependents = employees.toString();
+        JOptionPane.showMessageDialog(this, dependents, "Employees", JOptionPane.PLAIN_MESSAGE);
         
     }//GEN-LAST:event_jButtonViewEmployesActionPerformed
 
@@ -218,6 +242,11 @@ public class SA1_JFrame extends javax.swing.JFrame {
            }
         }
     }//GEN-LAST:event_jButtonNewMaintainerActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+
+        employees.save("users.txt");
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
