@@ -7,13 +7,12 @@ package progettogruppo7.Users;
 
 /**
  *
- * @author User
+ * @author Grazia D'Amore
  */
-public abstract class AbstractAdmin extends AbstractUser {
-
-    public AbstractAdmin(String username, String password, UserFactory.Role role) {
+public abstract class AbstractEmployee extends AbstractUser {
+    
+    public AbstractEmployee(String username, String password, UserFactory.Role role) {
         super(username, password, role);
     }
-  
     
 }

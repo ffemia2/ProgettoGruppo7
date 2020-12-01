@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author Rosanna
  */
-public class Maintainer extends AbstractUser {
+public class Maintainer extends AbstractEmployee {
     private int availability;
     // Competences
     // Activities

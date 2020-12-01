@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author User
  */
-public class Planner extends AbstractUser{
+public class Planner extends AbstractEmployee{
     
     public Planner(String username, String password) {
         super(username, password, UserFactory.Role.PLANNER);

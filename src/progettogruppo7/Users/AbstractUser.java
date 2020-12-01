@@ -24,26 +24,32 @@ public abstract class AbstractUser implements User {
         this.role = role;
     }
 
+    @Override
     public String getUsername() {
         return username;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
 
+    @Override
     public UserFactory.Role getRole() {
         return role;
     }
 
+    @Override
     public void setUsername(String username) {
         this.username = username;
     }
 
+    @Override
     public void setPassword(String password) {
         this.password = password;
     }
 
+    @Override
     public void setRole(UserFactory.Role role) {
         this.role = role;
     }
