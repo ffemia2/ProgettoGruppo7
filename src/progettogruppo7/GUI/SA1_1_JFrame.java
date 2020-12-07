@@ -5,9 +5,8 @@
  */
 package progettogruppo7.GUI;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import JDBC.SystemAdmin_JDBC;
+import java.util.LinkedList;
 import progettogruppo7.Users.*;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -17,28 +16,23 @@ import javax.swing.JTextField;
  *
  * @author Grazia  D'Amore
  */
-public class SA1_JFrame extends javax.swing.JFrame {
+public class SA1_1_JFrame extends javax.swing.JFrame {
     private AbstractUser admin;
-    private UserFactory factory;
-    private SystemUsers employees = SystemUsers.SystemUsers();
-    
+    private AdminFactory factory;
+    private LinkedList<AbstractUser> added;
+    private LinkedList<AbstractUser> removed;
     /**
      * Creates new form SystemAdminJFrame
      */
-    public SA1_JFrame() {
-        try {
-            factory = new AdminFactory();
-            admin = factory.build("Adam Kadmon", "password", UserFactory.Role.SYSTEMADMIN);
-            if (employees.load("users.txt") != null)
-                employees = employees.load("users.txt");
-            
-            initComponents();
-            jLabelName.setText(admin.getUsername()+" ,");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SA1_JFrame.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(SA1_JFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public SA1_1_JFrame() {
+        factory = new AdminFactory();
+        admin = factory.build("Adam Kadmon", "password", UserFactory.Role.SYSTEMADMIN);
+        added = new LinkedList<>();
+        removed = new LinkedList<>();
+        loadUsers();
+        initComponents();
+        
+        jLabelName.setText(admin.getUsername()+" ,");
     }
 
     /**
@@ -78,7 +72,7 @@ public class SA1_JFrame extends javax.swing.JFrame {
             }
         });
 
-        jButtonNewMaintainer.setBackground(new java.awt.Color(102, 102, 102));
+        jButtonNewMaintainer.setBackground(new java.awt.Color(153, 153, 153));
         jButtonNewMaintainer.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jButtonNewMaintainer.setText("New Maintainer");
         jButtonNewMaintainer.addActionListener(new java.awt.event.ActionListener() {
@@ -87,7 +81,7 @@ public class SA1_JFrame extends javax.swing.JFrame {
             }
         });
 
-        jButtonViewEmployes.setBackground(new java.awt.Color(102, 102, 102));
+        jButtonViewEmployes.setBackground(new java.awt.Color(153, 153, 153));
         jButtonViewEmployes.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         jButtonViewEmployes.setText("View Employees");
         jButtonViewEmployes.addActionListener(new java.awt.event.ActionListener() {
@@ -195,12 +189,18 @@ public class SA1_JFrame extends javax.swing.JFrame {
         int answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Planner", JOptionPane.OK_CANCEL_OPTION);
         
         if (answer == JOptionPane.OK_OPTION){
-           AbstractUser planner = admin.createUser(username.getText(), password.getText(), UserFactory.Role.PLANNER); 
-           while (planner == null && answer == JOptionPane.OK_OPTION){
-               this.errorMessage("This username is already taken");
-               answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Planner", JOptionPane.OK_CANCEL_OPTION);
-               planner = admin.createUser(username.getText(), password.getText(), UserFactory.Role.PLANNER);
-            }
+            while (password.getText().isEmpty()){
+                 this.errorMessage("Please insert a password");
+                 answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Planner", JOptionPane.OK_CANCEL_OPTION);
+             }
+            AbstractUser planner = admin.createUser(username.getText(), password.getText(), UserFactory.Role.PLANNER); 
+            while (planner == null && answer == JOptionPane.OK_OPTION){
+                this.errorMessage("This username is already taken");
+                answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Planner", JOptionPane.OK_CANCEL_OPTION);
+                planner = admin.createUser(username.getText(), password.getText(), UserFactory.Role.PLANNER);
+             }
+            if (planner != null)
+                added.add(planner);
         }
         
         
@@ -215,15 +215,18 @@ public class SA1_JFrame extends javax.swing.JFrame {
         for ( int i = 0; i < employees.size(); i++ ){
           model.addElement( employees.get(i).toString()+"\n");
         }*/
-        
-        String dependents = employees.toString();
+        /*
+        String dependents = admin.getUsers().toString();
         JOptionPane.showMessageDialog(this, dependents, "Employees", JOptionPane.PLAIN_MESSAGE);
+        */
         
+        SA1_2_JFrame sa1 = new SA1_2_JFrame(admin);
+        sa1.setVisible(true);
     }//GEN-LAST:event_jButtonViewEmployesActionPerformed
 
     private void jButtonNewMaintainerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNewMaintainerActionPerformed
         JTextField username = new JTextField();
-        JTextField password = new JTextField();
+        JTextField password = new JPasswordField();
         
         Object[] fields = {
             "Username", username,
@@ -233,19 +236,26 @@ public class SA1_JFrame extends javax.swing.JFrame {
         int answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Maintainer", JOptionPane.OK_CANCEL_OPTION);
         
         if (answer == JOptionPane.OK_OPTION){
+            while (password.getText().isEmpty()){
+                this.errorMessage("Please insert a password");
+                answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Maintainer", JOptionPane.OK_CANCEL_OPTION);
+            }    
             AbstractUser maintainer = admin.createUser(username.getText(), password.getText(), UserFactory.Role.MAINTAINER); 
-           while (maintainer == null && answer == JOptionPane.OK_OPTION){
-               JOptionPane.showMessageDialog(this, "This username is already taken", "Ops...", JOptionPane.ERROR_MESSAGE);
+            while (maintainer == null && answer == JOptionPane.OK_OPTION){
+               this.errorMessage("This username is already taken");
                answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Maintainer", JOptionPane.OK_CANCEL_OPTION);
                maintainer = admin.createUser(username.getText(), password.getText(), UserFactory.Role.MAINTAINER);
-               
            }
+            if (maintainer != null)
+                added.add(maintainer);
         }
     }//GEN-LAST:event_jButtonNewMaintainerActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-
-        employees.save("users.txt");
+        if (admin.getUsers() != null){
+            SystemAdmin_JDBC data = new SystemAdmin_JDBC(admin); 
+            data.saveUsersOnDatabase(added);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -265,21 +275,23 @@ public class SA1_JFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SA1_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SA1_1_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SA1_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SA1_1_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SA1_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SA1_1_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SA1_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SA1_1_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SA1_JFrame().setVisible(true);
+                new SA1_1_JFrame().setVisible(true);
             }
         });
     }
@@ -303,6 +315,11 @@ public void errorMessage(String str){
 
 public void infoMessage(String str){
     JOptionPane.showMessageDialog(this, str, "Info", JOptionPane.INFORMATION_MESSAGE);
+}
+
+public void loadUsers(){
+    SystemAdmin_JDBC data = new SystemAdmin_JDBC(admin); 
+    data.loadUsersFromDatabase(admin);
 }
 
 

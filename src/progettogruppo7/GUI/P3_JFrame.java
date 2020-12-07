@@ -36,10 +36,7 @@ public class P3_JFrame extends javax.swing.JFrame {
         initComponents();
         this.jLabelName.setText(" " + act.getActivityID() + " - " + act.getSite() );
         this.jWeekNumLabel.setText(" " + act.getWeek());
-        this.jDescriptionTextArea.setText(" " + act.getDescription());
-               
-        
-                
+        this.jDescriptionTextArea.setText(" " + act.getDescription());           
     }
 
     /**

@@ -20,7 +20,7 @@ public class CompetenceTest {
     public void testInsertCompetence(){
         Competence c = new Competence("Saldatura");
         elenco.insertCompetence(c);
-        assertTrue(elenco.verifyCompetence(c));
+        assertTrue(elenco.verifyCompetence(c.getName()));
     }
 
     @Test
@@ -28,7 +28,7 @@ public class CompetenceTest {
         Competence c = new Competence("Saldatura");
         elenco.insertCompetence(c);
         elenco.removeCompetence(c);
-        assertFalse(elenco.verifyCompetence(c));
+        assertFalse(elenco.verifyCompetence(c.getName()));
     }
     
     @Test

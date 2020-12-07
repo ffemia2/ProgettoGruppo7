@@ -21,13 +21,8 @@ public class Competences implements Iterable<Competence> {
         competenze.remove(c);
     }
     
-    public boolean verifyCompetence(Competence c){
-        if(competenze.contains(c)){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public boolean verifyCompetence(String c){
+        return competenze.contains(c);
     }
     
     public void modifyCompetence(Competence c, String s){
@@ -43,6 +38,10 @@ public class Competences implements Iterable<Competence> {
         else{
             c.setName(s);
         }
+    }
+    
+    public int size(){
+        return competenze.size();
     }
     
     public void printCompetences(){

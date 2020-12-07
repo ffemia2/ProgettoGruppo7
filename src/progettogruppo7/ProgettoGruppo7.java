@@ -5,12 +5,13 @@
  */
 package progettogruppo7;
 
-import java.io.IOException;
-import progettogruppo7.Users.AbstractUser;
-import progettogruppo7.Users.AdminFactory;
-import progettogruppo7.Users.SystemAdministrator;
-import progettogruppo7.Users.SystemUsers;
-import progettogruppo7.Users.UserFactory;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,9 +20,7 @@ import progettogruppo7.Users.UserFactory;
 public class ProgettoGruppo7 {
 
     public static void main(String[] args){
-        
-        
-        
+
     }
           
 }

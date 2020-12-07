@@ -15,8 +15,8 @@ import java.util.Objects;
  * @author Rosanna
  */
 public abstract class AbstractUser implements User, Serializable {
-    private String username;
-    private String password;
+    String username;
+    String password;
     private UserFactory.Role role;
 
     public AbstractUser(String username, String password, UserFactory.Role role) {

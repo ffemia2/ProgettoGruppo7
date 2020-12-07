@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package progettogruppo7.Users;
+import java.util.Calendar;
 
 
 /**
@@ -13,6 +14,7 @@ package progettogruppo7.Users;
 public abstract class UserFactory {
       
     public enum Role {MAINTAINER, SYSTEMADMIN, PLANNER};
+    public enum weekDay {MON, TUE, WED, THU, FRI, SAT, SUN};
     
     public UserFactory() {
     }
