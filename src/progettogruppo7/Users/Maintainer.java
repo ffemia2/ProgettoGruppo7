@@ -5,6 +5,7 @@
  */
 package progettogruppo7.Users;
 
+import progettogruppo7.Activities;
 import progettogruppo7.Activity;
 import progettogruppo7.Competence;
 import progettogruppo7.Competences;
@@ -17,17 +18,33 @@ public class Maintainer extends AbstractEmployee {
     
     private Availability availability ;
     private Competences skills;
-    // Activities
+    private Activities activities;
     
     public Maintainer(String username, String password) {
         super(username, password, UserFactory.Role.MAINTAINER);
         this.availability = new Availability();
         this.skills = new Competences();
+        this.activities=new Activities();
     }
 
+    public Activities getActivities() {
+        return activities;
+    }
+
+    
+    
+    public void addInActivities(Activity a) {
+        activities.insertInActivities(a);
+    }
+    
     public Competences getSkills() {
         return skills;
     }
+
+    public void setActivities(Activities activities) {
+        this.activities = activities;
+    }
+    
 
     public void setSkills(Competences skills) {
         this.skills = skills;

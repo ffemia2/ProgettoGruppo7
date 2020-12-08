@@ -6,29 +6,29 @@
 package JDBC;
 
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import progettogruppo7.Activity;
 import progettogruppo7.Users.AbstractUser;
-import progettogruppo7.Users.Availability;
 import progettogruppo7.Users.Maintainer;
-import progettogruppo7.Users.UserFactory;
 
 /**
  *
  * @author Grazia D'Amore
  */
-public class Maintainer_JDBC {
+public class Maintainer_JDBC extends JDBC{
     private Statement stm;
     private AbstractUser maintainer;
 
     public Maintainer_JDBC(AbstractUser maintainer) {
     {
-        String url = "jdbc:postgresql://localhost/postgres";
-        String user = "postgres";
-        String pwd = "ciao98";
+        String url = super.getUrl();
+        String user = super.getUser();
+        String pwd = super.getPwd();
 
         try {
             java.sql.Connection conn = null;
@@ -51,9 +51,6 @@ public class Maintainer_JDBC {
     
     public void saveAvailabiltyOnDatabase(){ 
         StringBuilder temp = new StringBuilder();
-        temp.append("insert into Availability(Maintainer,Week,WeekDay,TimeSlot,Avail)");
-        temp.append("values(");
-        temp.append("'").append(maintainer.getUsername()).append("',");
         temp.append(maintainer.getAvailability().getInsertQuery((Maintainer)maintainer)); 
         try {
             stm.executeUpdate(temp.toString());
@@ -63,5 +60,57 @@ public class Maintainer_JDBC {
     }
     
     
+    public void updateAvailabiltyOnDatabase(){ 
+        StringBuilder temp = new StringBuilder();
+        temp.append(maintainer.getAvailability().getUpdateQuery((Maintainer)maintainer)); 
+        try {
+            stm.executeUpdate(temp.toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateActivitiesOnDatabase(Activity a){ 
+        StringBuilder temp = new StringBuilder();
+        temp.append(maintainer.getAvailability().getinsertActivityQuery((Maintainer)maintainer,a)); 
+        try {
+            stm.executeUpdate(temp.toString());
+        } catch (SQLException ex) {
+            Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public LinkedList<Integer> selectActivitiesFromDatabase(){ 
+        StringBuilder temp = new StringBuilder();
+        temp.append(maintainer.getAvailability().getActivitiesQuery((Maintainer)maintainer)); 
+        LinkedList<Integer> l=new LinkedList();
+        try {
+            ResultSet rts=stm.executeQuery(temp.toString());
+            while(rts.next()){
+                l.add(rts.getInt("activity"));
+                //((Maintainer)maintainer).addInActivities(new Planned(rts.getInt("ID_CODE"),new Site(rts.getString("site_of"),rts.getString("site_de")),rts.getString("description"),rts.getInt("estimated_time"),rts.getBoolean("interruptible"), rts.getInt("week")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return l;
+    }
+    public int selectCountActivityIDFromDatabase(Activity a){ 
+        StringBuilder temp = new StringBuilder();
+        temp.append(maintainer.getAvailability().getCountACtivityIDQuery(a)); 
+        int count=0;
+        try {
+            ResultSet rts=stm.executeQuery(temp.toString());
+            if(rts.next())
+                count=rts.getInt("Count");
+                //((Maintainer)maintainer).addInActivities(new Planned(rts.getInt("ID_CODE"),new Site(rts.getString("site_of"),rts.getString("site_de")),rts.getString("description"),rts.getInt("estimated_time"),rts.getBoolean("interruptible"), rts.getInt("week")));
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return count;
+    }
     
 }

@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -34,7 +35,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
      private Planner planner;
      private Activity activity;
      private Map<String,Maintainer> maintainers;
-     
+     private JFrame f;
      
     /**
      * Creates new form P4_1_JFrame
@@ -44,7 +45,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
         this.listModel = new DefaultListModel<>();
         this.activity = act;
         this.tableModel = new DefaultTableModel(new String[] { "Maintainer", "Skills", "Avail MON", "Avail TUE", "Avail WED", "Avail THU", "Avail FRI", "Avail SAT", "Avail SUN" },0);
-        
+        this.f=this;
         loadUsers();
         initComponents();
         
@@ -58,6 +59,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
                     if (col > 1 ){
                         P4_2_JFrame p4 = new P4_2_JFrame(activity,String.valueOf(jTable1.getModel().getValueAt(row, 0)),col-1);
                         p4.setVisible(true);
+                        f.dispose();
                     }         
             }
         });
@@ -246,7 +248,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
         Site site = new Site("Fisciano", "Molding");
-        Activity act = new Planned(22, site, "Revisione impianto elettrico", 20, true, 30);
+        Activity act = new Planned(21, site, "Revisione impianto elettrico", 20, true, 30);
         Competences com = new Competences();
         com.insertCompetence(new Competence("Competenza 1"));
         com.insertCompetence(new Competence("Competenza 2"));

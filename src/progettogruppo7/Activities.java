@@ -34,9 +34,9 @@ public class Activities {
         }
     }
     
-    public void removeFromActivities(Activity a){
-        if (activities.containsKey(a.getActivityID())) {
-            activities.remove(a.getActivityID());
+    public void removeFromActivities(int id){
+        if (activities.containsKey(id)) {
+            activities.remove(id);
         } else
             throw new ActivityException("Activity doesn't exists");
     }

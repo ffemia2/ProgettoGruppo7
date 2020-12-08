@@ -5,8 +5,14 @@
  */
 package progettogruppo7.Users;
 
+import JDBC.SystemAdmin_JDBC;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import progettogruppo7.Activity;
 
 /**
  *
@@ -74,6 +80,47 @@ public class Availability {
             temp.deleteCharAt(temp.length()-1);
             temp.append(";");
         return temp.toString();
+    }
+    
+    public String getUpdateQuery(Maintainer m) {
+        StringBuilder temp = new StringBuilder();
+        
+        for (int i = 0; i < this.availability.size(); i++ ){
+            for (int j = 0; j < availability.get(i).weekDays.size(); j++){
+                UserFactory.weekDay[] week = UserFactory.weekDay.values();
+                          
+                Map<UserFactory.weekDay,TimeSlots> time = availability.get(i).getWeekDays();
+                TimeSlots te = time.get(UserFactory.weekDay.values()[j]);
+                
+                int len = te.timeSlots.length;
+                for (int k = 0; k < len; k++){
+                    temp.append("update Availability set avail =");
+                    temp.append("").append(availability.get(i).getWeekDays().get(UserFactory.weekDay.values()[j]).timeSlots[k]).append("");
+                    temp.append("where maintainer=").append("'"+m.getUsername()+"'");
+                    temp.append(" and ").append("week=").append(i);
+                    temp.append("and weekday=").append("'"+UserFactory.weekDay.values()[j]+"'");
+                    temp.append(" and timeslot=").append(k).append(";");
+                }
+            }
+        }
+        return temp.toString();
+    }
+    public String getinsertActivityQuery(Maintainer m, Activity ac) {
+        StringBuilder temp = new StringBuilder();
+        temp.append("insert into MAINTAINER_ACTIVITIES (maintainer, activity) values(").append("'"+m.getUsername()+"'").append(",").append(ac.getActivityID()).append(");");
+        return temp.toString();
+    }
+    
+    public String getActivitiesQuery(Maintainer m) {
+        StringBuilder temp = new StringBuilder();
+        temp.append("select activity from MAINTAINER_ACTIVITIES where maintainer=").append("'").append(m.getUsername()).append("'").append(";");
+        return temp.toString(); 
+    }
+    
+    public String getCountACtivityIDQuery(Activity a) {
+        StringBuilder temp = new StringBuilder();
+        temp.append("select count(maintainer) as Count from MAINTAINER_ACTIVITIES where activity=").append("'").append(a.getActivityID()).append("'").append(";");
+        return temp.toString(); 
     }
     
     

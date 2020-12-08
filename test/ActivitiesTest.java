@@ -54,7 +54,7 @@ public class ActivitiesTest {
         activ.insertInActivities(a1);
         activ.insertInActivities(a2);
         activ.insertInActivities(a3);
-        activ.removeFromActivities(a3);
+        activ.removeFromActivities(a3.getActivityID());
         assertEquals(2, activ.getActivities().size());
     }
     
@@ -63,7 +63,7 @@ public class ActivitiesTest {
         Site site1 = new Site("Fisciano", "Molding");
         Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
         Activities activ =new Activities();
-        activ.removeFromActivities(a1);
+        activ.removeFromActivities(a1.getActivityID());
     }
     
     @Test

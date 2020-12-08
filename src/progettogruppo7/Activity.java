@@ -21,7 +21,8 @@ public abstract class Activity {
     private String description;
     private int estimatedTime;
     private boolean interruptible;
-    private int week; 
+    private int week;
+    private boolean assigned;
 
     public Activity(int activityID, Site site, String description, int estimatedTime, boolean interruptible, int week) {
         this.activityID = activityID;
@@ -37,6 +38,7 @@ public abstract class Activity {
             WeekFields weekFields = WeekFields.of(Locale.getDefault());
             week = date.get(weekFields.weekOfWeekBasedYear());
         }
+        this.assigned=false;
     }
 
     public Activity(int activityID, Site site, Competences competences, String description, int estimatedTime, boolean interruptible, int week) {
@@ -54,8 +56,20 @@ public abstract class Activity {
             WeekFields weekFields = WeekFields.of(Locale.getDefault());
             week = date.get(weekFields.weekOfWeekBasedYear());
         }
+        this.assigned=false;
     }
 
+    public boolean isAssigned() {
+        return assigned;
+    }
+
+    public void setAssigned(boolean assigned) {
+        this.assigned = assigned;
+    }
+
+    
+    
+    
     public Site getSite() {
         return site;
     }
@@ -121,8 +135,10 @@ public abstract class Activity {
 
     @Override
     public String toString() {
-        return "activityID=" + activityID + ", description=" + description + ", estimatedTime=" + estimatedTime + ", interruptible=" + interruptible + ", week=" + week;
+        return activityID + " - " + site.toString() +  " - " + estimatedTime + "'";
     }
+
+    
 
     @Override
     public int hashCode() {
