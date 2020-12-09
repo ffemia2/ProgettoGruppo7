@@ -13,9 +13,11 @@ import java.util.Objects;
  */
 public class Procedure {
     private String description;
+    private Competences competences;
 
     public Procedure(String description) {
         this.description = description;
+        this.competences = new Competences();
     }
 
     public String getDescription() {
@@ -26,6 +28,14 @@ public class Procedure {
         this.description = description;
     }
 
+    public Competences getCompetences() {
+        return competences;
+    }
+
+    public void setCompetences(Competences competences) {
+        this.competences = competences;
+    }
+  
     @Override
     public int hashCode() {
         int hash = 3;
@@ -50,7 +60,10 @@ public class Procedure {
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "[" + description + "]\n" + this.getCompetences().toString();
+    }
     
 }

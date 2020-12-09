@@ -146,7 +146,7 @@ public class Planner extends AbstractEmployee implements Serializable{
     }
 
     @Override
-    public boolean findSkill(String name) {
+    public boolean findSkill(Competence c) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

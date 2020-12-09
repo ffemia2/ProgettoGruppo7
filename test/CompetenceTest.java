@@ -1,7 +1,3 @@
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import progettogruppo7.Competence;
@@ -20,7 +16,7 @@ public class CompetenceTest {
     public void testInsertCompetence(){
         Competence c = new Competence("Saldatura");
         elenco.insertCompetence(c);
-        assertTrue(elenco.verifyCompetence(c.getName()));
+        assertTrue(elenco.verifyCompetence(c));
     }
 
     @Test
@@ -28,7 +24,7 @@ public class CompetenceTest {
         Competence c = new Competence("Saldatura");
         elenco.insertCompetence(c);
         elenco.removeCompetence(c);
-        assertFalse(elenco.verifyCompetence(c.getName()));
+        assertFalse(elenco.verifyCompetence(c));
     }
     
     @Test

@@ -82,14 +82,14 @@ public class Maintainer extends AbstractEmployee {
         skills.removeCompetence(c);
     }
     
-    public boolean findSkill(String name){
-        return skills.verifyCompetence(name);
+    public boolean findSkill(Competence c){
+        return skills.verifyCompetence(c);
     }
      
     public int isQualified(Activity act){
         int count = 0;
         for (Competence c : act.getCompetences()){
-            if (this.findSkill(c.getName()))
+            if (this.findSkill(c))
                 count += 1;
         }
         return count;

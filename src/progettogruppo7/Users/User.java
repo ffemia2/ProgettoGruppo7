@@ -66,7 +66,7 @@ public interface User {
     
     public void removeSkill(Competence c);
     
-    public boolean findSkill(String name);
+    public boolean findSkill(Competence c);
      
     public int isQualified(Activity act); 
 }
