@@ -22,12 +22,13 @@ public class Materials {
     }
     
     public boolean verifyMaterial(String s){
-        for(Material m: listaMateriali){
-            if(m.getName().equals(s)){
-                return true;
-            }
+        Material m = new Material(s);
+        if(listaMateriali.contains(m)){
+            return true;
         }
-        return false;
+        else{
+            return false;
+        }
     }
     
     public void modifyMaterial(Material m, String newName){
