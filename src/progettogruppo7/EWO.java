@@ -11,8 +11,8 @@ package progettogruppo7;
  */
 public class EWO extends Unplanned {
 
-    public EWO(int activityID, Site site, String description, int estimatedTime, boolean interruptible, int week) {
-        super(activityID, site, description, estimatedTime, interruptible, week);
+    public EWO(int activityID, Site site, String description, int estimatedTime, boolean interruptible, int week, Typology type) {
+        super(activityID, site, description, estimatedTime, interruptible, week, type);
     }
 
     public EWO(int activityID, Site site, Competences competences, String description, int estimatedTime, boolean interruptible, int week) {

@@ -16,7 +16,7 @@ import java.util.Locale;
 public abstract class Activity {
     private int activityID;
     private Site site;
-    //typology
+    private Typology type;
     private Competences competences;
     private String description;
     private int estimatedTime;
@@ -24,12 +24,13 @@ public abstract class Activity {
     private int week;
     private boolean assigned;
 
-    public Activity(int activityID, Site site, String description, int estimatedTime, boolean interruptible, int week) {
+    public Activity(int activityID, Site site, String description, int estimatedTime, boolean interruptible, int week, Typology type) {
         this.activityID = activityID;
         this.site = site;
         this.description = description;
         this.estimatedTime = estimatedTime;
         this.interruptible = interruptible;
+        this.type = type;
         //se il valore di week non ha significato assegno il valore della settimana corrente
         if (week > 0 && week < 53) {
             this.week = week;
@@ -135,7 +136,7 @@ public abstract class Activity {
 
     @Override
     public String toString() {
-        return activityID + " - " + site.toString() +  " - " + estimatedTime + "'";
+        return activityID + " - " + site.toString() +  " - " + estimatedTime + "'" + " - " + type;
     }
 
     

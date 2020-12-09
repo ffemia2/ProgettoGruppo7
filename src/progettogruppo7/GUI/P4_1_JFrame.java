@@ -21,6 +21,7 @@ import progettogruppo7.Competence;
 import progettogruppo7.Competences;
 import progettogruppo7.Planned;
 import progettogruppo7.Site;
+import static progettogruppo7.Typology.*;
 import progettogruppo7.Users.Maintainer;
 import progettogruppo7.Users.Planner;
 import progettogruppo7.Users.UserFactory;
@@ -248,7 +249,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
         Site site = new Site("Fisciano", "Molding");
-        Activity act = new Planned(21, site, "Revisione impianto elettrico", 20, true, 30);
+        Activity act = new Planned(21, site, "Revisione impianto elettrico", 20, true, 30, Electrical);
         Competences com = new Competences();
         com.insertCompetence(new Competence("Competenza 1"));
         com.insertCompetence(new Competence("Competenza 2"));

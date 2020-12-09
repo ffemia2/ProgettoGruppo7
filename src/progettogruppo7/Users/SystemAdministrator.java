@@ -172,7 +172,7 @@ public class SystemAdministrator extends AbstractAdmin{
     }
 
     @Override
-    public boolean findSkill(Competence c) {
+    public boolean findSkill(String s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -15,6 +15,7 @@ import progettogruppo7.Competence;
 import progettogruppo7.Competences;
 import progettogruppo7.Planned;
 import progettogruppo7.Site;
+import static progettogruppo7.Typology.*;
 
 /**
  *
@@ -25,9 +26,9 @@ public class ActivitiesTest {
     @Test
     public void testInsertActivities() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
-        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48);
-        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
+        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Eletronic);
+        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Hydraulic);
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a2);
@@ -38,7 +39,7 @@ public class ActivitiesTest {
     @Test(expected=RuntimeException.class) 
     public void testExcInsertActivities() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a1);
@@ -47,9 +48,9 @@ public class ActivitiesTest {
     @Test
     public void testRemoveActivities() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
-        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48);
-        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Mechanical);
+        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Eletronic);
+        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Electrical);
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a2);
@@ -61,7 +62,7 @@ public class ActivitiesTest {
     @Test(expected=RuntimeException.class) 
     public void testExcRemoveActivities() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Hydraulic);
         Activities activ =new Activities();
         activ.removeFromActivities(a1.getActivityID());
     }
@@ -69,9 +70,9 @@ public class ActivitiesTest {
     @Test
     public void testGetActivities() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
-        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48);
-        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
+        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Electrical);
+        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Electrical);
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a2);
@@ -83,9 +84,9 @@ public class ActivitiesTest {
     @Test (expected=RuntimeException.class)
     public void testExcGetActivities() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
-        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48);
-        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
+        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Electrical);
+        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Electrical);
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a2);
@@ -95,7 +96,7 @@ public class ActivitiesTest {
     @Test
     public void testModifyActivitiesDescr() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
         String descr = "Checking gas implant";
         Activities activ =new Activities();
         activ.insertInActivities(a1);
@@ -106,7 +107,7 @@ public class ActivitiesTest {
     @Test
     public void testModifyActivitiesTime() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
         int time = 800;
         Activities activ =new Activities();
         activ.insertInActivities(a1);
@@ -117,7 +118,7 @@ public class ActivitiesTest {
     @Test
     public void testModifyActivitiesWeek() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
         int week = 20;
         Activities activ =new Activities();
         activ.insertInActivities(a1);
@@ -128,7 +129,7 @@ public class ActivitiesTest {
     @Test
     public void testExcModifyActivitiesWeek() {
         Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
         int week = 0;
         Activities activ =new Activities();
         activ.insertInActivities(a1);
@@ -162,7 +163,7 @@ public class ActivitiesTest {
     public void testExcModifyActivitiesSite() {
         Site site1 = new Site("Fisciano", "Molding");
         Site site2 = new Site("Nusco", "Carpentry");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51);
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.modifyInActivitiesSite(a1, site2);

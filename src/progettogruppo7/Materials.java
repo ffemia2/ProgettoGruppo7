@@ -21,13 +21,13 @@ public class Materials {
         listaMateriali.remove(m);
     }
     
-    public boolean verifyMaterial(Material m){
-        if(listaMateriali.contains(m)){
-            return true;
+    public boolean verifyMaterial(String s){
+        for(Material m: listaMateriali){
+            if(m.getName().equals(s)){
+                return true;
+            }
         }
-        else{
-            return false;
-        }
+        return false;
     }
     
     public void modifyMaterial(Material m, String newName){

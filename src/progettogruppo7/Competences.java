@@ -21,13 +21,13 @@ public class Competences implements Iterable<Competence> {
         competenze.remove(c);
     }
     
-    public boolean verifyCompetence(Competence c){
-        if(competenze.contains(c)){
-            return true;
+    public boolean verifyCompetence(String s){
+        for(Competence c: competenze){
+            if(c.getName().equals(s)){
+                return true;
+            }
         }
-        else{
-            return false;
-        }
+        return false;
     }
     
     public void modifyCompetence(Competence c, String s){
