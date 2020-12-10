@@ -53,8 +53,8 @@ public class P4_2_JFrame extends javax.swing.JFrame {
      */
     public P4_2_JFrame(Activity ac, String m, int day) {
         this.planner = new Planner("","");
-        this.activity=ac;
-        this.maintainer= planner.getMaintainers().get(m);
+        this.activity = ac;
+        this.maintainer = planner.getMaintainers().get(m);
         
         //prendo info maintainer sulle attività in corso 
         Maintainer_JDBC mainJ= new Maintainer_JDBC(maintainer);
@@ -85,9 +85,9 @@ public class P4_2_JFrame extends javax.swing.JFrame {
 
                 if(col>1 && et>0 && count==0){
                     int avail = maintainer.getSlotAvailability(ac.getWeek(), UserFactory.weekDay.values()[day-1], col-2);
-                    if (avail >= activity.getEstimatedTime() ){
+                    if (avail >= activity.getEstimatedTime()){
                       
-                      maintainer.addSlotAvailability(ac.getWeek(), UserFactory.weekDay.values()[day-1], col-2,avail - et);
+                      maintainer.addSlotAvailability(ac.getWeek(), UserFactory.weekDay.values()[day-1], col-2, avail - et);
                       dtm.setValueAt( String.valueOf(avail - et)+" min", row, col);
                       et-=avail;
                       percentuale.setText(String.valueOf(maintainer.getDayAvailability(activity.getWeek(), UserFactory.weekDay.values()[day-1]))+"%");
@@ -95,7 +95,6 @@ public class P4_2_JFrame extends javax.swing.JFrame {
                       maintainer.addInActivities(activity);
                       Maintainer_JDBC data = new Maintainer_JDBC(maintainer); 
                       data.updateActivitiesOnDatabase(activity);
-                      
                       
                     }
                     else{
@@ -109,9 +108,7 @@ public class P4_2_JFrame extends javax.swing.JFrame {
                 
             }
         });
-        
-        
-        
+
         actInfo.setText(ac.toString());// manca typology
         LocalDate date = LocalDate.of(LocalDate.now().getYear(), 1, 1).plusWeeks(activity.getWeek());
        
@@ -133,8 +130,6 @@ public class P4_2_JFrame extends javax.swing.JFrame {
            String v=((DefaultTableModel)table.getModel()).getDataVector().elementAt(modelRow).toString();
            String str=v.substring(1, v.length()-2);
            String []s= str.split(",");
-
-
        }
     };
 

@@ -294,6 +294,6 @@ public int questionMessage(String str){
 
 public void loadUsers(){
     Planner_JDBC data = new Planner_JDBC(planner); 
-    data.loadMaintainersFromDatabase(planner);
+    data.loadMaintainersFromDatabase();
 }
 }
