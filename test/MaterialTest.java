@@ -20,7 +20,7 @@ public class MaterialTest {
     public void testInsertMaterial(){
         Material m = new Material("Filo di stagno");
         elenco.insertMaterial(m);
-        assertTrue(elenco.verifyMaterial(m));
+        assertTrue(elenco.verifyMaterial(m.getName()));
     }
     
     @Test
@@ -28,7 +28,7 @@ public class MaterialTest {
         Material m = new Material("Saldatore a stagno");
         elenco.insertMaterial(m);
         elenco.removeMaterial(m);
-        assertFalse(elenco.verifyMaterial(m));
+        assertFalse(elenco.verifyMaterial(m.getName()));
     }
     
     @Test

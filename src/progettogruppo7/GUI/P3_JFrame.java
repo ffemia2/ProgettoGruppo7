@@ -13,6 +13,7 @@ import progettogruppo7.Competence;
 import progettogruppo7.Competences;
 import progettogruppo7.Planned;
 import progettogruppo7.Site;
+import static progettogruppo7.Typology.*;
 
 /**
  *
@@ -374,7 +375,7 @@ public class P3_JFrame extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         Site site = new Site("Fisciano", "Molding");
-        Activity act = new Planned(22, site, "Revisione impianto elettrico", 20, true, 30);
+        Activity act = new Planned(22, site, "Revisione impianto elettrico", 20, true, 30, Electrical);
         Competences com = new Competences();
         com.insertCompetence(new Competence("Competenza 1"));
         com.insertCompetence(new Competence("Competenza 2"));

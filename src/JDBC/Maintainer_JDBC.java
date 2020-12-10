@@ -5,6 +5,7 @@
  */
 package JDBC;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,15 +32,12 @@ public class Maintainer_JDBC extends JDBC{
         String pwd = super.getPwd();
 
         try {
-            java.sql.Connection conn = null;
-            Class.forName("org.postgresql.Driver");
              
-            conn = DriverManager.getConnection(url, user, pwd);
+            Connection conn = DriverManager.getConnection(url, user, pwd);
             this.stm = conn.createStatement();
             
             //conn.close();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+
         }
         catch (SQLException ex) {
             System.out.println(ex);
@@ -111,6 +109,11 @@ public class Maintainer_JDBC extends JDBC{
         }
         
         return count;
+    }
+
+    @Override
+    public void save() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -46,23 +46,37 @@ public class Planner_JDBC extends JDBC{
         }
         this.planner = planner;
     }
+
+    public Statement getStm() {
+        return stm;
+    }
+
+    public AbstractUser getPlanner() {
+        return planner;
+    }
     
-    public void loadMaintainersFromDatabase(AbstractUser planner){
+    
+    public void loadMaintainersFromDatabase(){
          try {
             ResultSet maintainers = stm.executeQuery("select * from maintainer");
             if (maintainers != null){
                 while (maintainers.next()){
-                    planner.createUser(maintainers.getString("Username"),"", UserFactory.Role.MAINTAINER);
+                    this.getPlanner().createUser(maintainers.getString("Username"),"", UserFactory.Role.MAINTAINER);
                 }
                 ResultSet avails = stm.executeQuery("select * from availability");
                 while (avails.next()){
-                    planner.getUser(avails.getString("Maintainer")).addSlotAvailability(Integer.valueOf(avails.getString("Week")), UserFactory.weekDay.valueOf(avails.getString("WeekDay")), Integer.valueOf(avails.getString("TimeSlot")), Integer.valueOf(avails.getString("Avail")));
+                    this.getPlanner().getUser(avails.getString("Maintainer")).addSlotAvailability(Integer.valueOf(avails.getString("Week")), UserFactory.weekDay.valueOf(avails.getString("WeekDay")), Integer.valueOf(avails.getString("TimeSlot")), Integer.valueOf(avails.getString("Avail")));
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
         } 
         
+    }
+
+    @Override
+    public void save() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -188,7 +188,7 @@ public class SA1_2_JFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 public void loadUsers(){
     SystemAdmin_JDBC data = new SystemAdmin_JDBC(admin); 
-    data.loadUsersFromDatabase(admin);
+    data.loadUsersFromDatabase();
 }
 
 }

@@ -5,6 +5,7 @@
  */
 package JDBC;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,49 +20,55 @@ import progettogruppo7.Users.UserFactory;
  *
  * @author Grazia D'Amore
  */
-public class SystemAdmin_JDBC {
+public class SystemAdmin_JDBC extends JDBC{
     private Statement stm;
     private AbstractUser admin;
 
     public SystemAdmin_JDBC(AbstractUser admin) {
-    {
-        String url = "jdbc:postgresql://localhost/postgres";
-        String user = "postgres";
-        String pwd = "ciao98";
+    
+        this.admin = admin;
+    }
 
+    public Statement getStm() {
+        return stm;
+    }
+
+    public AbstractUser getAdmin() {
+        return admin;
+    }
+    public void loadUsersFromDatabase(){
         try {
-            java.sql.Connection conn = null;
-            Class.forName("org.postgresql.Driver");
-             
-            conn = DriverManager.getConnection(url, user, pwd);
+           
+            Connection conn = DriverManager.getConnection(super.getUrl(), super.getUser(), super.getPwd());
             this.stm = conn.createStatement();
-            
-            //conn.close();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+            this.loadPlannersFromDatabase();
+            this.loadMaintainersFromDatabase();
+            conn.close();
         }
         catch (SQLException ex) {
             System.out.println(ex);
         }
     }
-        this.admin = admin;
-    }
-    
-    public void loadUsersFromDatabase(AbstractUser admin){
-        this.loadPlannersFromDatabase(admin);
-        this.loadMaintainersFromDatabase(admin);
-    }
     
     public void saveUsersOnDatabase(LinkedList<AbstractUser> users){
-        this.savePlannersOnDatabase(users);
-        this.saveMaintainersOnDatabase(users);
+        try {
+           
+            Connection conn = DriverManager.getConnection(super.getUrl(), super.getUser(), super.getPwd());
+            this.stm = conn.createStatement();
+            this.savePlannersOnDatabase(users);
+            this.saveMaintainersOnDatabase(users);
+            conn.close();
+        }
+        catch (SQLException ex) {
+            System.out.println(ex);
+        }
     }
     
-    public void loadPlannersFromDatabase(AbstractUser admin){
+    public void loadPlannersFromDatabase(){
         try {
             ResultSet planners = stm.executeQuery("select * from planner");
             while (planners.next()){
-                admin.createUser(planners.getString("Username"),planners.getString("Password_"), UserFactory.Role.PLANNER);
+                this.getAdmin().createUser(planners.getString("Username"),planners.getString("Password_"), UserFactory.Role.PLANNER);
             }
             
         } catch (SQLException ex) {
@@ -69,15 +76,15 @@ public class SystemAdmin_JDBC {
         } 
     }
     
-    public void loadMaintainersFromDatabase(AbstractUser admin){
+    public void loadMaintainersFromDatabase(){
         try {
             ResultSet maintainers = stm.executeQuery("select * from maintainer");
             while (maintainers.next()){
-                admin.createUser(maintainers.getString("Username"),maintainers.getString("Password_"), UserFactory.Role.MAINTAINER);
+                this.getAdmin().createUser(maintainers.getString("Username"),maintainers.getString("Password_"), UserFactory.Role.MAINTAINER);
             }
             ResultSet avails = stm.executeQuery("select * from availability");
             while (avails.next()){
-                admin.getUser(avails.getString("Maintainer")).addSlotAvailability(Integer.valueOf(avails.getString("Week")), UserFactory.weekDay.valueOf(avails.getString("WeekDay")), Integer.valueOf(avails.getString("TimeSlot")), Integer.valueOf(avails.getString("Avail")));
+                this.getAdmin().getUser(avails.getString("Maintainer")).addSlotAvailability(Integer.valueOf(avails.getString("Week")), UserFactory.weekDay.valueOf(avails.getString("WeekDay")), Integer.valueOf(avails.getString("TimeSlot")), Integer.valueOf(avails.getString("Avail")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,7 +95,7 @@ public class SystemAdmin_JDBC {
         for(AbstractUser m : maintainers){
             if(m.getRole() == UserFactory.Role.MAINTAINER){
                 try {
-                    stm.executeUpdate(m.getInsertQuery());
+                    this.getStm().executeUpdate(m.getInsertQuery());
                 } catch (SQLException ex) {
                     Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -100,11 +107,16 @@ public class SystemAdmin_JDBC {
         for(AbstractUser m : planners){
             if (m.getRole() == UserFactory.Role.PLANNER){
                 try {
-                    stm.executeUpdate(m.getInsertQuery());
+                    this.getStm().executeUpdate(m.getInsertQuery());
                 } catch (SQLException ex) {
                     Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
+    }
+
+    @Override
+    public void save() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

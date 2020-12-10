@@ -9,12 +9,12 @@ package JDBC;
  *
  * @author Francesco Femia
  */
-public abstract class JDBC {
+public abstract class JDBC implements JDBCInterface{
     private String url="jdbc:postgresql://localhost/postgres";
     private String user="postgres";
     private String pwd="polter01";
     
-    public void save(){};
+    
 
     public String getUrl() {
         return url;

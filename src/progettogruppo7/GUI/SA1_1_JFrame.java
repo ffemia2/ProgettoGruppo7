@@ -319,7 +319,7 @@ public void infoMessage(String str){
 
 public void loadUsers(){
     SystemAdmin_JDBC data = new SystemAdmin_JDBC(admin); 
-    data.loadUsersFromDatabase(admin);
+    data.loadUsersFromDatabase();
 }
 
 
