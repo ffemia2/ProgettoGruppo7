@@ -24,9 +24,9 @@ public class Competences_JDBC extends JDBC {
     
     public Competences_JDBC(Competences competences) throws SQLException {
     {
-        String url = "jdbc:postgresql://localhost/prova7";
-        String user = "postgres";
-        String pwd = "Spatzle126";
+        String url = super.getUrl();
+        String user = super.getUser();
+        String pwd = super.getPwd();
 
         try {
             java.sql.Connection conn = null;
@@ -73,5 +73,18 @@ public class Competences_JDBC extends JDBC {
                 }
             }
         }
+    
+    public Competence getCompetenceFromDatabase(String name){
+         try {
+            ResultSet competence = stm.executeQuery("select Nome from competence where Nome='" + name +"'");
+            while (competence.next()) {
+                Competence comp = new Competence(name);
+                return comp;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        return null;
+    }
     
 }
