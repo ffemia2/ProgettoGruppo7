@@ -5,15 +5,10 @@
  */
 package progettogruppo7.Users;
 
-import JDBC.Planner_JDBC;
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import progettogruppo7.Activity;
+import java.util.Objects;
+import progettogruppo7.Activities;
 import progettogruppo7.Competence;
 import progettogruppo7.Competences;
 
@@ -21,20 +16,62 @@ import progettogruppo7.Competences;
  *
  * @author Grazia D'Amore
  */
-public class Planner extends AbstractEmployee implements Serializable{
-    private  Map<String,Maintainer> maintainers = new HashMap<>();
-    
+public class Planner implements User{
+    private String username;
+    private String password;
+    private AbstractUserFactory.Role role;
+    private Map<String,Maintainer> maintainers;
+    private Activities activities;
+  
     public Planner(String username, String password) {
-        
-        super(username, password, UserFactory.Role.PLANNER);
-        new Planner_JDBC(this).loadMaintainersFromDatabase(this);
+        this.username = username;
+        this.password = password;
+        this.role = AbstractUserFactory.Role.PLANNER;
+        this.maintainers = new HashMap<>();
+        this.activities = new Activities();
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public AbstractUserFactory.Role getRole() {
+        return role;
+    }  
+    
+    @Override
+    public Activities getActivities() {
+        return activities;
+    }
+
+    @Override
+    public void setActivities(Activities activities) {
+        this.activities = activities;
     }
     
-    
+    @Override
     public Map<String,Maintainer> getMaintainers(){
         return maintainers;
     }
     
+    @Override
     public void setMaintainers(Map<String,Maintainer> maints){
         this.maintainers = maints;
     }
@@ -44,35 +81,38 @@ public class Planner extends AbstractEmployee implements Serializable{
         StringBuilder temp = new StringBuilder();
         temp.append("insert into Planner(Username,Password_)");
         temp.append("values(");
-        temp.append("'").append(username).append("',");
-        temp.append("'").append(password).append("'");
+        temp.append("'").append(this.getUsername()).append("',");
+        temp.append("'").append(this.getPassword()).append("'");
         temp.append(");");
         
         return temp.toString();
     }
     
     @Override
-    public AbstractUser removeUser(AbstractUser u) {
+    public String toString() {
+        return username + " " +password;
+    }
+    
+    @Override
+    public User removeUser(User u) {
         throw new UnsupportedOperationException("Not supported for this role."); 
     }
 
-   
     @Override
-    public String toString() {
-        return super.toString();
-    }
-
-    @Override
-    public AbstractUser createUser(String username, String password, UserFactory.Role role) {
-        if(role == UserFactory.Role.MAINTAINER){
+    public User addUser(String username, String password, AbstractUserFactory.Role role) {
+        if(role == AbstractUserFactory.Role.MAINTAINER){
             password = "";
-            Maintainer m = new Maintainer(username,password);
-            maintainers.put(username,m);
+            User m = new MaintainerFactory().createUser(username,password);
+            maintainers.put(username,(Maintainer) m);
             return m;
         }
         return null;
     }
 
+    @Override
+    public User getUser(String username) {
+        return maintainers.get(username);
+    }
 
     @Override
     public String printUsers() {
@@ -83,11 +123,6 @@ public class Planner extends AbstractEmployee implements Serializable{
     public SystemUsers getUsers() {
         throw new UnsupportedOperationException("Not supported for this role."); //To change body of generated methods, choose Tools | Templates.
     
-    }
-
-    @Override
-    public AbstractUser getUser(String username) {
-        return maintainers.get(username);
     }
 
     @Override
@@ -116,22 +151,22 @@ public class Planner extends AbstractEmployee implements Serializable{
     }
 
     @Override
-    public void addSlotAvailability(int week, UserFactory.weekDay day, int timeSlot, int avail) {
+    public void addSlotAvailability(int week, AbstractUserFactory.weekDay day, int timeSlot, int avail) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getSlotAvailability(int week, UserFactory.weekDay day, int slot) {
+    public int getSlotAvailability(int week, AbstractUserFactory.weekDay day, int slot) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void removeSlotAvailability(int week, UserFactory.weekDay day, int slot) {
+    public void removeSlotAvailability(int week, AbstractUserFactory.weekDay day, int slot) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getDayAvailability(int week, UserFactory.weekDay day) {
+    public int getDayAvailability(int week, AbstractUserFactory.weekDay day) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -151,9 +186,40 @@ public class Planner extends AbstractEmployee implements Serializable{
     }
 
     @Override
-    public int isQualified(Activity act) {
+    public int isQualified(Competences comp) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Planner other = (Planner) obj;
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (this.role != other.role) {
+            return false;
+        }
+        return true;
+    }
+
   
    
 }

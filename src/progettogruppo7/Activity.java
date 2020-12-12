@@ -9,26 +9,35 @@ import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.Locale;
 
+
 /**
  *
  * @author Rosanna
  */
-public abstract class Activity {
+public class Activity {
+    public enum Type {PLANNED, UNPLANNED, EXTRA ,EWO};
+    
     private int activityID;
     private Site site;
+    private Materials materials;
+    private Type type;
     //typology
+    private boolean status;
     private Competences competences;
     private String description;
     private int estimatedTime;
     private boolean interruptible;
     private int week; 
 
-    public Activity(int activityID, Site site, String description, int estimatedTime, boolean interruptible, int week) {
+    public Activity(int activityID, Site site, String description,Type type ,int estimatedTime, boolean interruptible, int week) {
         this.activityID = activityID;
         this.site = site;
+        this.type = type;
+        this.competences = new Competences();
         this.description = description;
         this.estimatedTime = estimatedTime;
         this.interruptible = interruptible;
+        this.status = false;
         //se il valore di week non ha significato assegno il valore della settimana corrente
         if (week > 0 && week < 53) {
             this.week = week;
@@ -39,13 +48,15 @@ public abstract class Activity {
         }
     }
 
-    public Activity(int activityID, Site site, Competences competences, String description, int estimatedTime, boolean interruptible, int week) {
+    public Activity(int activityID, Site site, Competences competences, String description,Type type, int estimatedTime, boolean interruptible, int week) {
         this.activityID = activityID;
         this.site = site;
+        this.type = type;
         this.competences = competences;
         this.description = description;
         this.estimatedTime = estimatedTime;
         this.interruptible = interruptible;
+        this.status = false;
         //se il valore di week non ha significato assegno il valore della settimana corrente
         if (week > 0 && week < 53) {
             this.week = week;
@@ -56,6 +67,23 @@ public abstract class Activity {
         }
     }
 
+    public Materials getMaterials() {
+        return materials;
+    }
+
+    public void setMaterials(Materials materials) {
+        this.materials = materials;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    
     public Site getSite() {
         return site;
     }
@@ -72,6 +100,14 @@ public abstract class Activity {
         this.activityID = activityID;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
     public Competences getCompetences() {
         return competences;
     }

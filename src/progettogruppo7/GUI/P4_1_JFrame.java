@@ -5,7 +5,6 @@
  */
 package progettogruppo7.GUI;
 
-import JDBC.Planner_JDBC;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -18,11 +17,13 @@ import javax.swing.table.TableCellRenderer;
 import progettogruppo7.Activity;
 import progettogruppo7.Competence;
 import progettogruppo7.Competences;
-import progettogruppo7.Planned;
 import progettogruppo7.Site;
 import progettogruppo7.Users.Maintainer;
 import progettogruppo7.Users.Planner;
-import progettogruppo7.Users.UserFactory;
+import progettogruppo7.Users.AbstractUserFactory;
+import progettogruppo7.Users.JDBC;
+import progettogruppo7.Users.PlannerFactory;
+import progettogruppo7.Users.User;
 
 /**
  *
@@ -31,7 +32,8 @@ import progettogruppo7.Users.UserFactory;
 public class P4_1_JFrame extends javax.swing.JFrame {
      private DefaultListModel<String> listModel;
      private DefaultTableModel tableModel; 
-     private Planner planner;
+     private User planner;
+     private JDBC jdbc;
      private Activity activity;
      private Map<String,Maintainer> maintainers;
      
@@ -39,13 +41,13 @@ public class P4_1_JFrame extends javax.swing.JFrame {
     /**
      * Creates new form P4_1_JFrame
      */
-    public P4_1_JFrame(Activity act) {
-        this.planner = new Planner("","");
+    public P4_1_JFrame(User planner, Activity act) {
+        this.planner = planner;
+        this.jdbc = new PlannerFactory().createJDBCUser(planner.getUsername(), planner.getPassword());
         this.listModel = new DefaultListModel<>();
         this.activity = act;
-        this.tableModel = new DefaultTableModel(new String[] { "Maintainer", "Skills", "Avail MON", "Avail TUE", "Avail WED", "Avail THU", "Avail FRI", "Avail SAT", "Avail SUN" },0);
+        this.tableModel = new DefaultTableModel(new String[] {"Maintainer", "Skills", "Avail MON", "Avail TUE", "Avail WED", "Avail THU", "Avail FRI", "Avail SAT", "Avail SUN" },0);
         
-        loadUsers();
         initComponents();
         
         this.jLabelWeekNEdit.setText("" + activity.getWeek());
@@ -67,9 +69,9 @@ public class P4_1_JFrame extends javax.swing.JFrame {
             listModel.addElement(c.toString());
         }
 
-        Map<String,Maintainer> maintainers = planner.getMaintainers();
+        Map<String,Maintainer> maintainers = jdbc.loadMaintainersFromDatabase();;
         for (Maintainer m : maintainers.values()) {
-            tableModel.addRow(new Object[]{ m.getUsername(), m.isQualified(act)+"/"+act.getCompetences().size(), m.getDayAvailability(act.getWeek(), UserFactory.weekDay.MON)+"%", m.getDayAvailability(act.getWeek(), UserFactory.weekDay.TUE)+"%", m.getDayAvailability(act.getWeek(), UserFactory.weekDay.WED)+"%", m.getDayAvailability(act.getWeek(), UserFactory.weekDay.THU)+"%",m.getDayAvailability(act.getWeek(), UserFactory.weekDay.FRI)+"%",m.getDayAvailability(act.getWeek(), UserFactory.weekDay.SAT)+"%",m.getDayAvailability(act.getWeek(), UserFactory.weekDay.SUN)+"%"});
+            tableModel.addRow(new Object[]{ m.getUsername(), m.isQualified(act.getCompetences())+"/"+act.getCompetences().size(), m.getDayAvailability(act.getWeek(), AbstractUserFactory.weekDay.MON)+"%", m.getDayAvailability(act.getWeek(), AbstractUserFactory.weekDay.TUE)+"%", m.getDayAvailability(act.getWeek(), AbstractUserFactory.weekDay.WED)+"%", m.getDayAvailability(act.getWeek(), AbstractUserFactory.weekDay.THU)+"%",m.getDayAvailability(act.getWeek(), AbstractUserFactory.weekDay.FRI)+"%",m.getDayAvailability(act.getWeek(), AbstractUserFactory.weekDay.SAT)+"%",m.getDayAvailability(act.getWeek(), AbstractUserFactory.weekDay.SUN)+"%"});
             
         }
     }
@@ -246,18 +248,18 @@ public class P4_1_JFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
         Site site = new Site("Fisciano", "Molding");
-        Activity act = new Planned(22, site, "Revisione impianto elettrico", 20, true, 30);
+        Activity act = new Activity(22, site, "Revisione impianto elettrico",Activity.Type.PLANNED ,20, true, 30);
         Competences com = new Competences();
         com.insertCompetence(new Competence("Competenza 1"));
         com.insertCompetence(new Competence("Competenza 2"));
         com.insertCompetence(new Competence("Competenza 3"));
         com.insertCompetence(new Competence("Competenza 4"));
         act.setCompetences(com);
-
+        User p = new PlannerFactory().createUser("","");
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new P4_1_JFrame(act).setVisible(true);
+                new P4_1_JFrame(p,act).setVisible(true);
             }
         });
         
@@ -290,8 +292,4 @@ public int questionMessage(String str){
    return JOptionPane.showConfirmDialog(this,str,"", JOptionPane.OK_CANCEL_OPTION);
 }
 
-public void loadUsers(){
-    Planner_JDBC data = new Planner_JDBC(planner); 
-    data.loadMaintainersFromDatabase(planner);
-}
 }

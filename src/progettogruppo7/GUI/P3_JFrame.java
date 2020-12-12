@@ -5,38 +5,61 @@
  */
 package progettogruppo7.GUI;
 
+
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.ListModel;
 import progettogruppo7.Activity;
 import progettogruppo7.Competence;
 import progettogruppo7.Competences;
-import progettogruppo7.Planned;
 import progettogruppo7.Site;
+import progettogruppo7.Users.AbstractUserFactory;
+import progettogruppo7.Users.JDBC;
+import progettogruppo7.Users.PlannerFactory;
+import progettogruppo7.Users.User;
 
 /**
  *
  * @author Grazia D'Amore
  */
 public class P3_JFrame extends javax.swing.JFrame {
-
+    private boolean flag;
+    private Activity activity;
+    private User planner;
+    private JDBC jdbc;
     private DefaultListModel<String> model;
 
     /**
      * Creates new form P3_JFrame
      * @param act
+     * @param flag
      */
-    public P3_JFrame(Activity act) {
+    public P3_JFrame(User planner, Activity act, boolean flag) {
         this.model = new DefaultListModel<>();
+        this.planner = planner;
+        this.jdbc = new PlannerFactory().createJDBCUser(planner.getUsername(), planner.getPassword());
+        this.flag = flag;
+        this.activity = act;
         
         Competences comps = act.getCompetences();
-        for (Competence c : comps){
-            model.addElement(c.toString());
+        
+        if (comps!= null){
+            for (Competence c : comps)
+                model.addElement(c.toString());
         }
         initComponents();
-        this.jLabelName.setText(" " + act.getActivityID() + " - " + act.getSite() );
-        this.jWeekNumLabel.setText(" " + act.getWeek());
-        this.jDescriptionTextArea.setText(" " + act.getDescription());           
+        
+        this.jForwardButton.setVisible(flag);
+        this.jButtonDelete.setVisible(!flag);
+        this.jButtonModify.setVisible(!flag);
+        this.jButtonAddComp.setVisible(false);
+        this.jButtonSave.setVisible(false);
+        
+        this.jTextFieldID.setText(String.valueOf(act.getActivityID()));
+        this.jTextFieldSite.setText(act.getSite().getFactorySite());
+        this.jTextFieldDepart.setText(act.getSite().getDepartment());
+        this.jTextFieldWeekN.setText("" + act.getWeek());
+        
+        this.jDescriptionTextArea.setText("" + act.getDescription());           
     }
 
     /**
@@ -62,13 +85,19 @@ public class P3_JFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jWeekLabel = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jWeekNumLabel = new javax.swing.JLabel();
+        jButtonDelete = new javax.swing.JButton();
+        jButtonModify = new javax.swing.JButton();
+        jTextFieldWeekN = new javax.swing.JTextField();
+        jButtonAddComp = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jLabel4 = new javax.swing.JLabel();
         jForwardButton = new javax.swing.JButton();
+        jButtonSave = new javax.swing.JButton();
+        jTextFieldID = new javax.swing.JTextField();
+        jTextFieldSite = new javax.swing.JTextField();
+        jTextFieldDepart = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Activity Information");
@@ -93,6 +122,11 @@ public class P3_JFrame extends javax.swing.JFrame {
         jDescriptionTextArea.setColumns(20);
         jDescriptionTextArea.setRows(5);
         jDescriptionTextArea.setSelectionColor(new java.awt.Color(153, 153, 153));
+        jDescriptionTextArea.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jDescriptionTextAreaKeyReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jDescriptionTextArea);
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -152,7 +186,9 @@ public class P3_JFrame extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabelName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
+        jLabelName.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelName.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelName.setText("-");
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -179,43 +215,71 @@ public class P3_JFrame extends javax.swing.JFrame {
                 .addComponent(jWeekLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonDelete.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonDelete.setText("DELETE");
+        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDeleteActionPerformed(evt);
+            }
+        });
 
-        jWeekNumLabel.setBackground(new java.awt.Color(255, 255, 255));
-        jWeekNumLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
+        jButtonModify.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonModify.setText("MODIFY");
+        jButtonModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModifyActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jWeekNumLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jWeekNumLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jTextFieldWeekN.setEditable(false);
+        jTextFieldWeekN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldWeekNActionPerformed(evt);
+            }
+        });
+
+        jButtonAddComp.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonAddComp.setText("ADD COMPETENCE");
+        jButtonAddComp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAddCompActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldWeekN, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jButtonModify)
+                        .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jButtonAddComp)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextFieldWeekN)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(106, 106, 106)
+                .addComponent(jButtonDelete)
+                .addGap(68, 68, 68)
+                .addComponent(jButtonModify)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonAddComp)
+                .addGap(55, 55, 55))
         );
 
         jPanel8.setBackground(new java.awt.Color(51, 51, 51));
@@ -237,6 +301,14 @@ public class P3_JFrame extends javax.swing.JFrame {
             }
         });
 
+        jButtonSave.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButtonSave.setText("DONE");
+        jButtonSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -248,11 +320,13 @@ public class P3_JFrame extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
-                        .addComponent(jForwardButton)
-                        .addGap(78, 78, 78))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70))))
+                        .addGap(70, 70, 70))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jForwardButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(74, 74, 74))))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,11 +334,29 @@ public class P3_JFrame extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1)
-                .addGap(38, 38, 38)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jForwardButton)
-                .addGap(37, 37, 37))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonSave)
+                .addGap(16, 16, 16))
         );
+
+        jTextFieldID.setEditable(false);
+
+        jTextFieldSite.setEditable(false);
+        jTextFieldSite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldSiteActionPerformed(evt);
+            }
+        });
+
+        jTextFieldDepart.setEditable(false);
+        jTextFieldDepart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldDepartActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -276,24 +368,27 @@ public class P3_JFrame extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(187, 187, 187)
-                        .addComponent(jButtonSMP)
-                        .addGap(5, 5, 5))
+                        .addComponent(jButtonSMP))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22)
-                                .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(87, 87, 87)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(140, 140, 140)
-                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)))
+                        .addGap(140, 140, 140)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldSite, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldDepart, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -304,16 +399,23 @@ public class P3_JFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTextFieldID)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldSite, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldDepart, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(108, 108, 108)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSMP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -346,6 +448,62 @@ public class P3_JFrame extends javax.swing.JFrame {
         this.errorMessage("There is no SMP for this activity");
     }//GEN-LAST:event_jButtonSMPActionPerformed
 
+    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+       int answer = JOptionPane.showConfirmDialog(this, "You are removing this activity. Are you sure?");
+       if (answer == JOptionPane.YES_OPTION){
+            planner.getActivities().removeFromActivities(activity.getActivityID());
+            jdbc.removeActivityFromDatabase(activity);
+            flag = false;
+            onClose();
+       } 
+    }//GEN-LAST:event_jButtonDeleteActionPerformed
+
+    private void jButtonModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifyActionPerformed
+        this.jButtonSave.setVisible(true);
+        this.jButtonAddComp.setVisible(true);
+        this.jTextFieldSite.setEditable(true);
+        this.jTextFieldWeekN.setEditable(true);
+        this.jDescriptionTextArea.setEditable(true);
+
+    }//GEN-LAST:event_jButtonModifyActionPerformed
+
+    private void jTextFieldWeekNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWeekNActionPerformed
+        int week = Integer.valueOf(jTextFieldWeekN.getText());
+        planner.getActivities().modifyInActivitiesWeek(activity, week);
+    }//GEN-LAST:event_jTextFieldWeekNActionPerformed
+
+    private void jTextFieldSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSiteActionPerformed
+        Site site = new Site(jTextFieldSite.getText(),jTextFieldDepart.getText());
+        planner.getActivities().modifyInActivitiesSite(activity, site);
+    }//GEN-LAST:event_jTextFieldSiteActionPerformed
+
+    private void jTextFieldDepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDepartActionPerformed
+        Site site = new Site(jTextFieldSite.getText(),jTextFieldDepart.getText());
+        planner.getActivities().modifyInActivitiesSite(activity, site);
+    }//GEN-LAST:event_jTextFieldDepartActionPerformed
+
+    private void jDescriptionTextAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDescriptionTextAreaKeyReleased
+        String description = jDescriptionTextArea.getText();
+        planner.getActivities().modifyInActivitiesDescr(activity, description);
+    }//GEN-LAST:event_jDescriptionTextAreaKeyReleased
+
+    private void jButtonAddCompActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCompActionPerformed
+        String answer = JOptionPane.showInputDialog(this, "New competence", "");
+        Competence c = new Competence(answer);
+        activity.getCompetences().insertCompetence(c);
+        model.addElement(c.toString());
+    }//GEN-LAST:event_jButtonAddCompActionPerformed
+
+    private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+        this.jButtonSave.setVisible(false);
+        this.jButtonAddComp.setVisible(false);
+        this.jTextFieldSite.setEditable(false);
+        this.jTextFieldWeekN.setEditable(false);
+        this.jDescriptionTextArea.setEditable(false);
+        
+        
+    }//GEN-LAST:event_jButtonSaveActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -374,7 +532,7 @@ public class P3_JFrame extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         Site site = new Site("Fisciano", "Molding");
-        Activity act = new Planned(22, site, "Revisione impianto elettrico", 20, true, 30);
+        Activity act = new Activity(22, site, "Revisione impianto elettrico",Activity.Type.PLANNED, 20, true, 30);
         Competences com = new Competences();
         com.insertCompetence(new Competence("Competenza 1"));
         com.insertCompetence(new Competence("Competenza 2"));
@@ -384,13 +542,17 @@ public class P3_JFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new P3_JFrame(act).setVisible(true);
+                new P3_JFrame(new PlannerFactory().createUser("",""),act,true).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAddComp;
+    private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton jButtonModify;
     private javax.swing.JButton jButtonSMP;
+    private javax.swing.JButton jButtonSave;
     private javax.swing.JTextArea jDescriptionTextArea;
     private javax.swing.JButton jForwardButton;
     private javax.swing.JLabel jLabel1;
@@ -401,7 +563,6 @@ public class P3_JFrame extends javax.swing.JFrame {
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -409,8 +570,11 @@ public class P3_JFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextFieldDepart;
+    private javax.swing.JTextField jTextFieldID;
+    private javax.swing.JTextField jTextFieldSite;
+    private javax.swing.JTextField jTextFieldWeekN;
     private javax.swing.JLabel jWeekLabel;
-    private javax.swing.JLabel jWeekNumLabel;
     // End of variables declaration//GEN-END:variables
 
 public void errorMessage(String str){
@@ -421,4 +585,13 @@ public void infoMessage(String str){
     JOptionPane.showMessageDialog(this, str, "Info", JOptionPane.INFORMATION_MESSAGE);
 }
 
+public void onClose(){
+    
+        if(!flag){
+            P1_2_JFrame frame = new P1_2_JFrame(planner);
+            frame.setVisible(true);
+        }
+ 
+        this.dispose();
+}
 }

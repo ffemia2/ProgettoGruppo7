@@ -20,8 +20,9 @@ import progettogruppo7.Activity;
 import progettogruppo7.ButtonColumn;
 import progettogruppo7.Competence;
 import progettogruppo7.Competences;
-import progettogruppo7.Planned;
 import progettogruppo7.Site;
+import progettogruppo7.Users.PlannerFactory;
+import progettogruppo7.Users.User;
 
 
 /*
@@ -39,16 +40,18 @@ public class ActivitySelection extends javax.swing.JFrame {
     private DefaultTableModel dtm;
     private DefaultTableCellRenderer cellRenderer;
     private DefaultTableCellRenderer OldRenderer;
+    private User planner;
     private Activities activities;
     private TableRowSorter<TableModel> sorter;
     /**
      * Creates new form ActivitySelection
      */
-    public ActivitySelection(Activities ac) {
+    public ActivitySelection(User planner,Activities ac) {
         initComponents();
         
-        this.setResizable(false);
+        this.planner = planner;
         
+        this.setResizable(false);
         dtm=(DefaultTableModel)activitySelectionTable.getModel();
         dtm.setRowCount(0);
         dtm.addColumn("Selection");
@@ -75,12 +78,12 @@ public class ActivitySelection extends javax.swing.JFrame {
         activitySelectionTable.getColumnModel().getColumn(4).setHeaderValue("Selection");
         
         //set the sorting order of the activities by the activity ID
-        sorter = new TableRowSorter<TableModel>(activitySelectionTable.getModel());
+        sorter = new TableRowSorter<>(activitySelectionTable.getModel());
         activitySelectionTable.setRowSorter(sorter);
         List<RowSorter.SortKey> sortKeys = new ArrayList<>(25);
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorter.setSortKeys(sortKeys);
-        
+
         activities=ac;
         
     }
@@ -95,7 +98,7 @@ public class ActivitySelection extends javax.swing.JFrame {
             String []s= str.split(",");
             Activity a= activities.getFromActivities(Integer.valueOf(s[0]));
             
-            P3_JFrame frame = new P3_JFrame(a);
+            P3_JFrame frame = new P3_JFrame(planner, a, true);
             frame.setVisible(true);
            // System.out.println(a.toString());
     
@@ -116,6 +119,7 @@ public class ActivitySelection extends javax.swing.JFrame {
         selectionWeek = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         activitySelectionTable = new javax.swing.JTable();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 153, 102));
@@ -158,6 +162,12 @@ public class ActivitySelection extends javax.swing.JFrame {
         activitySelectionTable.setRowHeight(25);
         jScrollPane1.setViewportView(activitySelectionTable);
 
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -169,6 +179,8 @@ public class ActivitySelection extends javax.swing.JFrame {
                         .addComponent(weekLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(selectionWeek)
+                        .addGap(297, 297, 297)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 848, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,7 +192,8 @@ public class ActivitySelection extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(selectionWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(weekLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(weekLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56))
@@ -225,6 +238,10 @@ public class ActivitySelection extends javax.swing.JFrame {
             
     }//GEN-LAST:event_selectionWeekActionPerformed
 
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+       
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -259,10 +276,10 @@ public class ActivitySelection extends javax.swing.JFrame {
         com.insertCompetence(new Competence("Competenza 3"));
         com.insertCompetence(new Competence("Competenza 4"));
         
-        Planned p1 =new Planned(1,new Site("Fisciano","Molding"),com,"Manutenzione Generale", 100,true, 1);
-        Planned p2 =new Planned(2,new Site("Fisciano","Ombrello"),com,"Manutenzione Generale2", 50,false, 1);
-        Planned p3 =new Planned(3,new Site("Baronissi","Molding"),com,"Manutenzione Generale3", 150,true, 3);
-        Planned p4 =new Planned(4,new Site("Caserta","Molding"),com,"Manutenzione Generale4", 200,true, 4);
+        Activity p1 =new Activity(1,new Site("Fisciano","Molding"),com,"Manutenzione Generale", Activity.Type.PLANNED, 100,true, 1);
+        Activity p2 =new Activity(2,new Site("Fisciano","Ombrello"),com,"Manutenzione Generale2", Activity.Type.PLANNED, 50,false, 1);
+        Activity p3 =new Activity(3,new Site("Baronissi","Molding"),com,"Manutenzione Generale3", Activity.Type.PLANNED, 150,true, 3);
+        Activity p4 =new Activity(4,new Site("Caserta","Molding"),com,"Manutenzione Generale4", Activity.Type.PLANNED, 200,true, 4);
         activities.insertInActivities(p1);
         activities.insertInActivities(p2);
         activities.insertInActivities(p3);
@@ -272,7 +289,7 @@ public class ActivitySelection extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ActivitySelection(activities).setVisible(true);
+                new ActivitySelection(new PlannerFactory().createUser("",""),activities).setVisible(true);
             }
         });
     }
@@ -281,6 +298,7 @@ public class ActivitySelection extends javax.swing.JFrame {
     private javax.swing.JTable activitySelectionTable;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton selectionWeek;
     private javax.swing.JLabel weekLabel;
     // End of variables declaration//GEN-END:variables

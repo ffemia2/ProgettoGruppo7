@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  *
- * @author User
+ * @author Grazia D'Amore
  */
 public class Availability {
     
@@ -23,19 +23,19 @@ public class Availability {
         }
     }
     
-    public int addAvailability(int week, UserFactory.weekDay day ,int slot, int avail){ 
+    public int addAvailability(int week, AbstractUserFactory.weekDay day ,int slot, int avail){ 
         return availability.get(week).addSlotAvail(day, slot, avail);
     }
     
-    public void removeSlotAvailability(int week, UserFactory.weekDay day, int slot){
+    public void removeSlotAvailability(int week, AbstractUserFactory.weekDay day, int slot){
         availability.get(week).removeSlotAvail(day, slot);
     }
     
-    public int getSlotAvailability(int week, UserFactory.weekDay day, int slot){
+    public int getSlotAvailability(int week, AbstractUserFactory.weekDay day, int slot){
         return availability.get(week).getSlotAvail(day, slot);
     }
     
-    public int getDayAvailability(int week, UserFactory.weekDay day){
+    public int getDayAvailability(int week, AbstractUserFactory.weekDay day){
         return availability.get(week).computeDayAvail(day);
     }
 
@@ -47,25 +47,49 @@ public class Availability {
         this.availability = availability;
     }
 
-    public String getInsertQuery(Maintainer m) {
+    public String getUpdateQuery(String username) {
+        StringBuilder temp = new StringBuilder();
+       
+        for (int i = 0; i < this.availability.size(); i++ ){
+            for (int j = 0; j < availability.get(i).weekDays.size(); j++){                          
+                Map<AbstractUserFactory.weekDay,TimeSlots> time = availability.get(i).getWeekDays();
+                //TimeSlots te = time.get(AbstractUserFactory.weekDay.values()[j]);
+                int len = time.get(AbstractUserFactory.weekDay.values()[j]).timeSlots.length;
+                
+                for (int k = 0; k < len; k++){
+                    temp.append("UPDATE availability SET Avail = ");
+                    temp.append(availability.get(i).getWeekDays().get(AbstractUserFactory.weekDay.values()[j]).timeSlots[k]);
+                    temp.append("WHERE");
+                    temp.append("USERNAME = ").append("'").append(username).append("',");
+                    temp.append("AND WEEK = ").append(i).append(",");
+                    temp.append("AND WEEKDAY = ").append("'").append(AbstractUserFactory.weekDay.values()[j]).append("',");
+                    temp.append("AND TIMESLOT = ").append(k).append(";");
+                }
+            }
+        }
+
+        return temp.toString();
+    }
+    
+    public String getInsertQuery(String username) {
         StringBuilder temp = new StringBuilder();
         temp.append("insert into Availability(Maintainer,Week,WeekDay,TimeSlot,Avail)");
         temp.append("values");
         for (int i = 0; i < this.availability.size(); i++ ){
             for (int j = 0; j < availability.get(i).weekDays.size(); j++){
-                UserFactory.weekDay[] week = UserFactory.weekDay.values();
+                AbstractUserFactory.weekDay[] week = AbstractUserFactory.weekDay.values();
                           
-                Map<UserFactory.weekDay,TimeSlots> time = availability.get(i).getWeekDays();
-                TimeSlots te = time.get(UserFactory.weekDay.values()[j]);
+                Map<AbstractUserFactory.weekDay,TimeSlots> time = availability.get(i).getWeekDays();
+                TimeSlots te = time.get(AbstractUserFactory.weekDay.values()[j]);
                 
                 int len = te.timeSlots.length;
                 for (int k = 0; k < len; k++){
                     
-                    temp.append("('").append(m.getUsername()).append("',");
+                    temp.append("('").append(username).append("',");
                     temp.append("").append(i).append(",");
-                    temp.append("'").append(UserFactory.weekDay.values()[j]).append("',");
+                    temp.append("'").append(AbstractUserFactory.weekDay.values()[j]).append("',");
                     temp.append("").append(k).append(",");
-                    temp.append("").append(availability.get(i).getWeekDays().get(UserFactory.weekDay.values()[j]).timeSlots[k]).append("");
+                    temp.append("").append(availability.get(i).getWeekDays().get(AbstractUserFactory.weekDay.values()[j]).timeSlots[k]).append("");
                     temp.append("),");
                 }
             }
@@ -113,28 +137,28 @@ public class Availability {
     }
 
     public static class WeekDay {
-        private Map<UserFactory.weekDay,TimeSlots> weekDays;
+        private Map<AbstractUserFactory.weekDay,TimeSlots> weekDays;
         
         public WeekDay() {
-            this.weekDays = new HashMap<UserFactory.weekDay,TimeSlots>();
-            for (UserFactory.weekDay day : UserFactory.weekDay.values()){
+            this.weekDays = new HashMap<AbstractUserFactory.weekDay,TimeSlots>();
+            for (AbstractUserFactory.weekDay day : AbstractUserFactory.weekDay.values()){
                 weekDays.put(day, new TimeSlots());
             }
         }
         
-        public int addSlotAvail(UserFactory.weekDay day,int slot,int avail){
+        public int addSlotAvail(AbstractUserFactory.weekDay day,int slot,int avail){
             return weekDays.get(day).addAvail(slot, avail);
         }
         
-        public void removeSlotAvail(UserFactory.weekDay day, int slot){
+        public void removeSlotAvail(AbstractUserFactory.weekDay day, int slot){
             weekDays.get(day).removeAvail(slot);
         }
         
-        public int getSlotAvail(UserFactory.weekDay day, int slot){
+        public int getSlotAvail(AbstractUserFactory.weekDay day, int slot){
             return weekDays.get(day).getAvail(slot);
         }
         
-        public int computeDayAvail(UserFactory.weekDay day){
+        public int computeDayAvail(AbstractUserFactory.weekDay day){
             float avail = 0;
             float total = 0;
             int result;
@@ -146,11 +170,11 @@ public class Availability {
             return result;
         }
 
-        public Map<UserFactory.weekDay, TimeSlots> getWeekDays() {
+        public Map<AbstractUserFactory.weekDay, TimeSlots> getWeekDays() {
             return weekDays;
         }
 
-        public void setWeekDays(Map<UserFactory.weekDay, TimeSlots> weekDays) {
+        public void setWeekDays(Map<AbstractUserFactory.weekDay, TimeSlots> weekDays) {
             this.weekDays = weekDays;
         }
                 

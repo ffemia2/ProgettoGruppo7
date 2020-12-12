@@ -5,6 +5,8 @@
  */
 package progettogruppo7.Users;
 
+import java.util.Map;
+import progettogruppo7.Activities;
 import progettogruppo7.Activity;
 import progettogruppo7.Competence;
 import progettogruppo7.Competences;
@@ -14,7 +16,7 @@ import progettogruppo7.Competences;
  * @author Rosanna
  */
 public interface User {
-
+    
     public String getUsername();
     
     public void setUsername(String username);
@@ -23,20 +25,20 @@ public interface User {
     
     public void setPassword(String password);
     
-    public UserFactory.Role getRole();
+    public AbstractUserFactory.Role getRole();
     
-    public void setRole(UserFactory.Role role);
+   // public void setRole(AbstractUserFactory.Role role);
     
     public String getInsertQuery();
                         
     
     // System Administrator methods //
    
-    public AbstractUser removeUser(AbstractUser u);
+    public User removeUser(User u);
     
-    public AbstractUser getUser(String username);
+    public User getUser(String username);
     
-    public AbstractUser createUser(String username, String password, UserFactory.Role role);
+    public User addUser(String username, String password, AbstractUserFactory.Role role);
     
     public String printUsers();
     
@@ -54,13 +56,13 @@ public interface User {
 
     public void setAvailability(Availability availability);
     
-    public void addSlotAvailability(int week,UserFactory.weekDay day, int timeSlot ,int avail);
+    public void addSlotAvailability(int week,AbstractUserFactory.weekDay day, int timeSlot ,int avail);
     
-    public int getSlotAvailability(int week,UserFactory.weekDay day, int slot);
+    public int getSlotAvailability(int week,AbstractUserFactory.weekDay day, int slot);
     
-    public void removeSlotAvailability(int week,UserFactory.weekDay day, int slot);
+    public void removeSlotAvailability(int week,AbstractUserFactory.weekDay day, int slot);
     
-    public int getDayAvailability(int week, UserFactory.weekDay day);
+    public int getDayAvailability(int week, AbstractUserFactory.weekDay day);
             
     public void insertSkill(Competence c);
     
@@ -68,5 +70,17 @@ public interface User {
     
     public boolean findSkill(String name);
      
-    public int isQualified(Activity act); 
+    public int isQualified(Competences comp); 
+    
+    
+    //Planner methods
+    
+    public Activities getActivities();
+
+    public void setActivities(Activities activities);
+    
+    public Map<String,Maintainer> getMaintainers();
+    
+    public void setMaintainers(Map<String,Maintainer> maints);
+ 
 }
