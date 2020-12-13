@@ -38,20 +38,27 @@ public class Activities {
         if (activities.containsKey(id)) {
             activities.remove(id);
         } else
-            throw new ActivityException("Activity doesn't exists");
+            throw new ActivityException("Activity doesn't exist");
+    }
+    
+    public void removeFromActivities(Activity a){
+        if (activities.containsKey(a.getActivityID())) {
+            activities.remove(a.getActivityID());
+        } else
+            throw new ActivityException("Activity doesn't exist");
     }
 
     public Activity getFromActivities(Activity a){
         if (activities.containsKey(a.getActivityID())) {
             return activities.get(a.getActivityID());
         } else
-            throw new ActivityException("Activity doesn't exists");
+            throw new ActivityException("Activity doesn't exist");
     }
     public Activity getFromActivities(int id){
         if (activities.containsKey(id)) {
             return activities.get(id);
         } else
-            throw new ActivityException("Activity doesn't exists");
+            throw new ActivityException("Activity doesn't exist");
     }
     
     public LinkedList<Integer> getWeeks(){
@@ -65,35 +72,35 @@ public class Activities {
         if (activities.containsKey(a.getActivityID())) {
             this.activities.get(a.getActivityID()).setDescription(description);
         } else
-            throw new ActivityException("Activity doesn't exists");
+            throw new ActivityException("Activity doesn't exist");
     }
     
     public void modifyInActivitiesTime(Activity a, int estimated) {
         if (activities.containsKey(a.getActivityID())) {
             this.activities.get(a.getActivityID()).setEstimatedTime(estimated);
         } else
-            throw new ActivityException("Activity doesn't exists");
+            throw new ActivityException("Activity doesn't exist");
     }
     
     public void modifyInActivitiesWeek(Activity a, int week) {
         if (activities.containsKey(a.getActivityID())) {
             this.activities.get(a.getActivityID()).setWeek(week);
         } else
-            throw new ActivityException("Activity doesn't exists");
+            throw new ActivityException("Activity doesn't exist");
     }
     
     public void modifyInActivitiesCompetences(Activity a, Competences comp) {
         if (activities.containsKey(a.getActivityID())) {
             this.activities.get(a.getActivityID()).setCompetences(comp);
         } else
-            throw new ActivityException("Activity doesn't exists");
+            throw new ActivityException("Activity doesn't exist");
     }
     
     public void modifyInActivitiesSite(Activity a, Site site) {
         if (activities.containsKey(a.getActivityID())) {
             this.activities.get(a.getActivityID()).setSite(site);
         } else
-            throw new ActivityException("Activity doesn't exists");
+            throw new ActivityException("Activity doesn't exist");
     }
     
 }

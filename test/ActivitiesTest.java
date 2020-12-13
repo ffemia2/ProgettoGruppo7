@@ -59,6 +59,20 @@ public class ActivitiesTest {
         assertEquals(2, activ.getActivities().size());
     }
     
+    @Test
+    public void testRemoveActivActivities() {
+        Site site1 = new Site("Fisciano", "Molding");
+        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Mechanical);
+        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Eletronic);
+        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Electrical);
+        Activities activ =new Activities();
+        activ.insertInActivities(a1);
+        activ.insertInActivities(a2);
+        activ.insertInActivities(a3);
+        activ.removeFromActivities(a3);
+        assertEquals(2, activ.getActivities().size());
+    }
+    
     @Test(expected=RuntimeException.class) 
     public void testExcRemoveActivities() {
         Site site1 = new Site("Fisciano", "Molding");

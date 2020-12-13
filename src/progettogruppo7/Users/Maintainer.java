@@ -32,7 +32,7 @@ public class Maintainer extends AbstractEmployee {
     }
 
     
-    
+
     public void addInActivities(Activity a) {
         activities.insertInActivities(a);
     }
@@ -142,7 +142,7 @@ public class Maintainer extends AbstractEmployee {
     public void setUsers(SystemUsers users) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-   
+    
+    
     
 }

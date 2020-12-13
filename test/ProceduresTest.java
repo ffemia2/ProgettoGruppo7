@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import java.io.IOException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -25,21 +26,21 @@ public class ProceduresTest {
     }
     
     @Test
-    public void testSizeInsertProcedure(){
+    public void testSizeInsertProcedure() throws IOException{
         Procedure proc=new Procedure("procedura");
         this.p.insertInProcedureMap(proc);
         assertEquals(1, this.p.getProcedureMap().size());
     }
     
     @Test
-    public void testDescriptionInsertProcedure(){
+    public void testDescriptionInsertProcedure() throws IOException{
         Procedure proc=new Procedure("procedura");
         this.p.insertInProcedureMap(proc);
         assertEquals(proc.getDescription(), this.p.getFromProcedureMap(proc).getDescription());
     }
     
     @Test
-    public void testDeleteProcedure(){
+    public void testDeleteProcedure() throws IOException{
         Procedure proc=new Procedure("procedura");
         this.p.insertInProcedureMap(proc);
         this.p.deleteInProcedureMap(proc);
@@ -47,7 +48,7 @@ public class ProceduresTest {
     }
     
     @Test
-    public void testGetProcedure(){
+    public void testGetProcedure() throws IOException{
         Procedure proc=new Procedure("procedura");
         this.p.insertInProcedureMap(proc);
         Procedure getP=this.p.getFromProcedureMap(proc);
@@ -55,19 +56,19 @@ public class ProceduresTest {
     }
     
     @Test(expected=RuntimeException.class)
-    public void testGetExceptionProcedure(){
+    public void testGetExceptionProcedure() throws IOException{
         Procedure proc=new Procedure("procedura");
         Procedure getP=this.p.getFromProcedureMap(proc);
     }
     
     @Test(expected=RuntimeException.class)
-    public void testDelExceptionProcedure(){
+    public void testDelExceptionProcedure() throws IOException{
         Procedure proc=new Procedure("procedura");
         this.p.deleteInProcedureMap(proc);
     }
     
     @Test
-    public void testModifyProcedure(){
+    public void testModifyProcedure() throws IOException{
         String description ="manutenzione";
         Procedure proc=new Procedure("procedura");
         this.p.insertInProcedureMap(proc);

@@ -5,7 +5,11 @@
  */
 package progettogruppo7;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
 
 /**
  *
@@ -14,12 +18,27 @@ import java.util.Objects;
 public class Procedure {
     private String description;
     private Competences competences;
-
-    public Procedure(String description) {
+    private PDDocument document;
+    private String filename = "C:\\Users\\Rosanna\\Documents\\NetBeansProjects\\ProgettoGruppo7\\smp_proc_";
+      
+    public Procedure(String description) throws IOException {
         this.description = description;
         this.competences = new Competences();
+        document = new PDDocument();
+        PDPage blankPage = new PDPage();
+        document.addPage(blankPage);
+        document.save(this.filename + description + ".pdf");
+        document.close();
     }
 
+    public Procedure(String description, String filename) throws IOException {
+        this.description = description;
+        this.competences = new Competences();
+        File SMP = new File(filename);
+        document = PDDocument.load(SMP);
+        document.close();   
+    }
+    
     public String getDescription() {
         return description;
     }
