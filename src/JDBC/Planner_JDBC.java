@@ -10,9 +10,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import progettogruppo7.Users.AbstractUser;
+import progettogruppo7.Users.User;
 import progettogruppo7.Users.UserFactory;
 
 /**
@@ -74,9 +76,18 @@ public class Planner_JDBC extends JDBC{
         
     }
 
-    @Override
-    public void save() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    public void saveMaintainersOnDatabase(LinkedList<User> maintainers) {
+        for(User m : maintainers){
+            if(m.getRole() == UserFactory.Role.MAINTAINER){
+                try {
+                    Connection conn = DriverManager.getConnection(super.getUrl(), super.getUser(), super.getPwd());
+                    stm.executeUpdate(m.getInsertQuery());
+                    stm.getConnection().close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
     }
-    
 }

@@ -54,7 +54,7 @@ public class ActivityTypeJDBC extends JDBC{
          return null;
     }
 
-    @Override
+
     public void save() {
         {
             try {

@@ -27,7 +27,7 @@ public class Planner extends AbstractEmployee implements Serializable{
     public Planner(String username, String password) {
         
         super(username, password, UserFactory.Role.PLANNER);
-        new Planner_JDBC(this).loadMaintainersFromDatabase(this);
+        new Planner_JDBC(this).loadMaintainersFromDatabase();
     }
     
     

@@ -5,6 +5,9 @@
  */
 package progettogruppo7.GUI;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
@@ -12,6 +15,7 @@ import progettogruppo7.Activity;
 import progettogruppo7.Competence;
 import progettogruppo7.Competences;
 import progettogruppo7.Planned;
+import progettogruppo7.Procedure;
 import progettogruppo7.Site;
 import static progettogruppo7.Typology.*;
 
@@ -20,7 +24,7 @@ import static progettogruppo7.Typology.*;
  * @author Grazia D'Amore
  */
 public class P3_JFrame extends javax.swing.JFrame {
-
+    private Activity localAct;
     private DefaultListModel<String> model;
 
     /**
@@ -37,7 +41,8 @@ public class P3_JFrame extends javax.swing.JFrame {
         initComponents();
         this.jLabelName.setText(" " + act.getActivityID() + " - " + act.getSite() );
         this.jWeekNumLabel.setText(" " + act.getWeek());
-        this.jDescriptionTextArea.setText(" " + act.getDescription());           
+        this.jDescriptionTextArea.setText(" " + act.getDescription());
+        this.localAct=act;
     }
 
     /**
@@ -339,12 +344,17 @@ public class P3_JFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jForwardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jForwardButtonActionPerformed
-        this.infoMessage("Activity verified");
+        new P4_1_JFrame(localAct).setVisible(true);
     }//GEN-LAST:event_jForwardButtonActionPerformed
 
     private void jButtonSMPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSMPActionPerformed
-        // TODO add your handling code here:
-        this.errorMessage("There is no SMP for this activity");
+        try {
+            // TODO add your handling code here:
+            new Procedure(localAct.getDescription(), localAct.getCompetences());
+            JOptionPane.showMessageDialog(this, "File ready to use");
+        } catch (IOException ex) {
+            System.err.println(ex.getStackTrace());
+        }
     }//GEN-LAST:event_jButtonSMPActionPerformed
 
     /**

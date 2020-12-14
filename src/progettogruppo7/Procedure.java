@@ -5,11 +5,15 @@
  */
 package progettogruppo7;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
 
 /**
  *
@@ -19,25 +23,36 @@ public class Procedure {
     private String description;
     private Competences competences;
     private PDDocument document;
-    private String filename = "C:\\Users\\Rosanna\\Documents\\NetBeansProjects\\ProgettoGruppo7\\smp_proc_";
+    
       
-    public Procedure(String description) throws IOException {
-        this.description = description;
-        this.competences = new Competences();
-        document = new PDDocument();
-        PDPage blankPage = new PDPage();
-        document.addPage(blankPage);
-        document.save(this.filename + description + ".pdf");
-        document.close();
+    public Procedure(String description, Competences c) throws IOException {
+        String path=System.getProperty("user.dir");
+        if(new File(path+"\\smp_proc_" + description + ".pdf").length()==0){
+            this.description = description;
+            this.competences = c;
+            this.document = new PDDocument();
+            PDPage blankPage = new PDPage();
+            this.document.addPage(blankPage);
+            PDPageContentStream contentStream = new PDPageContentStream(document, blankPage);
+
+
+            contentStream.beginText();
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+            contentStream.newLineAtOffset(25, 700);
+            String text=this.toString().replace("\n", "").replace("\r", "");
+            contentStream.showText(text); 
+            contentStream.endText();
+            contentStream.close();
+
+
+            this.document.save(path+"\\smp_proc_" + description + ".pdf");
+            this.document.close();
+            Desktop.getDesktop().open(new File(path+"\\smp_proc_" + description + ".pdf"));
+        }
+        else
+            Desktop.getDesktop().open(new File(path+"\\smp_proc_" + description + ".pdf"));
     }
 
-    public Procedure(String description, String filename) throws IOException {
-        this.description = description;
-        this.competences = new Competences();
-        File SMP = new File(filename);
-        document = PDDocument.load(SMP);
-        document.close();   
-    }
     
     public String getDescription() {
         return description;
@@ -82,7 +97,7 @@ public class Procedure {
 
     @Override
     public String toString() {
-        return "[" + description + "]\n" + this.getCompetences().toString();
+        return "[ " + description + " ]\n" + this.getCompetences().toString();
     }
     
 }

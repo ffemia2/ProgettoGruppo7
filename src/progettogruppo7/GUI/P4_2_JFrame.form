@@ -35,7 +35,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane2" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="availabilityLabel" min="-2" pref="737" max="-2" attributes="0"/>
+                              <Component id="availabilityLabel" min="-2" pref="551" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel2" min="-2" pref="179" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="percentuale" pref="241" max="32767" attributes="0"/>
                           </Group>
@@ -84,6 +86,7 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="availabilityLabel" pref="36" max="32767" attributes="0"/>
                   <Component id="percentuale" max="32767" attributes="0"/>
+                  <Component id="jLabel2" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -223,6 +226,12 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SendActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel2">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" value="Tempo da assegnare:  "/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

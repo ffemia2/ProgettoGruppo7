@@ -49,6 +49,15 @@ public class Competences implements Iterable<Competence> {
     public int size(){
         return competenze.size();
     }
+
+    @Override
+    public String toString() {
+        String s = "";
+        for(Competence c: competenze){
+            s = s +" - "+ c.toString() + "\r";
+        }
+        return s;
+    }
     
     public void printCompetences(){
         String s = "";

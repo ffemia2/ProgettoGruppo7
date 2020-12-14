@@ -249,7 +249,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
         }
         //</editor-fold>
         Site site = new Site("Fisciano", "Molding");
-        Activity act = new Planned(21, site, "Revisione impianto elettrico", 20, true, 30, Electrical);
+        Activity act = new Planned(21, site, "Revisione impianto elettrico", 100, true, 30, Electrical);
         Competences com = new Competences();
         com.insertCompetence(new Competence("Competenza 1"));
         com.insertCompetence(new Competence("Competenza 2"));

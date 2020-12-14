@@ -7,7 +7,7 @@
       <Connection code="&quot;Activity Information&quot;" type="code"/>
     </Property>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Default Cursor"/>
+      <Color id="Cursore predefinito"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -124,7 +124,7 @@
               </Border>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color id="Cursore predefinito"/>
             </Property>
           </Properties>
           <Events>
@@ -475,7 +475,7 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="FORWARD"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Default Cursor"/>
+                  <Color id="Cursore predefinito"/>
                 </Property>
               </Properties>
               <Events>

@@ -68,6 +68,14 @@ public abstract class Activity {
         this.assigned = assigned;
     }
 
+    public Typology getType() {
+        return type;
+    }
+
+    public void setType(Typology type) {
+        this.type = type;
+    }
+
     
     
     

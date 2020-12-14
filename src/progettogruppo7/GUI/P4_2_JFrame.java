@@ -49,6 +49,7 @@ public class P4_2_JFrame extends javax.swing.JFrame {
     private Planner planner;
     private int et, slot, count=0;
     private LinkedList<Integer>l=new LinkedList();
+    private int remainingTime;
     /**
      * Creates new form P4_JFrame
      */
@@ -59,7 +60,7 @@ public class P4_2_JFrame extends javax.swing.JFrame {
         
         //prendo info maintainer sulle attività in corso 
         Maintainer_JDBC mainJ= new Maintainer_JDBC(maintainer);
-        count=mainJ.selectCountActivityIDFromDatabase(this.activity);
+        
         this.dtm =  new DefaultTableModel(new String[] { "Maintainer", "Skills", "Avilab. 8.00-9.00", "Avilab. 9.00-10.00", 
             "Avilab. 10.00-11.00", "Avilab. 11.00-12.00", "Avilab. 12.00-13.00", "Avilab. 13.00-14.00", "Avilab. 14.00-15.00" },0){
             
@@ -83,20 +84,28 @@ public class P4_2_JFrame extends javax.swing.JFrame {
                 int row = jTableMaintainerAvailability.getSelectedRow();
                 int col = jTableMaintainerAvailability.getSelectedColumn();
                 slot=col;
-
+                count=mainJ.selectCountActivityIDFromDatabase(ac);
+                
                 if(col>1 && et>0 && count==0){
                     int avail = maintainer.getSlotAvailability(ac.getWeek(), UserFactory.weekDay.values()[day-1], col-2);
-                    if (avail >= activity.getEstimatedTime()){
-                      
-                      maintainer.addSlotAvailability(ac.getWeek(), UserFactory.weekDay.values()[day-1], col-2, avail - et);
-                      dtm.setValueAt( String.valueOf(avail - et)+" min", row, col);
-                      et-=avail;
-                      percentuale.setText(String.valueOf(maintainer.getDayAvailability(activity.getWeek(), UserFactory.weekDay.values()[day-1]))+"%");
-                      activity.setAssigned(true);
-                      maintainer.addInActivities(activity);
-                      Maintainer_JDBC data = new Maintainer_JDBC(maintainer); 
-                      data.updateActivitiesOnDatabase(activity);
-                      
+                    remainingTime=et-avail;  
+
+                        int actTime=0;
+                        if (remainingTime<=0)
+                            actTime=avail-et;
+                        else
+                            actTime=avail - (et-remainingTime);
+                    if(actTime>=0){
+                        maintainer.addSlotAvailability(ac.getWeek(), UserFactory.weekDay.values()[day-1], col-2, actTime);
+                        dtm.setValueAt( String.valueOf(actTime)+" min", row, col);
+                        et-=avail;
+                        percentuale.setText(String.valueOf(maintainer.getDayAvailability(activity.getWeek(), UserFactory.weekDay.values()[day-1]))+"%");
+                        
+                        if(remainingTime<=0){
+                            mainJ.updateActivitiesOnDatabase(activity);
+                            activity.setAssigned(true);
+                            maintainer.addInActivities(activity);
+                        }
                     }
                     else{
                         JOptionPane.showMessageDialog(jTableMaintainerAvailability, "Availability time too short","Ops...",JOptionPane.OK_CANCEL_OPTION);
@@ -104,7 +113,7 @@ public class P4_2_JFrame extends javax.swing.JFrame {
                 }
                 if (count>0){
                     JOptionPane.showMessageDialog(jTableMaintainerAvailability, "Activity already assigned","Ops...",JOptionPane.OK_CANCEL_OPTION);
-                    Send.setEnabled(false);
+                    //Send.setEnabled(false);
                 }
                 
             }
@@ -196,6 +205,7 @@ public class P4_2_JFrame extends javax.swing.JFrame {
         numDay = new javax.swing.JLabel();
         percentuale = new javax.swing.JLabel();
         Send = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -259,6 +269,9 @@ public class P4_2_JFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Tempo da assegnare:  ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -272,7 +285,9 @@ public class P4_2_JFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(availabilityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(availabilityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(percentuale, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
@@ -307,7 +322,8 @@ public class P4_2_JFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(availabilityLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(percentuale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(percentuale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(Send, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
@@ -368,7 +384,7 @@ public class P4_2_JFrame extends javax.swing.JFrame {
         com.insertCompetence(new Competence("Competenza 3"));
         com.insertCompetence(new Competence("Competenza 4"));
         act.setCompetences(com);
-        Maintainer maintainer=new Maintainer("Provola Affumicata","sullaPasta");
+        Maintainer maintainer=new Maintainer("Provola","Gigetto");
         
         System.out.println();
         /* Create and display the form */
@@ -385,6 +401,7 @@ public class P4_2_JFrame extends javax.swing.JFrame {
     private javax.swing.JLabel availabilityLabel;
     private javax.swing.JLabel dayOfWeek;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableMaintainerAvailability;

@@ -22,6 +22,9 @@ import progettogruppo7.Competence;
 import progettogruppo7.Competences;
 import progettogruppo7.Planned;
 import progettogruppo7.Site;
+import progettogruppo7.Users.EmployeeFactory;
+import progettogruppo7.Users.Planner;
+import progettogruppo7.Users.UserFactory;
 
 
 /*
@@ -211,7 +214,7 @@ public class ActivitySelection extends javax.swing.JFrame {
             tabmod.setRowCount(0);
             for(Activity a: activities.getActivities().values()){
                 if(a.getWeek()==Integer.valueOf(answer)){
-                    Object []o={a.getActivityID(), a.getSite(), null, a.getEstimatedTime()};
+                    Object []o={a.getActivityID(), a.getSite(), a.getType(), a.getEstimatedTime()};
                     tabmod=(DefaultTableModel)activitySelectionTable.getModel();
                     tabmod.addRow(o);
                 }
@@ -267,6 +270,8 @@ public class ActivitySelection extends javax.swing.JFrame {
         activities.insertInActivities(p2);
         activities.insertInActivities(p3);
         activities.insertInActivities(p4);
+        
+        //AbstractUser p= new EmployeeFactory().build("ciccio", "baubab", UserFactory.Role.PLANNER);
         
         
         /* Create and display the form */

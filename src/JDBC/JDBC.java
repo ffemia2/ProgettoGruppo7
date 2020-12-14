@@ -9,7 +9,7 @@ package JDBC;
  *
  * @author Francesco Femia
  */
-public abstract class JDBC implements JDBCInterface{
+public abstract class JDBC {
     private String url="jdbc:postgresql://localhost/postgres";
     private String user="postgres";
     private String pwd="polter01";
