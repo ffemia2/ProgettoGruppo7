@@ -9,13 +9,15 @@ import java.time.temporal.WeekFields;
 import java.util.Locale;
 import org.junit.*;
 import static org.junit.Assert.*;
-import progettogruppo7.Activities;
-import progettogruppo7.Activity;
-import progettogruppo7.Competence;
-import progettogruppo7.Competences;
-import progettogruppo7.Planned;
-import progettogruppo7.Site;
-import static progettogruppo7.Typology.*;
+
+import Activity.Site;
+import Activity.Activities;
+import Activity.Activity;
+
+import Activity.Planned.PlannedBuilder;
+
+import Activity.competence.Competence;
+import Activity.competence.Competences;
 
 /**
  *
@@ -25,11 +27,32 @@ public class ActivitiesTest {
     
     @Test
     public void testInsertActivities() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
-        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Eletronic);
-        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Hydraulic);
-        Activities activ =new Activities();
+        String factory = "Fisciano";
+        String department = "Molding";
+
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+         
+        Activity a2 = new PlannedBuilder().setSite(factory, department)
+                .setDescription( "Checking gas implant")
+                .setEstimatedTime(360)
+                .setWeek(48)
+                .setTypology(PlannedBuilder.Typology.Eletronic)
+                .getActivity();
+                
+        Activity a3 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Clean oil system")
+                .setEstimatedTime(480)
+                .setWeek(46)
+                .setTypology(PlannedBuilder.Typology.Hydraulic)
+                .getActivity();
+        
+        Activities activ = new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a2);
         activ.insertInActivities(a3);
@@ -38,8 +61,17 @@ public class ActivitiesTest {
     
     @Test(expected=RuntimeException.class) 
     public void testExcInsertActivities() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
+        String factory = "Fisciano";
+        String department = "Molding";
+        
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setInterruptible(true)
+                .setWeek(51)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+        
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a1);
@@ -47,115 +79,212 @@ public class ActivitiesTest {
     
     @Test
     public void testRemoveActivities() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Mechanical);
-        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Eletronic);
-        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Electrical);
+        String factory = "Fisciano";
+        String department = "Molding";
+ 
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+         
+        Activity a2 = new PlannedBuilder().setSite(factory, department)
+                .setDescription( "Checking gas implant")
+                .setEstimatedTime(360)
+                .setWeek(48)
+                .setTypology(PlannedBuilder.Typology.Eletronic)
+                .getActivity();
+                
+        Activity a3 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Clean oil system")
+                .setEstimatedTime(480)
+                .setWeek(46)
+                .setTypology(PlannedBuilder.Typology.Hydraulic)
+                .getActivity();
+        
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a2);
         activ.insertInActivities(a3);
+        
         activ.removeFromActivities(a3.getActivityID());
         assertEquals(2, activ.getActivities().size());
     }
-    
-    @Test
-    public void testRemoveActivActivities() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Mechanical);
-        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Eletronic);
-        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Electrical);
-        Activities activ =new Activities();
-        activ.insertInActivities(a1);
-        activ.insertInActivities(a2);
-        activ.insertInActivities(a3);
-        activ.removeFromActivities(a3);
-        assertEquals(2, activ.getActivities().size());
-    }
-    
+        
     @Test(expected=RuntimeException.class) 
     public void testExcRemoveActivities() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Hydraulic);
+        String factory = "Fisciano";
+        String department = "Molding";
+        
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+        
         Activities activ =new Activities();
         activ.removeFromActivities(a1.getActivityID());
     }
     
     @Test
     public void testGetActivities() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
-        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Electrical);
-        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Electrical);
+        String factory = "Fisciano";
+        String department = "Molding";
+        
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+         
+        Activity a2 = new PlannedBuilder().setSite(factory, department)
+                .setDescription( "Checking gas implant")
+                .setEstimatedTime(360)
+                .setWeek(48)
+                .setTypology(PlannedBuilder.Typology.Eletronic)
+                .getActivity();
+                
+        Activity a3 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Clean oil system")
+                .setEstimatedTime(480)
+                .setWeek(46)
+                .setTypology(PlannedBuilder.Typology.Hydraulic)
+                .getActivity();
+        
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a2);
         activ.insertInActivities(a3);
-        Activity a4 = activ.getFromActivities(a3);
+        
+        Activity a4 = activ.getFromActivities(a3.getActivityID());
         assertEquals(a4.getActivityID(), a3.getActivityID());
     }
     
     @Test (expected=RuntimeException.class)
     public void testExcGetActivities() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
-        Activity a2 = new Planned(2, site1, "Checking gas implant", 360, false, 48, Electrical);
-        Activity a3 = new Planned(3, site1, "Clean oil system", 480, true, 46, Electrical);
+        String factory = "Fisciano";
+        String department = "Molding";
+        
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+         
+        Activity a2 = new PlannedBuilder().setSite(factory, department)
+                .setDescription( "Checking gas implant")
+                .setEstimatedTime(360)
+                .setWeek(48)
+                .setTypology(PlannedBuilder.Typology.Eletronic)
+                .getActivity();
+                
+        Activity a3 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Clean oil system")
+                .setEstimatedTime(480)
+                .setWeek(46)
+                .setTypology(PlannedBuilder.Typology.Hydraulic)
+                .getActivity();
+        
         Activities activ =new Activities();
         activ.insertInActivities(a1);
         activ.insertInActivities(a2);
-        Activity a4 = activ.getFromActivities(a3);
+        Activity a4 = activ.getFromActivities(a3.getActivityID());
     }
     
     @Test
     public void testModifyActivitiesDescr() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
+        String factory = "Fisciano";
+        String department = "Molding";
+        
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+        
         String descr = "Checking gas implant";
         Activities activ =new Activities();
         activ.insertInActivities(a1);
-        activ.modifyInActivitiesDescr(a1, descr);
-        assertEquals(descr, activ.getFromActivities(a1).getDescription());
+        activ.modifyInActivitiesDescr(a1.getActivityID(), descr);
+        assertEquals(descr, activ.getFromActivities(a1.getActivityID()).getDescription());
     }
     
     @Test
     public void testModifyActivitiesTime() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
+        String factory = "Fisciano";
+        String department = "Molding";
+        
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+        
         int time = 800;
         Activities activ =new Activities();
         activ.insertInActivities(a1);
-        activ.modifyInActivitiesTime(a1, time);
-        assertEquals(time, activ.getFromActivities(a1).getEstimatedTime());
+        activ.modifyInActivitiesTime(a1.getActivityID(), time);
+        assertEquals(time, activ.getFromActivities(a1.getActivityID()).getEstimatedTime());
     }
     
     @Test
     public void testModifyActivitiesWeek() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
+        String factory = "Fisciano";
+        String department = "Molding";
+        
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+        
         int week = 20;
         Activities activ =new Activities();
         activ.insertInActivities(a1);
-        activ.modifyInActivitiesWeek(a1, week);
-        assertEquals(week, activ.getFromActivities(a1).getWeek());
+        activ.modifyInActivitiesWeek(a1.getActivityID(), week);
+        assertEquals(week, activ.getFromActivities(a1.getActivityID()).getWeek());
     }
     
     @Test
     public void testExcModifyActivitiesWeek() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
+        String factory = "Fisciano";
+        String department = "Molding";
+        
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
         int week = 0;
         Activities activ =new Activities();
         activ.insertInActivities(a1);
-        activ.modifyInActivitiesWeek(a1, week);
+        activ.modifyInActivitiesWeek(a1.getActivityID(), week);
         LocalDate date = LocalDate.now();
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
-        assertEquals(date.get(weekFields.weekOfWeekBasedYear()), activ.getFromActivities(a1).getWeek());
+        assertEquals(date.get(weekFields.weekOfWeekBasedYear()), activ.getFromActivities(a1.getActivityID()).getWeek());
     }
     
     @Test
     public void testExcModifyActivitiesComp() {
-        Site site1 = new Site("Fisciano", "Molding");
+        String factory = "Fisciano";
+        String department = "Molding";
+        
         Competence comp1 = new Competence("Doti analitiche e problem solving");
         Competence comp2 = new Competence("Doti comunicative");
         Competence comp3 = new Competence("Rapidità d'intervento");
@@ -166,22 +295,39 @@ public class ActivitiesTest {
         compets.insertCompetence(comp3);
         Competences compets2 = new Competences();
         compets2.insertCompetence(comp4);
-        Activity a1 = new Planned(1, site1, compets, "Replacement of robot", 120, true, 51);
+        
+         Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+         
         Activities activ =new Activities();
         activ.insertInActivities(a1);
-        activ.modifyInActivitiesCompetences(a1, compets2);
-        assertEquals(compets2, activ.getFromActivities(a1).getCompetences());
+        activ.modifyInActivitiesCompetences(a1.getActivityID(), compets2);
+        assertEquals(compets2, activ.getFromActivities(a1.getActivityID()).getCompetences());
     }
     
     @Test
     public void testExcModifyActivitiesSite() {
-        Site site1 = new Site("Fisciano", "Molding");
-        Site site2 = new Site("Nusco", "Carpentry");
-        Activity a1 = new Planned(1, site1, "Replacement of robot", 120, true, 51, Electrical);
+        String factory = "Fisciano";
+        String department = "Molding";
+        Site site = new Site("Nusco", "Carpentry");
+        
+        Activity a1 = new PlannedBuilder().setSite(factory, department)
+                .setDescription("Replacement of robot")
+                .setEstimatedTime(120)
+                .setWeek(24)
+                .setInterruptible(true)
+                .setTypology(PlannedBuilder.Typology.Electrical)
+                .getActivity();
+        
         Activities activ =new Activities();
         activ.insertInActivities(a1);
-        activ.modifyInActivitiesSite(a1, site2);
-        assertEquals(site2, activ.getFromActivities(a1).getSite());
+        activ.modifyInActivitiesSite(a1.getActivityID(), site);
+        assertEquals(site, activ.getFromActivities(a1.getActivityID()).getSite());
     }
     
 }

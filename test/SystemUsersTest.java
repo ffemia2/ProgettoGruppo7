@@ -9,7 +9,10 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import progettogruppo7.Users.*;
+import users.AbstractUserFactory;
+import users.User;
+import users.systemAdmin.SystemAdminFactory;
+import users.systemAdmin.SystemUsers;
 
 
 /**
@@ -24,7 +27,7 @@ public class SystemUsersTest {
     public SystemUsersTest() {
         this.users = SystemUsers.SystemUsers();
         this.admFact = new SystemAdminFactory();     
-        this.admin = SystemAdmin.SystemAdministrator("Adam Kadmon", "trello");
+        this.admin = admFact.createUser("Stan", "Lee");
     }
     
     @BeforeClass

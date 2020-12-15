@@ -9,16 +9,136 @@ digraph g {
 	    shape = "ellipse"
 	];
 	edge[];
-	"Default" [
-        label="Default | Total Classes: 1"
+	"Activity" [
+        label="Activity | Total Classes: 8"
+	shape="record"
+	color=".99 0.12 .9"
+	style=filled
+    ];
+    "Activity" -> "Activity.Procedure"
+    "Activity" -> "Activity.competence"
+    "Activity" -> "Activity.material"
+    "Activity" -> "java.lang"
+    "Activity" -> "java.time"
+    "Activity" -> "java.time.temporal"
+    "Activity" -> "java.util"
+    "Activity" -> "java.util.concurrent.atomic"
+    "Activity.Planned" [
+        label="Activity.Planned | Total Classes: 2"
+	shape="record"
+	color=".99 0.38 .9"
+	style=filled
+    ];
+    "Activity.Planned" -> "Activity"
+    "Activity.Planned" -> "Activity.Procedure"
+    "Activity.Planned" -> "Activity.competence"
+    "Activity.Planned" -> "Activity.material"
+    "Activity.Planned" -> "java.lang"
+    "Activity.Procedure" [
+        label="Activity.Procedure | Total Classes: 3"
+	shape="record"
+	color=".99 0.3 .9"
+	style=filled
+    ];
+    "Activity.Procedure" -> "Activity.competence"
+    "Activity.Procedure" -> "java.io"
+    "Activity.Procedure" -> "java.lang"
+    "Activity.Procedure" -> "java.util"
+    "Activity.Procedure" -> "java.util.logging"
+    "Activity.Procedure" -> "org.apache.pdfbox.pdmodel"
+    "Activity.Procedure" -> "org.apache.pdfbox.pdmodel.font"
+    "Activity.Unplanned" [
+        label="Activity.Unplanned | Total Classes: 5"
+	shape="record"
+	color=".99 0.38 .9"
+	style=filled
+    ];
+    "Activity.Unplanned" -> "Activity"
+    "Activity.Unplanned" -> "Activity.Procedure"
+    "Activity.Unplanned" -> "Activity.competence"
+    "Activity.Unplanned" -> "Activity.material"
+    "Activity.Unplanned" -> "java.lang"
+    "Activity.competence" [
+        label="Activity.competence | Total Classes: 3"
+	shape="record"
+	color=".99 0.77 .9"
+	style=filled
+    ];
+    "Activity.competence" -> "java.io"
+    "Activity.competence" -> "java.lang"
+    "Activity.competence" -> "java.util"
+    "Activity.material" [
+        label="Activity.material | Total Classes: 3"
+	shape="record"
+	color=".99 0.67 .9"
+	style=filled
+    ];
+    "Activity.material" -> "java.io"
+    "Activity.material" -> "java.lang"
+    "Activity.material" -> "java.util"
+    "GUI" [
+        label="GUI | Total Classes: 4"
 	shape="record"
 	color=".99 0 .9"
 	style=filled
     ];
-    "Default" -> "java.io"
-    "Default" -> "java.lang"
-    "Default" -> "org.junit"
-    "Default" -> "progettogruppo7.Users"
+    "GUI" -> "GUI.planner"
+    "GUI" -> "GUI.systemAdmin"
+    "GUI" -> "java.awt"
+    "GUI" -> "java.awt.event"
+    "GUI" -> "java.lang"
+    "GUI" -> "java.util.logging"
+    "GUI" -> "javax.swing"
+    "GUI" -> "users"
+    "GUI" -> "users.planner"
+    "GUI" -> "users.systemAdmin"
+    "GUI.planner" [
+        label="GUI.planner | Total Classes: 40"
+	shape="record"
+	color=".99 0.1 .9"
+	style=filled
+    ];
+    "GUI.planner" -> "Activity"
+    "GUI.planner" -> "Activity.Planned"
+    "GUI.planner" -> "Activity.Unplanned"
+    "GUI.planner" -> "Activity.competence"
+    "GUI.planner" -> "Activity.material"
+    "GUI.planner" -> "java.awt"
+    "GUI.planner" -> "java.awt.event"
+    "GUI.planner" -> "java.io"
+    "GUI.planner" -> "java.lang"
+    "GUI.planner" -> "java.time"
+    "GUI.planner" -> "java.util"
+    "GUI.planner" -> "java.util.logging"
+    "GUI.planner" -> "javax.swing"
+    "GUI.planner" -> "javax.swing.border"
+    "GUI.planner" -> "javax.swing.table"
+    "GUI.planner" -> "users"
+    "GUI.planner" -> "users.maintainer"
+    "GUI.planner" -> "users.planner"
+    "GUI.planner" -> "users.systemAdmin"
+    "GUI.systemAdmin" [
+        label="GUI.systemAdmin | Total Classes: 26"
+	shape="record"
+	color=".99 0.06 .9"
+	style=filled
+    ];
+    "GUI.systemAdmin" -> "Activity"
+    "GUI.systemAdmin" -> "Activity.competence"
+    "GUI.systemAdmin" -> "GUI.planner"
+    "GUI.systemAdmin" -> "java.awt"
+    "GUI.systemAdmin" -> "java.awt.event"
+    "GUI.systemAdmin" -> "java.io"
+    "GUI.systemAdmin" -> "java.lang"
+    "GUI.systemAdmin" -> "java.util"
+    "GUI.systemAdmin" -> "java.util.logging"
+    "GUI.systemAdmin" -> "javax.swing"
+    "GUI.systemAdmin" -> "javax.swing.event"
+    "GUI.systemAdmin" -> "javax.swing.table"
+    "GUI.systemAdmin" -> "javax.swing.text"
+    "GUI.systemAdmin" -> "users"
+    "GUI.systemAdmin" -> "users.maintainer"
+    "GUI.systemAdmin" -> "users.systemAdmin"
     "java.awt" [
         label="java.awt | Total Classes: "
 	shape="record"
@@ -67,6 +187,18 @@ digraph g {
 	color=".99 0.0 .9"
 	style=filled
     ];
+    "java.util.concurrent.atomic" [
+        label="java.util.concurrent.atomic | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "java.util.logging" [
+        label="java.util.logging | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
     "javax.swing" [
         label="javax.swing | Total Classes: "
 	shape="record"
@@ -79,53 +211,96 @@ digraph g {
 	color=".99 0.0 .9"
 	style=filled
     ];
+    "javax.swing.event" [
+        label="javax.swing.event | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
     "javax.swing.table" [
         label="javax.swing.table | Total Classes: "
 	shape="record"
 	color=".99 0.0 .9"
 	style=filled
     ];
-    "org.junit" [
-        label="org.junit | Total Classes: "
+    "javax.swing.text" [
+        label="javax.swing.text | Total Classes: "
 	shape="record"
 	color=".99 0.0 .9"
 	style=filled
     ];
-    "progettogruppo7" [
-        label="progettogruppo7 | Total Classes: 12"
+    "org.apache.pdfbox.pdmodel" [
+        label="org.apache.pdfbox.pdmodel | Total Classes: "
 	shape="record"
-	color=".99 0.08 .9"
+	color=".99 0.0 .9"
 	style=filled
     ];
-    "progettogruppo7" -> "java.awt"
-    "progettogruppo7" -> "java.awt.event"
-    "progettogruppo7" -> "java.io"
-    "progettogruppo7" -> "java.lang"
-    "progettogruppo7" -> "java.time"
-    "progettogruppo7" -> "java.time.temporal"
-    "progettogruppo7" -> "java.util"
-    "progettogruppo7" -> "javax.swing"
-    "progettogruppo7" -> "javax.swing.border"
-    "progettogruppo7" -> "javax.swing.table"
-    "progettogruppo7" -> "progettogruppo7.Exceptions"
-    "progettogruppo7.Exceptions" [
-        label="progettogruppo7.Exceptions | Total Classes: 5"
+    "org.apache.pdfbox.pdmodel.font" [
+        label="org.apache.pdfbox.pdmodel.font | Total Classes: "
 	shape="record"
-	color=".99 0.67 .9"
+	color=".99 0.0 .9"
 	style=filled
     ];
-    "progettogruppo7.Exceptions" -> "java.lang"
-    "progettogruppo7.Users" [
-        label="progettogruppo7.Users | Total Classes: 22"
+    "users" [
+        label="users | Total Classes: 4"
 	shape="record"
-	color=".99 0.13 .9"
+	color=".99 0.15 .9"
 	style=filled
     ];
-    "progettogruppo7.Users" -> "java.io"
-    "progettogruppo7.Users" -> "java.lang"
-    "progettogruppo7.Users" -> "java.sql"
-    "progettogruppo7.Users" -> "java.util"
-    "progettogruppo7.Users" -> "progettogruppo7"
-    "progettogruppo7.Users" -> "progettogruppo7.Exceptions"
+    "users" -> "Activity"
+    "users" -> "Activity.competence"
+    "users" -> "java.lang"
+    "users" -> "java.util"
+    "users.maintainer" [
+        label="users.maintainer | Total Classes: 7"
+	shape="record"
+	color=".99 0.33 .9"
+	style=filled
+    ];
+    "users.maintainer" -> "Activity"
+    "users.maintainer" -> "Activity.competence"
+    "users.maintainer" -> "java.io"
+    "users.maintainer" -> "java.lang"
+    "users.maintainer" -> "java.sql"
+    "users.maintainer" -> "java.util"
+    "users.maintainer" -> "java.util.logging"
+    "users.maintainer" -> "users"
+    "users.planner" [
+        label="users.planner | Total Classes: 3"
+	shape="record"
+	color=".99 0.2 .9"
+	style=filled
+    ];
+    "users.planner" -> "Activity"
+    "users.planner" -> "Activity.Planned"
+    "users.planner" -> "Activity.Unplanned"
+    "users.planner" -> "Activity.competence"
+    "users.planner" -> "Activity.material"
+    "users.planner" -> "java.io"
+    "users.planner" -> "java.lang"
+    "users.planner" -> "java.sql"
+    "users.planner" -> "java.util"
+    "users.planner" -> "java.util.logging"
+    "users.planner" -> "users"
+    "users.planner" -> "users.maintainer"
+    "users.systemAdmin" [
+        label="users.systemAdmin | Total Classes: 6"
+	shape="record"
+	color=".99 0.19 .9"
+	style=filled
+    ];
+    "users.systemAdmin" -> "Activity"
+    "users.systemAdmin" -> "Activity.Planned"
+    "users.systemAdmin" -> "Activity.Unplanned"
+    "users.systemAdmin" -> "Activity.competence"
+    "users.systemAdmin" -> "Activity.material"
+    "users.systemAdmin" -> "java.io"
+    "users.systemAdmin" -> "java.lang"
+    "users.systemAdmin" -> "java.sql"
+    "users.systemAdmin" -> "java.util"
+    "users.systemAdmin" -> "java.util.logging"
+    "users.systemAdmin" -> "users"
+    "users.systemAdmin" -> "users.maintainer"
+    "users.systemAdmin" -> "users.planner"
     
 }

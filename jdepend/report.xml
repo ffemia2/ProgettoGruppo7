@@ -2,13 +2,305 @@
 <JDepend>
     <Packages>
 
-        <Package name="Default">
+        <Package name="Activity">
             <Stats>
-                <TotalClasses>1</TotalClasses>
-                <ConcreteClasses>1</ConcreteClasses>
+                <TotalClasses>8</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
+                <AbstractClasses>3</AbstractClasses>
+                <Ca>8</Ca>
+                <Ce>8</Ce>
+                <A>0.38</A>
+                <I>0.5</I>
+                <D>0.12</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="Activity.java">
+                    Activity.Activity
+                </Class>
+                <Class sourceFile="ActivityBuilder.java">
+                    Activity.ActivityBuilder
+                </Class>
+                <Class sourceFile="ActivityInterface.java">
+                    Activity.ActivityInterface
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Activities.java">
+                    Activity.Activities
+                </Class>
+                <Class sourceFile="ActivityBuilder.java">
+                    Activity.ActivityBuilder$Typology
+                </Class>
+                <Class sourceFile="ActivityException.java">
+                    Activity.ActivityException
+                </Class>
+                <Class sourceFile="ActivityProcedures.java">
+                    Activity.ActivityProcedures
+                </Class>
+                <Class sourceFile="Site.java">
+                    Activity.Site
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>Activity.Procedure</Package>
+                <Package>Activity.competence</Package>
+                <Package>Activity.material</Package>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.time.temporal</Package>
+                <Package>java.util</Package>
+                <Package>java.util.concurrent.atomic</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>Activity.Planned</Package>
+                <Package>Activity.Unplanned</Package>
+                <Package>GUI.planner</Package>
+                <Package>GUI.systemAdmin</Package>
+                <Package>users</Package>
+                <Package>users.maintainer</Package>
+                <Package>users.planner</Package>
+                <Package>users.systemAdmin</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="Activity.Planned">
+            <Stats>
+                <TotalClasses>2</TotalClasses>
+                <ConcreteClasses>2</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>5</Ce>
+                <A>0</A>
+                <I>0.62</I>
+                <D>0.38</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Planned.java">
+                    Activity.Planned.Planned
+                </Class>
+                <Class sourceFile="PlannedBuilder.java">
+                    Activity.Planned.PlannedBuilder
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>Activity</Package>
+                <Package>Activity.Procedure</Package>
+                <Package>Activity.competence</Package>
+                <Package>Activity.material</Package>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>GUI.planner</Package>
+                <Package>users.planner</Package>
+                <Package>users.systemAdmin</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="Activity.Procedure">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>7</Ce>
+                <A>0</A>
+                <I>0.7</I>
+                <D>0.3</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Procedure.java">
+                    Activity.Procedure.Procedure
+                </Class>
+                <Class sourceFile="ProcedureDoesntExistException.java">
+                    Activity.Procedure.ProcedureDoesntExistException
+                </Class>
+                <Class sourceFile="Procedures.java">
+                    Activity.Procedure.Procedures
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>Activity.competence</Package>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>java.util.logging</Package>
+                <Package>org.apache.pdfbox.pdmodel</Package>
+                <Package>org.apache.pdfbox.pdmodel.font</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>Activity</Package>
+                <Package>Activity.Planned</Package>
+                <Package>Activity.Unplanned</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="Activity.Unplanned">
+            <Stats>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>5</Ce>
+                <A>0</A>
+                <I>0.62</I>
+                <D>0.38</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="EWO.java">
+                    Activity.Unplanned.EWO
+                </Class>
+                <Class sourceFile="Extra.java">
+                    Activity.Unplanned.Extra
+                </Class>
+                <Class sourceFile="ExtraBuilder.java">
+                    Activity.Unplanned.ExtraBuilder
+                </Class>
+                <Class sourceFile="Unplanned.java">
+                    Activity.Unplanned.Unplanned
+                </Class>
+                <Class sourceFile="UnplannedBuilder.java">
+                    Activity.Unplanned.UnplannedBuilder
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>Activity</Package>
+                <Package>Activity.Procedure</Package>
+                <Package>Activity.competence</Package>
+                <Package>Activity.material</Package>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>GUI.planner</Package>
+                <Package>users.planner</Package>
+                <Package>users.systemAdmin</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="Activity.competence">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>10</Ca>
+                <Ce>3</Ce>
+                <A>0</A>
+                <I>0.23</I>
+                <D>0.77</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Competence.java">
+                    Activity.competence.Competence
+                </Class>
+                <Class sourceFile="CompetenceException.java">
+                    Activity.competence.CompetenceException
+                </Class>
+                <Class sourceFile="Competences.java">
+                    Activity.competence.Competences
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>Activity</Package>
+                <Package>Activity.Planned</Package>
+                <Package>Activity.Procedure</Package>
+                <Package>Activity.Unplanned</Package>
+                <Package>GUI.planner</Package>
+                <Package>GUI.systemAdmin</Package>
+                <Package>users</Package>
+                <Package>users.maintainer</Package>
+                <Package>users.planner</Package>
+                <Package>users.systemAdmin</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="Activity.material">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>6</Ca>
+                <Ce>3</Ce>
+                <A>0</A>
+                <I>0.33</I>
+                <D>0.67</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Material.java">
+                    Activity.material.Material
+                </Class>
+                <Class sourceFile="MaterialException.java">
+                    Activity.material.MaterialException
+                </Class>
+                <Class sourceFile="Materials.java">
+                    Activity.material.Materials
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>Activity</Package>
+                <Package>Activity.Planned</Package>
+                <Package>Activity.Unplanned</Package>
+                <Package>GUI.planner</Package>
+                <Package>users.planner</Package>
+                <Package>users.systemAdmin</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="GUI">
+            <Stats>
+                <TotalClasses>4</TotalClasses>
+                <ConcreteClasses>4</ConcreteClasses>
                 <AbstractClasses>0</AbstractClasses>
                 <Ca>0</Ca>
-                <Ce>4</Ce>
+                <Ce>10</Ce>
                 <A>0</A>
                 <I>1</I>
                 <D>0</D>
@@ -19,19 +311,322 @@
             </AbstractClasses>
 
             <ConcreteClasses>
-                <Class sourceFile="SystemUsersTest.java">
-                    SystemUsersTest
+                <Class sourceFile="Login.java">
+                    GUI.Login
+                </Class>
+                <Class sourceFile="Login.java">
+                    GUI.Login$1
+                </Class>
+                <Class sourceFile="Login.java">
+                    GUI.Login$2
+                </Class>
+                <Class sourceFile="Login.java">
+                    GUI.Login$3
                 </Class>
             </ConcreteClasses>
 
             <DependsUpon>
-                <Package>java.io</Package>
+                <Package>GUI.planner</Package>
+                <Package>GUI.systemAdmin</Package>
+                <Package>java.awt</Package>
+                <Package>java.awt.event</Package>
                 <Package>java.lang</Package>
-                <Package>org.junit</Package>
-                <Package>progettogruppo7.Users</Package>
+                <Package>java.util.logging</Package>
+                <Package>javax.swing</Package>
+                <Package>users</Package>
+                <Package>users.planner</Package>
+                <Package>users.systemAdmin</Package>
             </DependsUpon>
 
             <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="GUI.planner">
+            <Stats>
+                <TotalClasses>40</TotalClasses>
+                <ConcreteClasses>40</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>2</Ca>
+                <Ce>19</Ce>
+                <A>0</A>
+                <I>0.9</I>
+                <D>0.1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="ActivitySelection.java">
+                    GUI.planner.ActivitySelection
+                </Class>
+                <Class sourceFile="ActivitySelection.java">
+                    GUI.planner.ActivitySelection$1
+                </Class>
+                <Class sourceFile="ActivitySelection.java">
+                    GUI.planner.ActivitySelection$2
+                </Class>
+                <Class sourceFile="ActivitySelection.java">
+                    GUI.planner.ActivitySelection$3
+                </Class>
+                <Class sourceFile="ActivitySelection.java">
+                    GUI.planner.ActivitySelection$4
+                </Class>
+                <Class sourceFile="ButtonColumn.java">
+                    GUI.planner.ButtonColumn
+                </Class>
+                <Class sourceFile="P1_1_JFrame.java">
+                    GUI.planner.P1_1_JFrame
+                </Class>
+                <Class sourceFile="P1_1_JFrame.java">
+                    GUI.planner.P1_1_JFrame$1
+                </Class>
+                <Class sourceFile="P1_1_JFrame.java">
+                    GUI.planner.P1_1_JFrame$2
+                </Class>
+                <Class sourceFile="P1_1_JFrame.java">
+                    GUI.planner.P1_1_JFrame$3
+                </Class>
+                <Class sourceFile="P1_1_JFrame.java">
+                    GUI.planner.P1_1_JFrame$4
+                </Class>
+                <Class sourceFile="P1_1_JFrame.java">
+                    GUI.planner.P1_1_JFrame$5
+                </Class>
+                <Class sourceFile="P1_2_JFrame.java">
+                    GUI.planner.P1_2_JFrame
+                </Class>
+                <Class sourceFile="P1_2_JFrame.java">
+                    GUI.planner.P1_2_JFrame$1
+                </Class>
+                <Class sourceFile="P1_2_JFrame.java">
+                    GUI.planner.P1_2_JFrame$2
+                </Class>
+                <Class sourceFile="P1_2_JFrame.java">
+                    GUI.planner.P1_2_JFrame$3
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$1
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$10
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$11
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$2
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$3
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$4
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$5
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$6
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$7
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$8
+                </Class>
+                <Class sourceFile="P3_JFrame.java">
+                    GUI.planner.P3_JFrame$9
+                </Class>
+                <Class sourceFile="P4_1_JFrame.java">
+                    GUI.planner.P4_1_JFrame
+                </Class>
+                <Class sourceFile="P4_1_JFrame.java">
+                    GUI.planner.P4_1_JFrame$1
+                </Class>
+                <Class sourceFile="P4_1_JFrame.java">
+                    GUI.planner.P4_1_JFrame$2
+                </Class>
+                <Class sourceFile="P4_1_JFrame.java">
+                    GUI.planner.P4_1_JFrame$3
+                </Class>
+                <Class sourceFile="P4_2_JFrame.java">
+                    GUI.planner.P4_2_JFrame
+                </Class>
+                <Class sourceFile="P4_2_JFrame.java">
+                    GUI.planner.P4_2_JFrame$1
+                </Class>
+                <Class sourceFile="P4_2_JFrame.java">
+                    GUI.planner.P4_2_JFrame$2
+                </Class>
+                <Class sourceFile="P4_2_JFrame.java">
+                    GUI.planner.P4_2_JFrame$3
+                </Class>
+                <Class sourceFile="P4_2_JFrame.java">
+                    GUI.planner.P4_2_JFrame$4
+                </Class>
+                <Class sourceFile="P4_2_JFrame.java">
+                    GUI.planner.P4_2_JFrame$5
+                </Class>
+                <Class sourceFile="P4_2_JFrame.java">
+                    GUI.planner.P4_2_JFrame$6
+                </Class>
+                <Class sourceFile="P4_2_JFrame.java">
+                    GUI.planner.P4_2_JFrame$7
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>Activity</Package>
+                <Package>Activity.Planned</Package>
+                <Package>Activity.Unplanned</Package>
+                <Package>Activity.competence</Package>
+                <Package>Activity.material</Package>
+                <Package>java.awt</Package>
+                <Package>java.awt.event</Package>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.util</Package>
+                <Package>java.util.logging</Package>
+                <Package>javax.swing</Package>
+                <Package>javax.swing.border</Package>
+                <Package>javax.swing.table</Package>
+                <Package>users</Package>
+                <Package>users.maintainer</Package>
+                <Package>users.planner</Package>
+                <Package>users.systemAdmin</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>GUI</Package>
+                <Package>GUI.systemAdmin</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="GUI.systemAdmin">
+            <Stats>
+                <TotalClasses>26</TotalClasses>
+                <ConcreteClasses>26</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>16</Ce>
+                <A>0</A>
+                <I>0.94</I>
+                <D>0.06</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="SA1_1_JFrame.java">
+                    GUI.systemAdmin.SA1_1_JFrame
+                </Class>
+                <Class sourceFile="SA1_1_JFrame.java">
+                    GUI.systemAdmin.SA1_1_JFrame$1
+                </Class>
+                <Class sourceFile="SA1_1_JFrame.java">
+                    GUI.systemAdmin.SA1_1_JFrame$2
+                </Class>
+                <Class sourceFile="SA1_1_JFrame.java">
+                    GUI.systemAdmin.SA1_1_JFrame$3
+                </Class>
+                <Class sourceFile="SA1_1_JFrame.java">
+                    GUI.systemAdmin.SA1_1_JFrame$4
+                </Class>
+                <Class sourceFile="SA1_1_JFrame.java">
+                    GUI.systemAdmin.SA1_1_JFrame$5
+                </Class>
+                <Class sourceFile="SA1_1_JFrame.java">
+                    GUI.systemAdmin.SA1_1_JFrame$6
+                </Class>
+                <Class sourceFile="SA1_2_JFrame.java">
+                    GUI.systemAdmin.SA1_2_JFrame
+                </Class>
+                <Class sourceFile="SA1_2_JFrame.java">
+                    GUI.systemAdmin.SA1_2_JFrame$1
+                </Class>
+                <Class sourceFile="SA1_2_JFrame.java">
+                    GUI.systemAdmin.SA1_2_JFrame$2
+                </Class>
+                <Class sourceFile="SA1_2_JFrame.java">
+                    GUI.systemAdmin.SA1_2_JFrame$3
+                </Class>
+                <Class sourceFile="SA1_2_JFrame.java">
+                    GUI.systemAdmin.SA1_2_JFrame$4
+                </Class>
+                <Class sourceFile="SA1_2_JFrame.java">
+                    GUI.systemAdmin.SA1_2_JFrame$5
+                </Class>
+                <Class sourceFile="SA1_2_JFrame.java">
+                    GUI.systemAdmin.SA1_2_JFrame$6
+                </Class>
+                <Class sourceFile="SA1_2_JFrame.java">
+                    GUI.systemAdmin.SA1_2_JFrame$7
+                </Class>
+                <Class sourceFile="SA1_3_JFrame.java">
+                    GUI.systemAdmin.SA1_3_JFrame
+                </Class>
+                <Class sourceFile="SA1_3_JFrame.java">
+                    GUI.systemAdmin.SA1_3_JFrame$1
+                </Class>
+                <Class sourceFile="SA1_3_JFrame.java">
+                    GUI.systemAdmin.SA1_3_JFrame$2
+                </Class>
+                <Class sourceFile="SA1_3_JFrame.java">
+                    GUI.systemAdmin.SA1_3_JFrame$3
+                </Class>
+                <Class sourceFile="SA1_3_JFrame.java">
+                    GUI.systemAdmin.SA1_3_JFrame$4
+                </Class>
+                <Class sourceFile="SA1_3_JFrame.java">
+                    GUI.systemAdmin.SA1_3_JFrame$5
+                </Class>
+                <Class sourceFile="SA1_3_JFrame.java">
+                    GUI.systemAdmin.SA1_3_JFrame$6
+                </Class>
+                <Class sourceFile="SA1_3_JFrame.java">
+                    GUI.systemAdmin.SA1_3_JFrame$7
+                </Class>
+                <Class sourceFile="SA1_3_JFrame.java">
+                    GUI.systemAdmin.SA1_3_JFrame$8
+                </Class>
+                <Class sourceFile="SA1_4_JFrame.java">
+                    GUI.systemAdmin.SA1_4_JFrame
+                </Class>
+                <Class sourceFile="SA1_4_JFrame.java">
+                    GUI.systemAdmin.SA1_4_JFrame$1
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>Activity</Package>
+                <Package>Activity.competence</Package>
+                <Package>GUI.planner</Package>
+                <Package>java.awt</Package>
+                <Package>java.awt.event</Package>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+                <Package>java.util.logging</Package>
+                <Package>javax.swing</Package>
+                <Package>javax.swing.event</Package>
+                <Package>javax.swing.table</Package>
+                <Package>javax.swing.text</Package>
+                <Package>users</Package>
+                <Package>users.maintainer</Package>
+                <Package>users.systemAdmin</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>GUI</Package>
             </UsedBy>
         </Package>
 
@@ -67,6 +662,14 @@
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
+        <Package name="java.util.concurrent.atomic">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.util.logging">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
         <Package name="javax.swing">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
@@ -75,228 +678,240 @@
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
+        <Package name="javax.swing.event">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
         <Package name="javax.swing.table">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
-        <Package name="org.junit">
+        <Package name="javax.swing.text">
             <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
-        <Package name="progettogruppo7">
-            <Stats>
-                <TotalClasses>12</TotalClasses>
-                <ConcreteClasses>12</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>1</Ca>
-                <Ce>11</Ce>
-                <A>0</A>
-                <I>0.92</I>
-                <D>0.08</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="Activities.java">
-                    progettogruppo7.Activities
-                </Class>
-                <Class sourceFile="Activity.java">
-                    progettogruppo7.Activity
-                </Class>
-                <Class sourceFile="Activity.java">
-                    progettogruppo7.Activity$Type
-                </Class>
-                <Class sourceFile="ButtonColumn.java">
-                    progettogruppo7.ButtonColumn
-                </Class>
-                <Class sourceFile="Competence.java">
-                    progettogruppo7.Competence
-                </Class>
-                <Class sourceFile="Competences.java">
-                    progettogruppo7.Competences
-                </Class>
-                <Class sourceFile="Material.java">
-                    progettogruppo7.Material
-                </Class>
-                <Class sourceFile="Materials.java">
-                    progettogruppo7.Materials
-                </Class>
-                <Class sourceFile="Procedure.java">
-                    progettogruppo7.Procedure
-                </Class>
-                <Class sourceFile="Procedures.java">
-                    progettogruppo7.Procedures
-                </Class>
-                <Class sourceFile="ProgettoGruppo7.java">
-                    progettogruppo7.ProgettoGruppo7
-                </Class>
-                <Class sourceFile="Site.java">
-                    progettogruppo7.Site
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.awt</Package>
-                <Package>java.awt.event</Package>
-                <Package>java.io</Package>
-                <Package>java.lang</Package>
-                <Package>java.time</Package>
-                <Package>java.time.temporal</Package>
-                <Package>java.util</Package>
-                <Package>javax.swing</Package>
-                <Package>javax.swing.border</Package>
-                <Package>javax.swing.table</Package>
-                <Package>progettogruppo7.Exceptions</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>progettogruppo7.Users</Package>
-            </UsedBy>
+        <Package name="org.apache.pdfbox.pdmodel">
+            <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
-        <Package name="progettogruppo7.Exceptions">
-            <Stats>
-                <TotalClasses>5</TotalClasses>
-                <ConcreteClasses>5</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
-                <Ca>2</Ca>
-                <Ce>1</Ce>
-                <A>0</A>
-                <I>0.33</I>
-                <D>0.67</D>
-                <V>1</V>
-            </Stats>
-
-            <AbstractClasses>
-            </AbstractClasses>
-
-            <ConcreteClasses>
-                <Class sourceFile="ActivityException.java">
-                    progettogruppo7.Exceptions.ActivityException
-                </Class>
-                <Class sourceFile="CompetenceException.java">
-                    progettogruppo7.Exceptions.CompetenceException
-                </Class>
-                <Class sourceFile="MaterialException.java">
-                    progettogruppo7.Exceptions.MaterialException
-                </Class>
-                <Class sourceFile="ProcedureDoesntExistException.java">
-                    progettogruppo7.Exceptions.ProcedureDoesntExistException
-                </Class>
-                <Class sourceFile="UsernameException.java">
-                    progettogruppo7.Exceptions.UsernameException
-                </Class>
-            </ConcreteClasses>
-
-            <DependsUpon>
-                <Package>java.lang</Package>
-            </DependsUpon>
-
-            <UsedBy>
-                <Package>progettogruppo7</Package>
-                <Package>progettogruppo7.Users</Package>
-            </UsedBy>
+        <Package name="org.apache.pdfbox.pdmodel.font">
+            <error>No stats available: package referenced, but not analyzed.</error>
         </Package>
 
-        <Package name="progettogruppo7.Users">
+        <Package name="users">
             <Stats>
-                <TotalClasses>22</TotalClasses>
-                <ConcreteClasses>16</ConcreteClasses>
-                <AbstractClasses>6</AbstractClasses>
-                <Ca>1</Ca>
-                <Ce>6</Ce>
-                <A>0.27</A>
-                <I>0.86</I>
-                <D>0.13</D>
+                <TotalClasses>4</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>3</AbstractClasses>
+                <Ca>6</Ca>
+                <Ce>4</Ce>
+                <A>0.75</A>
+                <I>0.4</I>
+                <D>0.15</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
-                <Class sourceFile="AbstractAdmin.java">
-                    progettogruppo7.Users.AbstractAdmin
-                </Class>
-                <Class sourceFile="AbstractEmployee.java">
-                    progettogruppo7.Users.AbstractEmployee
-                </Class>
-                <Class sourceFile="AbstractUser.java">
-                    progettogruppo7.Users.AbstractUser
-                </Class>
                 <Class sourceFile="AbstractUserFactory.java">
-                    progettogruppo7.Users.AbstractUserFactory
+                    users.AbstractUserFactory
                 </Class>
                 <Class sourceFile="JDBC.java">
-                    progettogruppo7.Users.JDBC
+                    users.JDBC
                 </Class>
                 <Class sourceFile="User.java">
-                    progettogruppo7.Users.User
+                    users.User
                 </Class>
             </AbstractClasses>
 
             <ConcreteClasses>
                 <Class sourceFile="AbstractUserFactory.java">
-                    progettogruppo7.Users.AbstractUserFactory$Role
-                </Class>
-                <Class sourceFile="AbstractUserFactory.java">
-                    progettogruppo7.Users.AbstractUserFactory$weekDay
-                </Class>
-                <Class sourceFile="Availability.java">
-                    progettogruppo7.Users.Availability
-                </Class>
-                <Class sourceFile="Availability.java">
-                    progettogruppo7.Users.Availability$TimeSlots
-                </Class>
-                <Class sourceFile="Availability.java">
-                    progettogruppo7.Users.Availability$WeekDay
-                </Class>
-                <Class sourceFile="Maintainer.java">
-                    progettogruppo7.Users.Maintainer
-                </Class>
-                <Class sourceFile="MaintainerFactory.java">
-                    progettogruppo7.Users.MaintainerFactory
-                </Class>
-                <Class sourceFile="Maintainer_JDBC.java">
-                    progettogruppo7.Users.Maintainer_JDBC
-                </Class>
-                <Class sourceFile="Maintainers.java">
-                    progettogruppo7.Users.Maintainers
-                </Class>
-                <Class sourceFile="Planner.java">
-                    progettogruppo7.Users.Planner
-                </Class>
-                <Class sourceFile="PlannerFactory.java">
-                    progettogruppo7.Users.PlannerFactory
-                </Class>
-                <Class sourceFile="Planner_JDBC.java">
-                    progettogruppo7.Users.Planner_JDBC
-                </Class>
-                <Class sourceFile="SystemAdmin.java">
-                    progettogruppo7.Users.SystemAdmin
-                </Class>
-                <Class sourceFile="SystemAdminFactory.java">
-                    progettogruppo7.Users.SystemAdminFactory
-                </Class>
-                <Class sourceFile="SystemAdmin_JDBC.java">
-                    progettogruppo7.Users.SystemAdmin_JDBC
-                </Class>
-                <Class sourceFile="SystemUsers.java">
-                    progettogruppo7.Users.SystemUsers
+                    users.AbstractUserFactory$Role
                 </Class>
             </ConcreteClasses>
 
             <DependsUpon>
+                <Package>Activity</Package>
+                <Package>Activity.competence</Package>
+                <Package>java.lang</Package>
+                <Package>java.util</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>GUI</Package>
+                <Package>GUI.planner</Package>
+                <Package>GUI.systemAdmin</Package>
+                <Package>users.maintainer</Package>
+                <Package>users.planner</Package>
+                <Package>users.systemAdmin</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="users.maintainer">
+            <Stats>
+                <TotalClasses>7</TotalClasses>
+                <ConcreteClasses>7</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>4</Ca>
+                <Ce>8</Ce>
+                <A>0</A>
+                <I>0.67</I>
+                <D>0.33</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Availability.java">
+                    users.maintainer.Availability
+                </Class>
+                <Class sourceFile="Availability.java">
+                    users.maintainer.Availability$TimeSlots
+                </Class>
+                <Class sourceFile="Availability.java">
+                    users.maintainer.Availability$WeekDay
+                </Class>
+                <Class sourceFile="Availability.java">
+                    users.maintainer.Availability$week
+                </Class>
+                <Class sourceFile="Maintainer.java">
+                    users.maintainer.Maintainer
+                </Class>
+                <Class sourceFile="MaintainerFactory.java">
+                    users.maintainer.MaintainerFactory
+                </Class>
+                <Class sourceFile="Maintainer_JDBC.java">
+                    users.maintainer.Maintainer_JDBC
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>Activity</Package>
+                <Package>Activity.competence</Package>
                 <Package>java.io</Package>
                 <Package>java.lang</Package>
                 <Package>java.sql</Package>
                 <Package>java.util</Package>
-                <Package>progettogruppo7</Package>
-                <Package>progettogruppo7.Exceptions</Package>
+                <Package>java.util.logging</Package>
+                <Package>users</Package>
             </DependsUpon>
 
             <UsedBy>
-                <Package>Default</Package>
+                <Package>GUI.planner</Package>
+                <Package>GUI.systemAdmin</Package>
+                <Package>users.planner</Package>
+                <Package>users.systemAdmin</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="users.planner">
+            <Stats>
+                <TotalClasses>3</TotalClasses>
+                <ConcreteClasses>3</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>12</Ce>
+                <A>0</A>
+                <I>0.8</I>
+                <D>0.2</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Planner.java">
+                    users.planner.Planner
+                </Class>
+                <Class sourceFile="PlannerFactory.java">
+                    users.planner.PlannerFactory
+                </Class>
+                <Class sourceFile="Planner_JDBC.java">
+                    users.planner.Planner_JDBC
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>Activity</Package>
+                <Package>Activity.Planned</Package>
+                <Package>Activity.Unplanned</Package>
+                <Package>Activity.competence</Package>
+                <Package>Activity.material</Package>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.sql</Package>
+                <Package>java.util</Package>
+                <Package>java.util.logging</Package>
+                <Package>users</Package>
+                <Package>users.maintainer</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>GUI</Package>
+                <Package>GUI.planner</Package>
+                <Package>users.systemAdmin</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="users.systemAdmin">
+            <Stats>
+                <TotalClasses>6</TotalClasses>
+                <ConcreteClasses>6</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>3</Ca>
+                <Ce>13</Ce>
+                <A>0</A>
+                <I>0.81</I>
+                <D>0.19</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="SystemAdmin.java">
+                    users.systemAdmin.SystemAdmin
+                </Class>
+                <Class sourceFile="SystemAdminFactory.java">
+                    users.systemAdmin.SystemAdminFactory
+                </Class>
+                <Class sourceFile="SystemAdmin_JDBC.java">
+                    users.systemAdmin.SystemAdmin_JDBC
+                </Class>
+                <Class sourceFile="SystemAdmin_JDBC.java">
+                    users.systemAdmin.SystemAdmin_JDBC$1
+                </Class>
+                <Class sourceFile="SystemUsers.java">
+                    users.systemAdmin.SystemUsers
+                </Class>
+                <Class sourceFile="UsernameException.java">
+                    users.systemAdmin.UsernameException
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>Activity</Package>
+                <Package>Activity.Planned</Package>
+                <Package>Activity.Unplanned</Package>
+                <Package>Activity.competence</Package>
+                <Package>Activity.material</Package>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.sql</Package>
+                <Package>java.util</Package>
+                <Package>java.util.logging</Package>
+                <Package>users</Package>
+                <Package>users.maintainer</Package>
+                <Package>users.planner</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>GUI</Package>
+                <Package>GUI.planner</Package>
+                <Package>GUI.systemAdmin</Package>
             </UsedBy>
         </Package>
     </Packages>

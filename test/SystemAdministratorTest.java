@@ -5,21 +5,23 @@
  */
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import progettogruppo7.Exceptions.UsernameException;
+import users.AbstractUserFactory;
+import users.User;
+import users.maintainer.MaintainerFactory;
+import users.planner.PlannerFactory;
+import users.systemAdmin.SystemAdmin;
+import users.systemAdmin.SystemAdminFactory;
 
-import progettogruppo7.Users.*;
+
 
 /**
  *
- * @author User
+ * @author Grazia D'Amore
  */
 public class SystemAdministratorTest { 
     private AbstractUserFactory pfactory = new PlannerFactory();
@@ -95,20 +97,20 @@ public class SystemAdministratorTest {
         planners.put("settimo",admin.addUser("settimo", "test", AbstractUserFactory.Role.PLANNER));
         maintainers.put("ottavo",admin.addUser("ottavo", "test", AbstractUserFactory.Role.MAINTAINER));
         
-        assertNotNull("Received Map is null;", admin.getUsers());
+        assertNotNull("Received Map is null;", ((SystemAdmin)admin).getUsers());
         assertNotNull("Provided Map is null;", planners);
         assertNotNull("Provided Map is null;", maintainers);
-        assertEquals("Size mismatch for maps;",maintainers.size(), admin.getUsers().getMaintainers().size());
-        assertEquals("Size mismatch for maps;", planners.size(), admin.getUsers().getPlanners().size());
-        assertTrue("Missing keys in received map;", admin.getUsers().getMaintainers().keySet().containsAll(maintainers.keySet()));
-        assertTrue("Missing keys in received map;", admin.getUsers().getPlanners().keySet().containsAll(planners.keySet()));
+        assertEquals("Size mismatch for maps;",maintainers.size(), ((SystemAdmin)admin).getUsers().getMaintainers().size());
+        assertEquals("Size mismatch for maps;", planners.size(), ((SystemAdmin)admin).getUsers().getPlanners().size());
+        assertTrue("Missing keys in received map;", ((SystemAdmin)admin).getUsers().getMaintainers().keySet().containsAll(maintainers.keySet()));
+        assertTrue("Missing keys in received map;", ((SystemAdmin)admin).getUsers().getPlanners().keySet().containsAll(planners.keySet()));
         
         maintainers.keySet().stream().forEach((key) -> {
-        assertEquals("Value mismatch for key '" + key + "';", maintainers.get(key), admin.getUsers().getMaintainers().get(key));
+        assertEquals("Value mismatch for key '" + key + "';", maintainers.get(key), ((SystemAdmin)admin).getUsers().getMaintainers().get(key));
         });
 
         planners.keySet().stream().forEach((key) -> {
-        assertEquals("Value mismatch for key '" + key + "';", planners.get(key), admin.getUsers().getPlanners().get(key));
+        assertEquals("Value mismatch for key '" + key + "';", planners.get(key), ((SystemAdmin)admin).getUsers().getPlanners().get(key));
         });
             
        

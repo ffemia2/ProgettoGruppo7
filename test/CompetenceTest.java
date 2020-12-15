@@ -1,7 +1,7 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
-import progettogruppo7.Competence;
-import progettogruppo7.Competences;
+import Activity.competence.Competence;
+import Activity.competence.Competences;
 
 /* @author marco */
 public class CompetenceTest {
