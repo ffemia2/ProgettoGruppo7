@@ -21,49 +21,53 @@ public class Activity {
     private Site site;
     private Materials materials;
     private Type type;
-    //typology
-    private boolean status;
+    private Typology typology;
+    private boolean assigned;
     private Competences competences;
     private String description;
     private int estimatedTime;
     private boolean interruptible;
     private int week; 
 
-    public Activity(int activityID, Site site, String description,Type type ,int estimatedTime, boolean interruptible, int week) {
+    public Activity(int activityID, Site site, String description, Type type ,int estimatedTime, boolean interruptible, int week, Typology typology) {
         this.activityID = activityID;
         this.site = site;
         this.type = type;
+        this.typology = typology;
         this.competences = new Competences();
         this.description = description;
         this.estimatedTime = estimatedTime;
         this.interruptible = interruptible;
-        this.status = false;
+        this.assigned = false;
         //se il valore di week non ha significato assegno il valore della settimana corrente
         if (week > 0 && week < 53) {
             this.week = week;
         } else {
             LocalDate date = LocalDate.now();
             WeekFields weekFields = WeekFields.of(Locale.getDefault());
-            week = date.get(weekFields.weekOfWeekBasedYear());
+            this.week = date.get(weekFields.weekOfWeekBasedYear());
         }
     }
 
-    public Activity(int activityID, Site site, Competences competences, String description,Type type, int estimatedTime, boolean interruptible, int week) {
+    
+    
+    public Activity(int activityID, Site site, Competences competences, String description,Type type, int estimatedTime, boolean interruptible, int week, Typology typology) {
         this.activityID = activityID;
         this.site = site;
         this.type = type;
+        this.typology = typology;
         this.competences = competences;
         this.description = description;
         this.estimatedTime = estimatedTime;
         this.interruptible = interruptible;
-        this.status = false;
+        this.assigned = false;
         //se il valore di week non ha significato assegno il valore della settimana corrente
         if (week > 0 && week < 53) {
             this.week = week;
         } else {
             LocalDate date = LocalDate.now();
             WeekFields weekFields = WeekFields.of(Locale.getDefault());
-            week = date.get(weekFields.weekOfWeekBasedYear());
+            this.week = date.get(weekFields.weekOfWeekBasedYear());
         }
     }
 
@@ -100,12 +104,12 @@ public class Activity {
         this.activityID = activityID;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isAssigned() {
+        return assigned;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setStatus(boolean assigned) {
+        this.assigned = assigned;
     }
     
     public Competences getCompetences() {
@@ -179,10 +183,7 @@ public class Activity {
             return false;
         }
         final Activity other = (Activity) obj;
-        if (this.activityID != other.activityID) {
-            return false;
-        }
-        return true;
+        return this.activityID == other.activityID;
     }
     
 }

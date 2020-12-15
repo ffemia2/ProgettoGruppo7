@@ -5,16 +5,15 @@
  */
 package progettogruppo7.GUI;
 
-import JDBC.SystemAdmin_JDBC;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
-import progettogruppo7.Users.AbstractUser;
-import progettogruppo7.Users.AdminFactory;
+import progettogruppo7.Users.JDBC;
 import progettogruppo7.Users.Maintainer;
-import progettogruppo7.Users.SystemAdministrator;
-import progettogruppo7.Users.UserFactory;
+import progettogruppo7.Users.SystemAdminFactory;
+import progettogruppo7.Users.User;
 
 /**
  *
@@ -23,18 +22,21 @@ import progettogruppo7.Users.UserFactory;
 public class SA1_2_JFrame extends javax.swing.JFrame {
     private DefaultListModel<String> listModel1;
     private DefaultListModel<String> listModel2;
-    private AbstractUser admin;
-    private AdminFactory factory;
-     
+    private User admin;
+    private JDBC jdbc;
+    private SA1_2_JFrame frame; 
     /**
      * Creates new form SA1_2_JFrame
+     * @param admin
      */
-    public SA1_2_JFrame(AbstractUser admin) {
+    public SA1_2_JFrame(User admin) {
         this.admin = admin;
+        this.jdbc = new SystemAdminFactory().createJDBCUser(admin.getUsername(),admin.getPassword());
         this.listModel1 = new DefaultListModel<>();
         this.listModel2 = new DefaultListModel<>();
+        this.frame = this;
         
-        loadUsers();
+        //loadUsers();
         initComponents();
         
         this.jList1.addMouseListener(new MouseAdapter() {
@@ -47,10 +49,10 @@ public class SA1_2_JFrame extends javax.swing.JFrame {
                         Object o = list.getModel().getElementAt(index);
                         String input = String.valueOf(o); 
                         int i = input.indexOf(' ');
-                        String word = input.substring(0, i);
-                        Maintainer m = (Maintainer) admin.getUser(word);
-                        SA1_3_JFrame sa1 = new SA1_3_JFrame(m);
+                        String word = input.substring(0, i); 
+                        SA1_3_JFrame sa1 = new SA1_3_JFrame(admin.getUser(word), admin);
                         sa1.setVisible(true);
+                        frame.dispose();
                         //System.out.println("Double-clicked on: " + o.toString());
                     }                       
                 }
@@ -72,12 +74,13 @@ public class SA1_2_JFrame extends javax.swing.JFrame {
         });
         
         int i = 0;
-        for (AbstractUser u : admin.getUsers().getMaintainers().values()){
+        
+        for (User u : admin.getUsers().getMaintainers().values()){
             listModel1.add(i, u.toString());
             i = i+1;
         }
         i = 0;
-        for (AbstractUser u : admin.getUsers().getPlanners().values()){
+        for (User u : admin.getUsers().getPlanners().values()){
             listModel2.add(i, u.toString());
             i = i+1;
         }
@@ -169,7 +172,7 @@ public class SA1_2_JFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(SA1_2_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        AbstractUser user = SystemAdministrator.SystemAdministrator("","");
+        User user = new SystemAdminFactory().createUser("", "");
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -186,9 +189,11 @@ public class SA1_2_JFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
+
 public void loadUsers(){
-    SystemAdmin_JDBC data = new SystemAdmin_JDBC(admin); 
-    data.loadUsersFromDatabase(admin);
+    Map <String, Maintainer> m = jdbc.loadMaintainersFromDatabase();
+    admin.getUsers().setMaintainers(m);
+    admin.getUsers().setPlanners(jdbc.loadPlannersFromDatabase());
 }
 
 }

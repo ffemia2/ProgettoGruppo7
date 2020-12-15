@@ -5,26 +5,30 @@
  */
 package progettogruppo7.Users;
 
-import progettogruppo7.Users.AbstractUser;
-import progettogruppo7.Users.Maintainer;
-import progettogruppo7.Users.UserFactory;
-import progettogruppo7.Users.Planner;
-
-
 
 /**
  *
  * @author Grazia D'Amore
  */
-public class EmployeeFactory extends UserFactory {
+public class PlannerFactory extends AbstractUserFactory {
 
+    @Override
+    public JDBC createJDBCUser(String username, String password){
+        return new Planner_JDBC(username,password);
+    }
+    
+    @Override
+    public User createUser(String username, String password){
+        return new Planner(username,password);
+    }
+ /*   
     @Override
     protected AbstractUser selectUser(Role role) {
         if (role == Role.MAINTAINER)
             return new Maintainer("", "");
         else
             return new Planner("","");
-    }
+    }*/
         
     
     

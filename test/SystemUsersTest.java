@@ -5,7 +5,6 @@
  */
 
 
-import java.util.Map;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,17 +14,17 @@ import progettogruppo7.Users.*;
 
 /**
  *
- * @author User
+ * @author Grazia D'Amore
  */
 public class SystemUsersTest {
     private SystemUsers users;
-    private AbstractUser admin;
-    private AdminFactory admFact;
+    private User admin;
+    private SystemAdminFactory admFact;
     
     public SystemUsersTest() {
         this.users = SystemUsers.SystemUsers();
-        this.admFact = new AdminFactory();     
-        this.admin = SystemAdministrator.SystemAdministrator("Adam Kadmon", "trello");
+        this.admFact = new SystemAdminFactory();     
+        this.admin = SystemAdmin.SystemAdministrator("Adam Kadmon", "trello");
     }
     
     @BeforeClass
@@ -36,8 +35,6 @@ public class SystemUsersTest {
     public static void tearDownClass() {
     }
 
-    
-
     /**
      * Test of addUser method, of class SystemUsers.
      */
@@ -45,12 +42,12 @@ public class SystemUsersTest {
     public void testAddUser() throws Exception {
         
         System.out.println("addUser");
-        AbstractUser planner1 = admin.createUser("batman", "1234", UserFactory.Role.PLANNER);
-        AbstractUser planner2 = admin.createUser("superman", "1234", UserFactory.Role.PLANNER);
-        AbstractUser planner3 = admin.createUser("spiderman", "1234", UserFactory.Role.PLANNER);
-        AbstractUser maintainer1 = admin.createUser("batwoman", "1234", UserFactory.Role.MAINTAINER);
-        AbstractUser maintainer2 = admin.createUser("wonderwoman", "1234", UserFactory.Role.MAINTAINER);
-        AbstractUser maintainer3 = admin.createUser("catwoman", "1234", UserFactory.Role.MAINTAINER);
+        User planner1 = admin.addUser("batman", "1234", AbstractUserFactory.Role.PLANNER);
+        User planner2 = admin.addUser("superman", "1234", AbstractUserFactory.Role.PLANNER);
+        User planner3 = admin.addUser("spiderman", "1234", AbstractUserFactory.Role.PLANNER);
+        User maintainer1 = admin.addUser("batwoman", "1234", AbstractUserFactory.Role.MAINTAINER);
+        User maintainer2 = admin.addUser("wonderwoman", "1234", AbstractUserFactory.Role.MAINTAINER);
+        User maintainer3 = admin.addUser("catwoman", "1234", AbstractUserFactory.Role.MAINTAINER);
         
         assertNotNull(planner1);
         assertNotNull(planner2);
@@ -59,21 +56,6 @@ public class SystemUsersTest {
         assertNotNull(maintainer2);
         assertNotNull(maintainer3);
 
-    }
-
-    
-    /**
-     * Test of save method, of class SystemUsers.
-     */
-    @Test
-    public void testSave() {
-        
-        System.out.println("save");
-        String filename = "users.txt";
-        users.save(filename);
-        
-    }
-
-    
+    }    
 
 }

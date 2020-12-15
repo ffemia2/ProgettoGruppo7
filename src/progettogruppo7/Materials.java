@@ -21,7 +21,8 @@ public class Materials {
         listaMateriali.remove(m);
     }
     
-    public boolean verifyMaterial(Material m){
+    public boolean verifyMaterial(String s){
+        Material m = new Material(s);
         if(listaMateriali.contains(m)){
             return true;
         }

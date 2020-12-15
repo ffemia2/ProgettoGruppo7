@@ -5,7 +5,6 @@
  */
 package progettogruppo7.GUI;
 
-import JDBC.SystemAdmin_JDBC;
 import java.util.LinkedList;
 import progettogruppo7.Users.*;
 import javax.swing.JOptionPane;
@@ -17,22 +16,23 @@ import javax.swing.JTextField;
  * @author Grazia  D'Amore
  */
 public class SA1_1_JFrame extends javax.swing.JFrame {
-    private AbstractUser admin;
-    private AdminFactory factory;
-    private LinkedList<AbstractUser> added;
-    private LinkedList<AbstractUser> removed;
+    private User admin;
+    private JDBC jdbc;
+    private LinkedList<User> added;
+    private LinkedList<User> removed;
     /**
      * Creates new form SystemAdminJFrame
      */
-    public SA1_1_JFrame() {
-        factory = new AdminFactory();
-        admin = factory.build("Adam Kadmon", "password", UserFactory.Role.SYSTEMADMIN);
-        added = new LinkedList<>();
-        removed = new LinkedList<>();
+    public SA1_1_JFrame(String username, String password) {
+        this.admin = new SystemAdminFactory().createUser(username, password);
+        this.jdbc = new SystemAdminFactory().createJDBCUser(username, password);
+        this.added = new LinkedList<>();
+        this.removed = new LinkedList<>();
+     
         loadUsers();
         initComponents();
         
-        jLabelName.setText(admin.getUsername()+" ,");
+        this.jLabelName.setText(admin.getUsername()+" ,");
     }
 
     /**
@@ -158,20 +158,18 @@ public class SA1_1_JFrame extends javax.swing.JFrame {
                 .addComponent(jButtonNewMaintainer)
                 .addGap(33, 33, 33)
                 .addComponent(jButtonViewEmployes)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -186,18 +184,19 @@ public class SA1_1_JFrame extends javax.swing.JFrame {
             "Password", password
         };
         
+        
         int answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Planner", JOptionPane.OK_CANCEL_OPTION);
         
         if (answer == JOptionPane.OK_OPTION){
             while (password.getText().isEmpty()){
                  this.errorMessage("Please insert a password");
                  answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Planner", JOptionPane.OK_CANCEL_OPTION);
-             }
-            AbstractUser planner = admin.createUser(username.getText(), password.getText(), UserFactory.Role.PLANNER); 
+            }
+            User planner = admin.addUser(username.getText(), password.getText(), AbstractUserFactory.Role.PLANNER); 
             while (planner == null && answer == JOptionPane.OK_OPTION){
                 this.errorMessage("This username is already taken");
                 answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Planner", JOptionPane.OK_CANCEL_OPTION);
-                planner = admin.createUser(username.getText(), password.getText(), UserFactory.Role.PLANNER);
+                planner = admin.addUser(username.getText(), password.getText(), AbstractUserFactory.Role.PLANNER);
              }
             if (planner != null)
                 added.add(planner);
@@ -207,19 +206,7 @@ public class SA1_1_JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNewPlannerActionPerformed
 
     private void jButtonViewEmployesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewEmployesActionPerformed
-        
-        /*LinkedList<AbstractUser> employees = admin.getUsers();
-        DefaultListModel<String> model = new DefaultListModel<>();
-        JList<String> list = new JList<>( model );
-
-        for ( int i = 0; i < employees.size(); i++ ){
-          model.addElement( employees.get(i).toString()+"\n");
-        }*/
-        /*
-        String dependents = admin.getUsers().toString();
-        JOptionPane.showMessageDialog(this, dependents, "Employees", JOptionPane.PLAIN_MESSAGE);
-        */
-        
+       
         SA1_2_JFrame sa1 = new SA1_2_JFrame(admin);
         sa1.setVisible(true);
     }//GEN-LAST:event_jButtonViewEmployesActionPerformed
@@ -240,11 +227,11 @@ public class SA1_1_JFrame extends javax.swing.JFrame {
                 this.errorMessage("Please insert a password");
                 answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Maintainer", JOptionPane.OK_CANCEL_OPTION);
             }    
-            AbstractUser maintainer = admin.createUser(username.getText(), password.getText(), UserFactory.Role.MAINTAINER); 
+            User maintainer = admin.addUser(username.getText(), password.getText(), AbstractUserFactory.Role.MAINTAINER); 
             while (maintainer == null && answer == JOptionPane.OK_OPTION){
                this.errorMessage("This username is already taken");
                answer = JOptionPane.showConfirmDialog(this, fields, "Insert new Maintainer", JOptionPane.OK_CANCEL_OPTION);
-               maintainer = admin.createUser(username.getText(), password.getText(), UserFactory.Role.MAINTAINER);
+               maintainer = admin.addUser(username.getText(), password.getText(), AbstractUserFactory.Role.MAINTAINER);
            }
             if (maintainer != null)
                 added.add(maintainer);
@@ -252,9 +239,8 @@ public class SA1_1_JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNewMaintainerActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (admin.getUsers() != null){
-            SystemAdmin_JDBC data = new SystemAdmin_JDBC(admin); 
-            data.saveUsersOnDatabase(added);
+        if (added != null){ 
+            jdbc.saveUsersOnDatabase(added);
         }
     }//GEN-LAST:event_formWindowClosing
 
@@ -287,11 +273,12 @@ public class SA1_1_JFrame extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new SA1_1_JFrame().setVisible(true);
+                new SA1_1_JFrame("Adam","Kadmon").setVisible(true);
             }
         });
     }
@@ -317,9 +304,9 @@ public void infoMessage(String str){
     JOptionPane.showMessageDialog(this, str, "Info", JOptionPane.INFORMATION_MESSAGE);
 }
 
-public void loadUsers(){
-    SystemAdmin_JDBC data = new SystemAdmin_JDBC(admin); 
-    data.loadUsersFromDatabase(admin);
+public void loadUsers(){ 
+    admin.getUsers().setMaintainers(jdbc.loadMaintainersFromDatabase());
+    admin.getUsers().setPlanners(jdbc.loadPlannersFromDatabase());
 }
 
 

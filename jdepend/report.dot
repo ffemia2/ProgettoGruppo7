@@ -1,0 +1,131 @@
+
+digraph g {
+        graph [
+	    rankdir = "LR"
+	];
+	node [
+	    fontsize = "12"
+	    fontname = "Courier"
+	    shape = "ellipse"
+	];
+	edge[];
+	"Default" [
+        label="Default | Total Classes: 1"
+	shape="record"
+	color=".99 0 .9"
+	style=filled
+    ];
+    "Default" -> "java.io"
+    "Default" -> "java.lang"
+    "Default" -> "org.junit"
+    "Default" -> "progettogruppo7.Users"
+    "java.awt" [
+        label="java.awt | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "java.awt.event" [
+        label="java.awt.event | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "java.io" [
+        label="java.io | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "java.lang" [
+        label="java.lang | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "java.sql" [
+        label="java.sql | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "java.time" [
+        label="java.time | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "java.time.temporal" [
+        label="java.time.temporal | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "java.util" [
+        label="java.util | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "javax.swing" [
+        label="javax.swing | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "javax.swing.border" [
+        label="javax.swing.border | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "javax.swing.table" [
+        label="javax.swing.table | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "org.junit" [
+        label="org.junit | Total Classes: "
+	shape="record"
+	color=".99 0.0 .9"
+	style=filled
+    ];
+    "progettogruppo7" [
+        label="progettogruppo7 | Total Classes: 12"
+	shape="record"
+	color=".99 0.08 .9"
+	style=filled
+    ];
+    "progettogruppo7" -> "java.awt"
+    "progettogruppo7" -> "java.awt.event"
+    "progettogruppo7" -> "java.io"
+    "progettogruppo7" -> "java.lang"
+    "progettogruppo7" -> "java.time"
+    "progettogruppo7" -> "java.time.temporal"
+    "progettogruppo7" -> "java.util"
+    "progettogruppo7" -> "javax.swing"
+    "progettogruppo7" -> "javax.swing.border"
+    "progettogruppo7" -> "javax.swing.table"
+    "progettogruppo7" -> "progettogruppo7.Exceptions"
+    "progettogruppo7.Exceptions" [
+        label="progettogruppo7.Exceptions | Total Classes: 5"
+	shape="record"
+	color=".99 0.67 .9"
+	style=filled
+    ];
+    "progettogruppo7.Exceptions" -> "java.lang"
+    "progettogruppo7.Users" [
+        label="progettogruppo7.Users | Total Classes: 22"
+	shape="record"
+	color=".99 0.13 .9"
+	style=filled
+    ];
+    "progettogruppo7.Users" -> "java.io"
+    "progettogruppo7.Users" -> "java.lang"
+    "progettogruppo7.Users" -> "java.sql"
+    "progettogruppo7.Users" -> "java.util"
+    "progettogruppo7.Users" -> "progettogruppo7"
+    "progettogruppo7.Users" -> "progettogruppo7.Exceptions"
+    
+}

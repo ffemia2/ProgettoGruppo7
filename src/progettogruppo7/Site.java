@@ -32,7 +32,7 @@ public class Site {
 
     @Override
     public String toString() {
-        return "" + factorySite + ", " + department;
+        return factorySite + " " + department;
     }
 
     @Override
@@ -63,4 +63,6 @@ public class Site {
         }
         return true;
     }
+    
+    
 }

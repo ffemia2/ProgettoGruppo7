@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -18,6 +19,7 @@ import progettogruppo7.Activity;
 import progettogruppo7.Competence;
 import progettogruppo7.Competences;
 import progettogruppo7.Site;
+import static progettogruppo7.Typology.*;
 import progettogruppo7.Users.Maintainer;
 import progettogruppo7.Users.Planner;
 import progettogruppo7.Users.AbstractUserFactory;
@@ -36,7 +38,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
      private JDBC jdbc;
      private Activity activity;
      private Map<String,Maintainer> maintainers;
-     
+     private JFrame f;
      
     /**
      * Creates new form P4_1_JFrame
@@ -46,8 +48,9 @@ public class P4_1_JFrame extends javax.swing.JFrame {
         this.jdbc = new PlannerFactory().createJDBCUser(planner.getUsername(), planner.getPassword());
         this.listModel = new DefaultListModel<>();
         this.activity = act;
-        this.tableModel = new DefaultTableModel(new String[] {"Maintainer", "Skills", "Avail MON", "Avail TUE", "Avail WED", "Avail THU", "Avail FRI", "Avail SAT", "Avail SUN" },0);
-        
+        this.tableModel = new DefaultTableModel(new String[] { "Maintainer", "Skills", "Avail MON", "Avail TUE", "Avail WED", "Avail THU", "Avail FRI", "Avail SAT", "Avail SUN" },0);
+        this.f=this;
+        loadUsers();
         initComponents();
         
         this.jLabelWeekNEdit.setText("" + activity.getWeek());
@@ -60,6 +63,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
                     if (col > 1 ){
                         P4_2_JFrame p4 = new P4_2_JFrame(activity,String.valueOf(jTable1.getModel().getValueAt(row, 0)),col-1);
                         p4.setVisible(true);
+                        f.dispose();
                     }         
             }
         });

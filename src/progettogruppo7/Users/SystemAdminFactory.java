@@ -10,8 +10,17 @@ package progettogruppo7.Users;
  *
  * @author Grazia D'Amore
  */
-public class AdminFactory extends UserFactory{
+public class SystemAdminFactory extends AbstractUserFactory{
 
+    public JDBC createJDBCUser(String username, String password){
+        return new SystemAdmin_JDBC(username,password);
+    }
+    
+    public User createUser(String username, String password){
+        return SystemAdmin.SystemAdministrator(username, password);
+    }
+    
+    /*
     @Override
     protected AbstractUser selectUser(Role role) {
        if (role == Role.SYSTEMADMIN)
@@ -19,5 +28,5 @@ public class AdminFactory extends UserFactory{
        else
            return null;
     }
-    
+    */
 }

@@ -5,18 +5,8 @@
  */
 package progettogruppo7.Users;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import progettogruppo7.Exceptions.UsernameException;
 import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,7 +14,7 @@ import java.util.Objects;
  *
  * @author Rosanna
  */
-public class SystemUsers implements Serializable{
+public class SystemUsers {
     //DESIGN PATTERN: SINGLETON
     private static SystemUsers single_instance=null; 
     
@@ -50,16 +40,16 @@ public class SystemUsers implements Serializable{
         return single_instance; 
     } 
     
-    public AbstractUser addUser(AbstractUser u) throws UsernameException{
+    public User addUser(User u) throws UsernameException{
         if (planners.containsKey(u.getUsername()) || maintainers.containsKey(u.getUsername()))
             throw new UsernameException("Username not available"); 
         
-        if (u.getRole() == UserFactory.Role.PLANNER){
+        if (u.getRole() == AbstractUserFactory.Role.PLANNER){
             Planner p = new Planner(u.getUsername(),u.getPassword());
             planners.put(u.getUsername(), p);
             return p;
         }
-        else if (u.getRole() == UserFactory.Role.MAINTAINER){
+        else if (u.getRole() == AbstractUserFactory.Role.MAINTAINER){
             Maintainer m = new Maintainer(u.getUsername(),u.getPassword());
             maintainers.put(u.getUsername(), m);
             return m;
@@ -68,18 +58,19 @@ public class SystemUsers implements Serializable{
             return null;
     }
     
-    public AbstractUser removeUser(AbstractUser u){
-        if (u.getRole() == UserFactory.Role.PLANNER)
+    public User removeUser(User u){
+        
+        if (u.getRole() == AbstractUserFactory.Role.PLANNER)
             return  planners.remove(u.getUsername());
-        else if (u.getRole() == UserFactory.Role.MAINTAINER)
+        else if (u.getRole() == AbstractUserFactory.Role.MAINTAINER)
             return maintainers.remove(u.getUsername());
         else
             return null;
     }
 
     
-    public AbstractUser getUser(String username){
-        AbstractUser user = planners.get(username);
+    public User getUser(String username){
+        User user = planners.get(username);
         if (user == null)
             user = maintainers.get(username);
         return user;
@@ -100,7 +91,7 @@ public class SystemUsers implements Serializable{
     public void setPlanners(Map<String, Planner> planners) {
         this.planners = planners;
     }
-
+    /*
     public void save(String filename){
          try(ObjectOutputStream p = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(filename)))){
             p.writeObject(this);
@@ -124,7 +115,7 @@ public class SystemUsers implements Serializable{
         }
         return ab;
     }
-
+    */
     @Override
     public String toString(){
         String str = "--- MAINTAINERS --" + "\n";
@@ -160,14 +151,11 @@ public class SystemUsers implements Serializable{
             return false;
         }
         final SystemUsers other = (SystemUsers) obj;
-        
+                
         if (!Objects.equals(this.planners, other.planners)) {
             return false;
         }
-        if (!Objects.equals(this.maintainers, other.maintainers)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.maintainers, other.maintainers);
     }
 
    

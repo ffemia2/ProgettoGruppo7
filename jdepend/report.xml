@@ -1,0 +1,306 @@
+<?xml version="1.0"?>
+<JDepend>
+    <Packages>
+
+        <Package name="Default">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>4</Ce>
+                <A>0</A>
+                <I>1</I>
+                <D>0</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="SystemUsersTest.java">
+                    SystemUsersTest
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>org.junit</Package>
+                <Package>progettogruppo7.Users</Package>
+            </DependsUpon>
+
+            <UsedBy>
+            </UsedBy>
+        </Package>
+
+        <Package name="java.awt">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.awt.event">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.io">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.lang">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.sql">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.time">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.time.temporal">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="java.util">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javax.swing">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javax.swing.border">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="javax.swing.table">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="org.junit">
+            <error>No stats available: package referenced, but not analyzed.</error>
+        </Package>
+
+        <Package name="progettogruppo7">
+            <Stats>
+                <TotalClasses>12</TotalClasses>
+                <ConcreteClasses>12</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>11</Ce>
+                <A>0</A>
+                <I>0.92</I>
+                <D>0.08</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="Activities.java">
+                    progettogruppo7.Activities
+                </Class>
+                <Class sourceFile="Activity.java">
+                    progettogruppo7.Activity
+                </Class>
+                <Class sourceFile="Activity.java">
+                    progettogruppo7.Activity$Type
+                </Class>
+                <Class sourceFile="ButtonColumn.java">
+                    progettogruppo7.ButtonColumn
+                </Class>
+                <Class sourceFile="Competence.java">
+                    progettogruppo7.Competence
+                </Class>
+                <Class sourceFile="Competences.java">
+                    progettogruppo7.Competences
+                </Class>
+                <Class sourceFile="Material.java">
+                    progettogruppo7.Material
+                </Class>
+                <Class sourceFile="Materials.java">
+                    progettogruppo7.Materials
+                </Class>
+                <Class sourceFile="Procedure.java">
+                    progettogruppo7.Procedure
+                </Class>
+                <Class sourceFile="Procedures.java">
+                    progettogruppo7.Procedures
+                </Class>
+                <Class sourceFile="ProgettoGruppo7.java">
+                    progettogruppo7.ProgettoGruppo7
+                </Class>
+                <Class sourceFile="Site.java">
+                    progettogruppo7.Site
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.awt</Package>
+                <Package>java.awt.event</Package>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.time</Package>
+                <Package>java.time.temporal</Package>
+                <Package>java.util</Package>
+                <Package>javax.swing</Package>
+                <Package>javax.swing.border</Package>
+                <Package>javax.swing.table</Package>
+                <Package>progettogruppo7.Exceptions</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>progettogruppo7.Users</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="progettogruppo7.Exceptions">
+            <Stats>
+                <TotalClasses>5</TotalClasses>
+                <ConcreteClasses>5</ConcreteClasses>
+                <AbstractClasses>0</AbstractClasses>
+                <Ca>2</Ca>
+                <Ce>1</Ce>
+                <A>0</A>
+                <I>0.33</I>
+                <D>0.67</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="ActivityException.java">
+                    progettogruppo7.Exceptions.ActivityException
+                </Class>
+                <Class sourceFile="CompetenceException.java">
+                    progettogruppo7.Exceptions.CompetenceException
+                </Class>
+                <Class sourceFile="MaterialException.java">
+                    progettogruppo7.Exceptions.MaterialException
+                </Class>
+                <Class sourceFile="ProcedureDoesntExistException.java">
+                    progettogruppo7.Exceptions.ProcedureDoesntExistException
+                </Class>
+                <Class sourceFile="UsernameException.java">
+                    progettogruppo7.Exceptions.UsernameException
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>progettogruppo7</Package>
+                <Package>progettogruppo7.Users</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="progettogruppo7.Users">
+            <Stats>
+                <TotalClasses>22</TotalClasses>
+                <ConcreteClasses>16</ConcreteClasses>
+                <AbstractClasses>6</AbstractClasses>
+                <Ca>1</Ca>
+                <Ce>6</Ce>
+                <A>0.27</A>
+                <I>0.86</I>
+                <D>0.13</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="AbstractAdmin.java">
+                    progettogruppo7.Users.AbstractAdmin
+                </Class>
+                <Class sourceFile="AbstractEmployee.java">
+                    progettogruppo7.Users.AbstractEmployee
+                </Class>
+                <Class sourceFile="AbstractUser.java">
+                    progettogruppo7.Users.AbstractUser
+                </Class>
+                <Class sourceFile="AbstractUserFactory.java">
+                    progettogruppo7.Users.AbstractUserFactory
+                </Class>
+                <Class sourceFile="JDBC.java">
+                    progettogruppo7.Users.JDBC
+                </Class>
+                <Class sourceFile="User.java">
+                    progettogruppo7.Users.User
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+                <Class sourceFile="AbstractUserFactory.java">
+                    progettogruppo7.Users.AbstractUserFactory$Role
+                </Class>
+                <Class sourceFile="AbstractUserFactory.java">
+                    progettogruppo7.Users.AbstractUserFactory$weekDay
+                </Class>
+                <Class sourceFile="Availability.java">
+                    progettogruppo7.Users.Availability
+                </Class>
+                <Class sourceFile="Availability.java">
+                    progettogruppo7.Users.Availability$TimeSlots
+                </Class>
+                <Class sourceFile="Availability.java">
+                    progettogruppo7.Users.Availability$WeekDay
+                </Class>
+                <Class sourceFile="Maintainer.java">
+                    progettogruppo7.Users.Maintainer
+                </Class>
+                <Class sourceFile="MaintainerFactory.java">
+                    progettogruppo7.Users.MaintainerFactory
+                </Class>
+                <Class sourceFile="Maintainer_JDBC.java">
+                    progettogruppo7.Users.Maintainer_JDBC
+                </Class>
+                <Class sourceFile="Maintainers.java">
+                    progettogruppo7.Users.Maintainers
+                </Class>
+                <Class sourceFile="Planner.java">
+                    progettogruppo7.Users.Planner
+                </Class>
+                <Class sourceFile="PlannerFactory.java">
+                    progettogruppo7.Users.PlannerFactory
+                </Class>
+                <Class sourceFile="Planner_JDBC.java">
+                    progettogruppo7.Users.Planner_JDBC
+                </Class>
+                <Class sourceFile="SystemAdmin.java">
+                    progettogruppo7.Users.SystemAdmin
+                </Class>
+                <Class sourceFile="SystemAdminFactory.java">
+                    progettogruppo7.Users.SystemAdminFactory
+                </Class>
+                <Class sourceFile="SystemAdmin_JDBC.java">
+                    progettogruppo7.Users.SystemAdmin_JDBC
+                </Class>
+                <Class sourceFile="SystemUsers.java">
+                    progettogruppo7.Users.SystemUsers
+                </Class>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.io</Package>
+                <Package>java.lang</Package>
+                <Package>java.sql</Package>
+                <Package>java.util</Package>
+                <Package>progettogruppo7</Package>
+                <Package>progettogruppo7.Exceptions</Package>
+            </DependsUpon>
+
+            <UsedBy>
+                <Package>Default</Package>
+            </UsedBy>
+        </Package>
+    </Packages>
+
+    <Cycles>
+    </Cycles>
+</JDepend>

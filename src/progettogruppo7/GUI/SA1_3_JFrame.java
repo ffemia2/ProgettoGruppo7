@@ -5,14 +5,15 @@
  */
 package progettogruppo7.GUI;
 
-import JDBC.Maintainer_JDBC;
-import JDBC.SystemAdmin_JDBC;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
-import progettogruppo7.Users.Maintainer;
-import progettogruppo7.Users.UserFactory;
+import progettogruppo7.Users.AbstractUserFactory;
+import progettogruppo7.Users.JDBC;
+import progettogruppo7.Users.MaintainerFactory;
+import progettogruppo7.Users.SystemAdminFactory;
+import progettogruppo7.Users.User;
 
 /**
  *
@@ -23,13 +24,19 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
     private boolean flag;
     private String[] slots;
     private DefaultTableModel tableModel;
-    private Maintainer employee;
+    private User admin;
+    private JDBC jdbc_admin;
+    private User employee;
+    private JDBC jdbc_employee;
     /**
      * Creates new form SA1_3_JFrame
      */
-    public SA1_3_JFrame(Maintainer employee) {
+    public SA1_3_JFrame(User employee, User admin) {
         this.tableModel = new DefaultTableModel(new String[]{"Hour","Avail MON", "Avail TUE", "Avail WED", "Avail THU", "Avail FRI", "Avail SAT", "Avail SUN" },0);
         this.employee = employee;
+        this.jdbc_employee = new MaintainerFactory().createJDBCUser(employee.getUsername(), employee.getPassword());
+        this.admin = admin;
+        this.jdbc_admin = new SystemAdminFactory().createJDBCUser(employee.getUsername(), employee.getPassword());
         this.flag = false;
         
         initComponents();
@@ -39,6 +46,8 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
             tableModel.addRow(new Object[]{s,"","","","","","",""});
         }
         
+        
+       
         tableModel.addTableModelListener(new TableModelListener(){
             @Override
             public void tableChanged(TableModelEvent tableModelEvent) {
@@ -47,13 +56,13 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
                     int col = jTable1.getSelectedColumn();
                     Object value = jTable1.getValueAt(row, col); 
                     int avail = Integer.valueOf(String.valueOf(value));
-                    employee.addSlotAvailability(week, UserFactory.weekDay.values()[col-1], row, avail);
+                    employee.addSlotAvailability(week, AbstractUserFactory.weekDay.values()[col-1], row, avail);
                     flag = true;
                 }           
             }
         });
         
-        this.jLabelUsername.setText(employee.getUsername());
+        this.jTextField1.setText(employee.getUsername());
         this.jLabelRole.setText(String.valueOf(employee.getRole()));    
     }
 
@@ -66,12 +75,13 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelUsername = new javax.swing.JLabel();
         jLabelRole = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -79,9 +89,6 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
                 formWindowClosing(evt);
             }
         });
-
-        jLabelUsername.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabelUsername.setText("Pablo");
 
         jLabelRole.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabelRole.setText("maintainer");
@@ -99,6 +106,18 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setEditable(false);
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTextField1.setText("Pablo");
+        jTextField1.setBorder(null);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -109,23 +128,28 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 765, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelRole, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
+                                .addComponent(jButton1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(142, 142, 142)
+                                .addComponent(jButton2)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelUsername)
+                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelRole, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -144,7 +168,7 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
         
         for(int i = 0; i < tableModel.getRowCount(); i++ ){
             for (int j = 1; j< tableModel.getColumnCount(); j++){
-                int value = employee.getSlotAvailability(week, UserFactory.weekDay.values()[j-1], i);
+                int value = employee.getSlotAvailability(week, AbstractUserFactory.weekDay.values()[j-1], i);
                 tableModel.setValueAt(value,i, j);
             }
         }       
@@ -152,11 +176,18 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if (flag){
-            Maintainer_JDBC data = new Maintainer_JDBC(employee); 
-            data.saveAvailabiltyOnDatabase();
-        }
+        onClose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       int answer = JOptionPane.showConfirmDialog(this, "You are removing this employee. Are you sure?");
+       if (answer == JOptionPane.YES_OPTION){
+            admin.removeUser(employee);
+            jdbc_admin.removeUserFromDatabase(employee.getUsername(), employee.getRole());
+            flag = false;
+            onClose();
+       }       
+    }//GEN-LAST:event_jButton2ActionPerformed
  
     /**
      * @param args the command line arguments
@@ -184,21 +215,33 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(SA1_3_JFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        Maintainer user = new Maintainer("Pablo","");
+        User user = new MaintainerFactory().createUser("Pablo","");
+        User user1 = new SystemAdminFactory().createUser("si","");
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SA1_3_JFrame(user).setVisible(true);
+                new SA1_3_JFrame(user, user1).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelRole;
-    private javax.swing.JLabel jLabelUsername;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+    public void onClose(){
+       if (flag){
+             
+            jdbc_employee.updateAvailabiltyOnDatabase(employee.getAvailability());
+        }
+        SA1_2_JFrame frame = new SA1_2_JFrame(admin);
+        frame.setVisible(true);  
+        this.dispose();
+    }
 }
