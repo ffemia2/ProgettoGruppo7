@@ -282,7 +282,8 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
             }
             if (answer != null){
                 this.jLabel3.setText(answer);
-                ((SystemAdmin)admin).getUsers().getMaintainers().get(name).setUsername(answer);
+                
+                
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed

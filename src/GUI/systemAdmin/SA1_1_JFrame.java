@@ -230,6 +230,9 @@ public class SA1_1_JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNewPlannerActionPerformed
 
     private void jButtonViewEmployesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewEmployesActionPerformed
+        if (added != null){ 
+            jdbc.saveUsersOnDatabase(added);
+        }
         SA1_2_JFrame sa1 = new SA1_2_JFrame(admin);
         sa1.setVisible(true);
     }//GEN-LAST:event_jButtonViewEmployesActionPerformed

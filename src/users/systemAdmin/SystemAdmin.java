@@ -133,14 +133,21 @@ public class SystemAdmin implements User{
         
     public User changeUsername(User u, String username){
         User found = getUser(u.getUsername());
+        User oldUser;
+        if(u.getRole()==AbstractUserFactory.Role.MAINTAINER)
+            oldUser= new MaintainerFactory().createUser(u.getUsername(), u.getPassword());
+        else
+            oldUser= new PlannerFactory().createUser(u.getUsername(), u.getPassword());
+        
         if ( found != null){
             try {
+                
                 found.setUsername(username);
                 users.addUser(found);
             } catch (UsernameException ex) {
                 return null;
             } 
-            users.removeUser(u);
+            users.removeUser(oldUser);
         }
         return found;
     }
