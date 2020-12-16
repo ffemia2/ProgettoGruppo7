@@ -34,6 +34,7 @@ public class P1_1_JFrame extends javax.swing.JFrame {
     private User planner;
     private JDBC jdbc;
     private Activities added;
+
     /**
      * Creates new form P1_JFrame
      * @param username
@@ -43,7 +44,7 @@ public class P1_1_JFrame extends javax.swing.JFrame {
         this.added = new Activities();
         this.planner = new PlannerFactory().createUser(username,password);
         this.jdbc = new PlannerFactory().createJDBCUser(username, password);
-        
+
         planner.setActivities(jdbc.loadActivitiesFromDatabase());
         
         Activity.setInitialCount(jdbc.loadCountFromDatabase());
@@ -205,9 +206,12 @@ public class P1_1_JFrame extends javax.swing.JFrame {
                                        .setTypology(ActivityBuilder.Typology.valueOf(String.valueOf(typology.getSelectedItem())))
                                        .setEstimatedTime(Integer.valueOf(time.getText()))
                                        .setDescription(description.getText())
-                                       .setInterruptible(interr.isSelected())
                                        .setWeek(Integer.valueOf(week.getText()))
                                        .getActivity();
+            if(String.valueOf(type.getSelectedItem())=="Planned")
+                activity.setInterruptible(interr.isSelected());
+            
+                
                                        
             planner.getActivities().insertInActivities(activity);
             added.insertInActivities(activity);
@@ -218,7 +222,7 @@ public class P1_1_JFrame extends javax.swing.JFrame {
         onClose();
         ActivitySelection frame = new ActivitySelection(planner, planner.getActivities());
         frame.setVisible(true);
-        
+        this.dispose();
     }//GEN-LAST:event_jButtonAssignActActionPerformed
 
     private void jButtonViewActActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewActActionPerformed
@@ -284,7 +288,7 @@ private ActivityBuilder selectActivity(String type){
         return new PlannedBuilder();
     if(type.equals("Unplanned"))
         return new UnplannedBuilder();
-    if(type.equals("Planned"))
+    if(type.equals("Extra"))
         return new ExtraBuilder();
     
     return null;

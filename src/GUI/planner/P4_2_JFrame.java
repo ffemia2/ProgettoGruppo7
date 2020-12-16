@@ -102,8 +102,8 @@ public class P4_2_JFrame extends javax.swing.JFrame {
                 int col = jTableMaintainerAvailability.getSelectedColumn();
                 
                 count= ((Maintainer_JDBC)jdbc_m).selectCountActivityIDFromDatabase(ac);
-                boolean flag=false;
-                if(col>1 && et>0 && count==0&&false){
+                boolean flag=true;
+                if(col>1 && et>0 && count==0&&flag){
                     
                     int avail = maintainer.getSlotAvailability(ac.getWeek(),day, col-2);
                     remainingTime=et-avail;  
@@ -124,7 +124,7 @@ public class P4_2_JFrame extends javax.swing.JFrame {
                             jLabel4.setText(String.valueOf(et));
                         
                         if(remainingTime<=0){
-                            flag=true;
+                            flag=false;
                             
                         }
                     }

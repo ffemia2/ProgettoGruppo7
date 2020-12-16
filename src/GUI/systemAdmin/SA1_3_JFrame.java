@@ -307,6 +307,7 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
         if(answer!=null){
             Competence c = new Competence(answer);
             employee.getSkills().insertCompetence(c);
+            ((SystemAdmin) admin).getUsers().getMaintainers().get(employee.getUsername()).insertSkill(c);
             added.insertCompetence(c);
             flag = true;
             model.addElement(c.toString());

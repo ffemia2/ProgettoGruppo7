@@ -64,13 +64,15 @@ public class P3_JFrame extends javax.swing.JFrame {
             this.jButtonModify.setVisible(!flag);
             this.jButtonCompetence.setVisible(false);
             this.jButtonSave.setVisible(false); 
+            
         }
         else if("SystemAdmin".equals(user)){
             this.jForwardButton.setVisible(false);
             this.jButtonDelete.setVisible(false);
             this.jButtonModify.setVisible(false);
             this.jButtonCompetence.setVisible(true);
-            this.jButtonSave.setVisible(true); 
+            this.jButtonSave.setVisible(false); 
+            
         }
         
         this.jTextFieldID.setText(String.valueOf(act.getActivityID()));
@@ -79,6 +81,13 @@ public class P3_JFrame extends javax.swing.JFrame {
         this.jTextFieldWeekN.setText("" + act.getWeek());
 
         this.jDescriptionTextArea.setText("" + act.getDescription());
+        
+        this.jTextFieldID.setEditable(false);
+        this.jTextFieldSite.setEditable(false);
+        this.jTextFieldDepart.setEditable(false);
+        this.jTextFieldWeekN.setEditable(false);
+
+        this.jDescriptionTextArea.setEditable(false);;
     }
 
     /**
@@ -251,6 +260,11 @@ public class P3_JFrame extends javax.swing.JFrame {
         });
 
         jTextFieldWeekN.setEditable(false);
+        jTextFieldWeekN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldWeekNActionPerformed(evt);
+            }
+        });
 
         jButtonCompetence.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonCompetence.setText("ADD COMPETENCE");
@@ -294,7 +308,7 @@ public class P3_JFrame extends javax.swing.JFrame {
                 .addComponent(jButtonModify)
                 .addGap(56, 56, 56)
                 .addComponent(jButtonCompetence)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel8.setBackground(new java.awt.Color(51, 51, 51));
@@ -358,6 +372,7 @@ public class P3_JFrame extends javax.swing.JFrame {
         );
 
         jTextFieldID.setEditable(false);
+        jTextFieldID.setEnabled(false);
 
         jTextFieldSite.setEditable(false);
         jTextFieldSite.addInputMethodListener(new java.awt.event.InputMethodListener() {
@@ -397,15 +412,15 @@ public class P3_JFrame extends javax.swing.JFrame {
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabelName)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldSite, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldDepart, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jTextFieldSite, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldDepart, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGap(194, 194, 194)
                                 .addComponent(jButtonSMP)))
@@ -418,25 +433,16 @@ public class P3_JFrame extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextFieldID)
-                                        .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(jTextFieldSite, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(113, 113, 113))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jTextFieldDepart, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                        .addGap(114, 114, 114)))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTextFieldID)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldSite, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDepart, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(113, 113, 113)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -444,7 +450,7 @@ public class P3_JFrame extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonSMP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -488,12 +494,14 @@ public class P3_JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonDeleteActionPerformed
 
     private void jButtonModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModifyActionPerformed
-        this.jButtonCompetence.setVisible(true);
+        //this.jButtonCompetence.setVisible(true);
         this.jButtonSave.setVisible(true);
         this.jTextFieldSite.setEditable(true);
+        this.jTextFieldDepart.setEditable(true);
         this.jTextFieldWeekN.setEditable(true);
         this.jDescriptionTextArea.setEditable(true);
-
+        this.jButtonModify.setEnabled(false);
+        
     }//GEN-LAST:event_jButtonModifyActionPerformed
 
     private void jTextFieldDepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDepartActionPerformed
@@ -525,16 +533,20 @@ public class P3_JFrame extends javax.swing.JFrame {
             jdbc.updateActivityOnDatabase(activity);
         }
         jdbc.updateCompetencesOnDatabase(added, String.valueOf(activity.getActivityID()));
+        this.jButtonModify.setEnabled(true);
+        
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButtonCompetenceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompetenceActionPerformed
         this.jButtonSave.setVisible(true);
         String answer = JOptionPane.showInputDialog(this, "New competence", "");
-        Competence c = new Competence(answer);
-        activity.getCompetences().insertCompetence(c);
-        flag = true;
-        added.insertCompetence(c);
-        model.addElement(c.toString()); 
+        if(answer!=null){
+            Competence c = new Competence(answer);
+            activity.getCompetences().insertCompetence(c);
+            flag = true;
+            added.insertCompetence(c);
+            model.addElement(c.toString()); 
+        }
     }//GEN-LAST:event_jButtonCompetenceActionPerformed
 
     private void jTextFieldSiteInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextFieldSiteInputMethodTextChanged
@@ -544,6 +556,10 @@ public class P3_JFrame extends javax.swing.JFrame {
     private void jDescriptionTextAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDescriptionTextAreaKeyReleased
 
     }//GEN-LAST:event_jDescriptionTextAreaKeyReleased
+
+    private void jTextFieldWeekNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWeekNActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldWeekNActionPerformed
 
     /**
      * @param args the command line arguments

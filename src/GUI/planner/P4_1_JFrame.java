@@ -23,6 +23,7 @@ import Activity.ActivityBuilder;
 import Activity.Planned.PlannedBuilder;
 import Activity.competence.Competence;
 import Activity.competence.Competences;
+import javax.swing.JFrame;
 
 
 /**
@@ -36,7 +37,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
      private JDBC jdbc;
      private Activity activity;
      private Map<String,User> maintainers;
-     
+     private JFrame actual;
      
     /**
      * Creates new form P4_1_JFrame
@@ -47,6 +48,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
         this.listModel = new DefaultListModel<>();
         this.activity = act;
         this.tableModel = new DefaultTableModel(new String[] {"Maintainer", "Skills", "Avail MON", "Avail TUE", "Avail WED", "Avail THU", "Avail FRI", "Avail SAT", "Avail SUN" },0);
+        this.actual=this;
         
         initComponents();
         
@@ -63,6 +65,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
                         User maint = maintainers.get(String.valueOf(jTable1.getModel().getValueAt(row, 0)));
                         P4_2_JFrame p4 = new P4_2_JFrame(activity, maint,planner,day[1]);
                         p4.setVisible(true);
+                        actual.dispose();
                     }         
             }
         });
@@ -150,7 +153,7 @@ public class P4_1_JFrame extends javax.swing.JFrame {
 
         };
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabelWeekN.setBackground(new java.awt.Color(255, 255, 255));
         jLabelWeekN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

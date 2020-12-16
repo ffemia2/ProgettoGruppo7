@@ -257,16 +257,17 @@ public class SystemAdmin_JDBC implements JDBC{
 
             while (activities.next()){
                 int id = Integer.valueOf(activities.getString("ID_CODE"));
-                ActivityBuilder builder = this.selectActivity(activities.getString("TYPE_"));
+                ActivityBuilder builder = this.selectActivity(activities.getString("TYPE_"));                
                 Activity activity = builder.setSite(activities.getString("FACTORY_SITE"), activities.getString("DEPARTMENT"))
                                            .setEstimatedTime(Integer.valueOf(activities.getString("ESTIMATED_TIME")))
                                            .setAssigned(false)
                                            .setDescription(activities.getString("DESCRIPTION"))
-                                           .setInterruptible(Boolean.valueOf(activities.getString("INTERRUPTIBLE")))
                                            .setTypology(ActivityBuilder.Typology.valueOf(activities.getString("TYPOLOGY")))
                                            .setWeek(Integer.valueOf(activities.getString("WEEK")))
                                            .getActivity();
                 activity.setActivityID(id);
+                if(activities.getString("TYPE_")=="Planned")
+                    activity.setInterruptible(Boolean.valueOf(activities.getString("INTERRUPTIBLE")));
                 this.loadActivityCompetences(activity);
                 this.loadActivityMaterials(activity);
                 found.insertInActivities(activity); 
@@ -311,7 +312,7 @@ public class SystemAdmin_JDBC implements JDBC{
             return new PlannedBuilder();
         if(type.equals("Unplanned"))
             return new UnplannedBuilder();
-        if(type.equals("Planned"))
+        if(type.equals("Extra"))
             return new ExtraBuilder();
     
         return null;

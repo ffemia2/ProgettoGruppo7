@@ -84,7 +84,7 @@ public class ExtraBuilder extends ActivityBuilder {
     @Override
     public ActivityBuilder setTypology(Typology typo){
         this.typology = typo;
-        return null;
+        return this;
     }
     
     public void reset(){
