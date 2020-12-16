@@ -180,8 +180,8 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton3))
@@ -293,17 +293,19 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
                 answer = JOptionPane.showInputDialog(this, "New Username:");
                 found = ((SystemAdmin) admin).changePassword(employee, answer);
             }
-            
         }
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         String answer = JOptionPane.showInputDialog(this, "New competence", "");
-        Competence c = new Competence(answer);
-        employee.getSkills().insertCompetence(c);
-        added.insertCompetence(c);
-        flag = true;
-        model.addElement(c.toString());
+        if(answer!=null){
+            Competence c = new Competence(answer);
+            employee.getSkills().insertCompetence(c);
+            added.insertCompetence(c);
+            flag = true;
+            model.addElement(c.toString());
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
  
     /**

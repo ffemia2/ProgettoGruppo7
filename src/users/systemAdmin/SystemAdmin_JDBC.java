@@ -42,7 +42,7 @@ import Activity.material.Material;
 public class SystemAdmin_JDBC implements JDBC{
     Statement stm;
     private String jdbc_user = "postgres";
-    private String jdbc_password = "ciao98";
+    private String jdbc_password = "polter01";
     private String username;
     private String password;
     
@@ -253,7 +253,6 @@ public class SystemAdmin_JDBC implements JDBC{
             while (activities.next()){
                 int id = Integer.valueOf(activities.getString("ID_CODE"));
                 ActivityBuilder builder = this.selectActivity(activities.getString("TYPE_"));
-                
                 Activity activity = builder.setSite(activities.getString("FACTORY_SITE"), activities.getString("DEPARTMENT"))
                                            .setEstimatedTime(Integer.valueOf(activities.getString("ESTIMATED_TIME")))
                                            .setAssigned(false)

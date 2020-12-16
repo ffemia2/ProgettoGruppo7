@@ -28,7 +28,7 @@ import users.User;
 public class Maintainer_JDBC implements JDBC{
     private Statement stm;
     private String jdbc_user = "postgres";
-    private String jdbc_password = "ciao98"; 
+    private String jdbc_password = "polter01"; 
     private String username;
     private String password;
     
@@ -116,8 +116,7 @@ public class Maintainer_JDBC implements JDBC{
             }
          temp.append("INSERT INTO maintainer_competences (maintainer, competence) VALUES (").append("'").append(name).append("',").append("'").append(c.getName()).append("');");
         }
-        try {
-            
+        try {            
             stm.executeUpdate(temp.toString());
             stm.getConnection().close();
         } catch (SQLException ex) {

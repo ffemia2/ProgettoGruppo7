@@ -43,7 +43,7 @@ import users.maintainer.MaintainerFactory;
 public class Planner_JDBC implements JDBC {
     private Statement stm;
     private String jdbc_user = "postgres";
-    private String jdbc_password = "ciao98";
+    private String jdbc_password = "polter01";
     private String username;
     private String password;
     
