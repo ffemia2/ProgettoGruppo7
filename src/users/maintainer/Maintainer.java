@@ -6,12 +6,16 @@
 package users.maintainer;
 
 import Activity.Activities;
+
 import Activity.competence.Competence;
 import Activity.competence.Competences;
+
+import users.User;
 import users.AbstractUserFactory;
+
 import java.util.Map;
 import java.util.Objects;
-import users.User;
+
 
 /**
  *

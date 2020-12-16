@@ -62,6 +62,7 @@ public class P1_2_JFrame extends javax.swing.JFrame {
                 int col = jTable1.getSelectedColumn();
                 String value = String.valueOf(jTable1.getValueAt(row, 0));
                 int id_code = Integer.valueOf(value);
+                
                 P3_JFrame frame = new P3_JFrame(planner, activities.getFromActivities(id_code),false);
                 frame.setVisible(true);
                 p1_2.dispose();           

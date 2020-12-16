@@ -12,12 +12,10 @@ import javax.swing.JOptionPane;
 import Activity.Activity;
 import Activity.ActivityBuilder;
 import Activity.Planned.PlannedBuilder;
+import Activity.Procedure.Procedure;
 import Activity.competence.Competence;
 import Activity.competence.Competences;
 import Activity.Site;
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
 import users.AbstractUserFactory;
 import users.User;
 import users.JDBC;
@@ -31,6 +29,7 @@ public class P3_JFrame extends javax.swing.JFrame {
     private boolean flag;
     private Activity activity;
     private User planner;
+    private String user;
     private JDBC jdbc;
     private Competences added;
     
@@ -38,6 +37,7 @@ public class P3_JFrame extends javax.swing.JFrame {
 
     /**
      * Creates new form P3_JFrame
+     * @param planner
      * @param act
      * @param flag
      */
@@ -45,6 +45,7 @@ public class P3_JFrame extends javax.swing.JFrame {
         this.model = new DefaultListModel<>();
         this.planner = planner;
         this.jdbc = selectUser(planner.getClass().getSimpleName()).createJDBCUser(planner.getUsername(), planner.getPassword());
+        this.user = planner.getClass().getSimpleName();
         this.flag = flag;
         this.activity = act;
         this.added = new Competences();
@@ -57,18 +58,27 @@ public class P3_JFrame extends javax.swing.JFrame {
         }
         initComponents();
         
-        this.jForwardButton.setVisible(flag);
-        this.jButtonDelete.setVisible(!flag);
-        this.jButtonModify.setVisible(!flag);
-        this.jButtonCompetence.setVisible(false);
-        this.jButtonSave.setVisible(false);
+        if("Planner".equals(user)){
+            this.jForwardButton.setVisible(flag);
+            this.jButtonDelete.setVisible(!flag);
+            this.jButtonModify.setVisible(!flag);
+            this.jButtonCompetence.setVisible(false);
+            this.jButtonSave.setVisible(false); 
+        }
+        else if("SystemAdmin".equals(user)){
+            this.jForwardButton.setVisible(false);
+            this.jButtonDelete.setVisible(false);
+            this.jButtonModify.setVisible(false);
+            this.jButtonCompetence.setVisible(true);
+            this.jButtonSave.setVisible(true); 
+        }
         
         this.jTextFieldID.setText(String.valueOf(act.getActivityID()));
         this.jTextFieldSite.setText(act.getSite().getFactorySite());
         this.jTextFieldDepart.setText(act.getSite().getDepartment());
         this.jTextFieldWeekN.setText("" + act.getWeek());
-        
-        this.jDescriptionTextArea.setText("" + act.getDescription());           
+
+        this.jDescriptionTextArea.setText("" + act.getDescription());
     }
 
     /**
@@ -241,11 +251,6 @@ public class P3_JFrame extends javax.swing.JFrame {
         });
 
         jTextFieldWeekN.setEditable(false);
-        jTextFieldWeekN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldWeekNActionPerformed(evt);
-            }
-        });
 
         jButtonCompetence.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButtonCompetence.setText("ADD COMPETENCE");
@@ -344,7 +349,7 @@ public class P3_JFrame extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addGap(18, 18, 18)
                 .addComponent(jForwardButton)
                 .addGap(18, 18, 18)
@@ -355,9 +360,11 @@ public class P3_JFrame extends javax.swing.JFrame {
         jTextFieldID.setEditable(false);
 
         jTextFieldSite.setEditable(false);
-        jTextFieldSite.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldSiteActionPerformed(evt);
+        jTextFieldSite.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                jTextFieldSiteInputMethodTextChanged(evt);
             }
         });
 
@@ -407,17 +414,25 @@ public class P3_JFrame extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextFieldID)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextFieldSite, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextFieldDepart, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(108, 108, 108)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextFieldID)
+                                        .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabelName, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(jTextFieldSite, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(113, 113, 113))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jTextFieldDepart, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                        .addGap(114, 114, 114)))
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -428,7 +443,7 @@ public class P3_JFrame extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSMP, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -456,16 +471,9 @@ public class P3_JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jForwardButtonActionPerformed
 
     private void jButtonSMPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSMPActionPerformed
-        // TODO add your handling code here:
-        
-        if (Desktop.isDesktopSupported()) {
-            try {
-                File myFile = new File( "path/to/file");
-                Desktop.getDesktop().open(myFile);
-            } catch (IOException ex) {
-                // no application registered for PDFs
-            }
-        }
+        Procedure p = new Procedure(activity.getDescription(), activity.getCompetences());
+        activity.setProcedure(p);
+        p.viewPDF();
     }//GEN-LAST:event_jButtonSMPActionPerformed
 
     private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
@@ -487,33 +495,34 @@ public class P3_JFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonModifyActionPerformed
 
-    private void jTextFieldWeekNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldWeekNActionPerformed
-        int week = Integer.valueOf(jTextFieldWeekN.getText());
-        planner.getActivities().modifyInActivitiesWeek(activity.getActivityID(), week);
-    }//GEN-LAST:event_jTextFieldWeekNActionPerformed
-
-    private void jTextFieldSiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSiteActionPerformed
-        Site site = new Site(jTextFieldSite.getText(),jTextFieldDepart.getText());
-        planner.getActivities().modifyInActivitiesSite(activity.getActivityID(), site);
-    }//GEN-LAST:event_jTextFieldSiteActionPerformed
-
     private void jTextFieldDepartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDepartActionPerformed
-        Site site = new Site(jTextFieldSite.getText(),jTextFieldDepart.getText());
-        planner.getActivities().modifyInActivitiesSite(activity.getActivityID(), site);
+        
     }//GEN-LAST:event_jTextFieldDepartActionPerformed
-
-    private void jDescriptionTextAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDescriptionTextAreaKeyReleased
-        String description = jDescriptionTextArea.getText();
-        planner.getActivities().modifyInActivitiesDescr(activity.getActivityID(), description);
-    }//GEN-LAST:event_jDescriptionTextAreaKeyReleased
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         this.jButtonSave.setVisible(false);
         this.jTextFieldSite.setEditable(false);
         this.jTextFieldWeekN.setEditable(false);
-        this.jDescriptionTextArea.setEditable(false); 
-        
-        
+        this.jDescriptionTextArea.setEditable(false);
+        if (user.equals("Planner")){
+            int week = Integer.valueOf(jTextFieldWeekN.getText());
+            activity.setWeek(week);
+            planner.getActivities().modifyInActivitiesWeek(activity.getActivityID(), week);
+
+            Site site1 = new Site(jTextFieldSite.getText(),jTextFieldDepart.getText());
+            activity.setSite(site1);
+            planner.getActivities().modifyInActivitiesSite(activity.getActivityID(), site1); 
+
+            Site site2 = new Site(jTextFieldSite.getText(),jTextFieldDepart.getText());
+            activity.setSite(site2);
+            planner.getActivities().modifyInActivitiesSite(activity.getActivityID(), site2);
+
+            String description = jDescriptionTextArea.getText();
+            activity.setDescription(description);
+            planner.getActivities().modifyInActivitiesDescr(activity.getActivityID(), description);
+
+            jdbc.updateActivityOnDatabase(activity);
+        }
         jdbc.updateCompetencesOnDatabase(added, String.valueOf(activity.getActivityID()));
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
@@ -526,6 +535,14 @@ public class P3_JFrame extends javax.swing.JFrame {
         added.insertCompetence(c);
         model.addElement(c.toString()); 
     }//GEN-LAST:event_jButtonCompetenceActionPerformed
+
+    private void jTextFieldSiteInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextFieldSiteInputMethodTextChanged
+        
+    }//GEN-LAST:event_jTextFieldSiteInputMethodTextChanged
+
+    private void jDescriptionTextAreaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jDescriptionTextAreaKeyReleased
+
+    }//GEN-LAST:event_jDescriptionTextAreaKeyReleased
 
     /**
      * @param args the command line arguments

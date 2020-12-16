@@ -6,6 +6,7 @@
 package Activity;
 
 import Activity.competence.Competences;
+
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Map;

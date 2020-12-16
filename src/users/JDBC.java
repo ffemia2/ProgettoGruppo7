@@ -51,6 +51,8 @@ public interface JDBC {
     
     public void saveActivitiesOnDatabase(Activities ac);
     
+    public void updateActivityOnDatabase(Activity ac);
+    
     public void removeActivityFromDatabase(Activity ac);
 
     public int loadCountFromDatabase();

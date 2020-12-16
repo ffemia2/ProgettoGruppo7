@@ -27,11 +27,12 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
  */
 public class Procedure {
     private String description;
+    private String path;
     private Competences competences;
     private PDDocument document;
       
     public Procedure(String description, Competences c){
-        String path=System.getProperty("user.dir");
+        this.path = System.getProperty("user.dir");
         this.description = description;
         this.competences = c;
         
@@ -49,21 +50,14 @@ public class Procedure {
                 contentStream.showText(text);
                 contentStream.endText();
                 contentStream.close();
-                
-                
+
                 this.document.save(path+"\\smp_proc_" + description + ".pdf");
                 this.document.close();
                 //Desktop.getDesktop().open(new File(path+"\\smp_proc_" + description + ".pdf"));
             } catch (IOException ex) {
                 Logger.getLogger(Procedure.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        /*else
-            try {
-                //Desktop.getDesktop().open(new File(path+"\\smp_proc_" + description + ".pdf"));
-        } catch (IOException ex) {
-            Logger.getLogger(Procedure.class.getName()).log(Level.SEVERE, null, ex);*/
-        
+        }  
     }
     
     public String getDescription() {
@@ -80,6 +74,13 @@ public class Procedure {
 
     public void setCompetences(Competences competences) {
         this.competences = competences;
+    }
+    
+    public void viewPDF(){
+        try {
+            Desktop.getDesktop().open(new File(path+"\\smp_proc_" + description + ".pdf"));
+        } catch (IOException ex) {
+            Logger.getLogger(Procedure.class.getName()).log(Level.SEVERE, null, ex);}
     }
   
     @Override
