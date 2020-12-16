@@ -120,9 +120,11 @@ public class SA1_2_JFrame extends javax.swing.JFrame {
         jList2.setModel(listModel2);
         jScrollPane2.setViewportView(jList2);
 
-        jLabel1.setText("             Maintainers");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Maintainers");
 
-        jLabel2.setText("               Planners");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Planners");
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

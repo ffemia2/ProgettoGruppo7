@@ -247,12 +247,30 @@ public class Planner_JDBC implements JDBC {
        }
     }
     
+    @Override
+    public void updateActivityOnDatabase(Activity ac){
+        createConnection();
+        StringBuilder temp = new StringBuilder();
+        temp.append("UPDATE activity SET week = ").append(ac.getWeek())
+           .append(", factory_site = ").append("'").append(ac.getSite().getFactorySite()).append("'")
+           .append(", department = ").append("'").append(ac.getSite().getDepartment()).append("'")
+           .append(", description = ").append("'").append(ac.getDescription()).append("'")
+           .append(" WHERE id_code = ").append(ac.getActivityID());
+        
+        try{
+            stm.executeUpdate(temp.toString());
+            stm.getConnection().close();
+        }catch (SQLException ex) {
+           Logger.getLogger(Planner_JDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void updateStatusOnDatabase(Activity ac, boolean assigned){
         createConnection();
         StringBuilder temp = new StringBuilder(); 
         temp.append("UPDATE Activity SET status = ").append(assigned).append(" WHERE id_code = ").append(ac.getActivityID());
         try{
-        stm.executeUpdate(temp.toString());
+            stm.executeUpdate(temp.toString());
             stm.getConnection().close();
         }catch (SQLException ex) {
            Logger.getLogger(Planner_JDBC.class.getName()).log(Level.SEVERE, null, ex);

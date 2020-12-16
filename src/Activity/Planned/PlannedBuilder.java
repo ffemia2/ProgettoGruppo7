@@ -7,9 +7,12 @@ package Activity.Planned;
 
 import Activity.Activity;
 import Activity.ActivityBuilder;
-import Activity.Procedure.Procedure;
 import Activity.Site;
+
+import Activity.Procedure.Procedure;
+
 import Activity.competence.Competences;
+
 import Activity.material.Materials;
 
 /**

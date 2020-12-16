@@ -35,6 +35,7 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
     private JDBC jdbc_admin;
     private User employee;
     private JDBC jdbc_employee;
+    private String name;
     /**
      * Creates new form SA1_3_JFrame
      * @param employee
@@ -44,6 +45,7 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
         this.tableModel = new DefaultTableModel(new String[]{"Hour","Avail MON", "Avail TUE", "Avail WED", "Avail THU", "Avail FRI", "Avail SAT", "Avail SUN" },0);
         this.model = new DefaultListModel();
         this.employee = employee;
+        this.name = employee.getUsername();
         this.jdbc_employee = new MaintainerFactory().createJDBCUser(employee.getUsername(), employee.getPassword());
         this.admin = admin;
         this.jdbc_admin = new SystemAdminFactory().createJDBCUser(employee.getUsername(), employee.getPassword());
@@ -278,8 +280,10 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
                 answer = JOptionPane.showInputDialog(this, "New Username:");
                 found = ((SystemAdmin) admin).changeUsername(employee, answer);
             }
-            if (answer != null)
+            if (answer != null){
                 this.jLabel3.setText(answer);
+                ((SystemAdmin)admin).getUsers().getMaintainers().get(name).setUsername(answer);
+            }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -363,6 +367,7 @@ public class SA1_3_JFrame extends javax.swing.JFrame {
 
     public void onClose(){
        if (flag){
+            ((Maintainer_JDBC)jdbc_employee).updateMaintainerOnDatabase(employee, name);
             ((Maintainer_JDBC)jdbc_employee).updateSkillsOnDatabase(added, employee.getUsername());
             ((Maintainer_JDBC)jdbc_employee).updateAvailabiltyOnDatabase(((Maintainer) employee).getAvailability());
         }

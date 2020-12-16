@@ -205,6 +205,11 @@ public class SystemAdmin_JDBC implements JDBC{
             while (avails.next()){
                 ((Maintainer)found.get(avails.getString("Maintainer"))).addSlotAvailability(Integer.valueOf(avails.getString("Week")), avails.getString("WeekDay"), Integer.valueOf(avails.getString("TimeSlot")), Integer.valueOf(avails.getString("Avail")));
             }
+            
+            ResultSet skills = stm.executeQuery("SELECT * FROM Maintainer_Competences");
+            while (skills.next()){
+                ((Maintainer)found.get(skills.getString("Maintainer"))).insertSkill(new Competence(skills.getString("Competence")));
+            }
             stm.getConnection().close();
         } catch (SQLException ex) {
             Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
@@ -384,6 +389,11 @@ public class SystemAdmin_JDBC implements JDBC{
         } catch (SQLException ex) {
             Logger.getLogger(SystemAdmin_JDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void updateActivityOnDatabase(Activity ac) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

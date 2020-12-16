@@ -7,19 +7,25 @@ package users.maintainer;
 
 import Activity.Activities;
 import Activity.Activity;
+
 import Activity.competence.Competence;
 import Activity.competence.Competences;
+
+import users.AbstractUserFactory;
+import users.JDBC;
+import users.User;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import java.util.LinkedList;
 import java.util.Map;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import users.AbstractUserFactory;
-import users.JDBC;
-import users.User;
+import users.planner.Planner_JDBC;
 
 /**
  *
@@ -124,6 +130,21 @@ public class Maintainer_JDBC implements JDBC{
         }
     }
     
+    public void updateMaintainerOnDatabase(User employee, String name){
+        createConnection();
+        StringBuilder temp = new StringBuilder();
+        temp.append("UPDATE maintainer SET username = ").append("'").append(employee.getUsername()).append("'")
+           .append(", password_ = ").append("'").append(employee.getPassword()).append("'")
+           .append(" WHERE username = ").append("'").append(name).append("'");
+        
+        try{
+            stm.executeUpdate(temp.toString());
+            stm.getConnection().close();
+        }catch (SQLException ex) {
+           Logger.getLogger(Maintainer_JDBC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     @Override
     public boolean isTableEmpty() {
         createConnection();
@@ -182,7 +203,7 @@ public class Maintainer_JDBC implements JDBC{
         
         return count;
     }
-
+   
     @Override
     public void loadUsersFromDatabase() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -287,6 +308,11 @@ public class Maintainer_JDBC implements JDBC{
         }catch (SQLException ex) {
            Logger.getLogger(Maintainer_JDBC.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void updateActivityOnDatabase(Activity ac) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     
