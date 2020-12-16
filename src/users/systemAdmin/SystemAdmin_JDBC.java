@@ -266,7 +266,7 @@ public class SystemAdmin_JDBC implements JDBC{
                                            .setWeek(Integer.valueOf(activities.getString("WEEK")))
                                            .getActivity();
                 activity.setActivityID(id);
-                if(activities.getString("TYPE_")=="Planned")
+                if(activities.getString("TYPE_").compareTo("Planned")==0)
                     activity.setInterruptible(Boolean.valueOf(activities.getString("INTERRUPTIBLE")));
                 this.loadActivityCompetences(activity);
                 this.loadActivityMaterials(activity);

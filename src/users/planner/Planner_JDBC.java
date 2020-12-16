@@ -154,11 +154,12 @@ public class Planner_JDBC implements JDBC {
                                            .setEstimatedTime(estimated)
                                            .setAssigned(false)
                                            .setDescription(activities.getString("DESCRIPTION"))
-                                           .setInterruptible(Boolean.valueOf(activities.getString("INTERRUPTIBLE")))
                                            .setTypology(ActivityBuilder.Typology.valueOf(activities.getString("TYPOLOGY")))
                                            .setWeek(week)
                                            .getActivity();
                 activity.setActivityID(id);
+                if(activities.getString("TYPE_").compareTo("Planned")==0)
+                    activity.setInterruptible(Boolean.valueOf(activities.getString("INTERRUPTIBLE")));
                 this.loadActivityCompetences(activity);
                 this.loadActivityMaterials(activity);
                 found.insertInActivities(activity); 
@@ -175,7 +176,7 @@ public class Planner_JDBC implements JDBC {
             return new PlannedBuilder();
         if(type.equals("Unplanned"))
             return new UnplannedBuilder();
-        if(type.equals("Planned"))
+        if(type.equals("Extra"))
             return new ExtraBuilder();
     
     return null;
