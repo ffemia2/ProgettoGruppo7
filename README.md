@@ -4,6 +4,7 @@
 * [Packages](#packages)
 ## General info
 Software engineering project: **Smart Maintenance App**
+
 Team members:
 * Marco Ammirati
 * Rosanna Coccaro
